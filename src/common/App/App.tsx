@@ -8,10 +8,10 @@ import darkTheme from "common/styles/darkTheme";
 import Router from "common/routing/router";
 
 const App = (): JSX.Element => {
-  const [theme, setTheme] = useState(lightTheme);
+  const [theme, setTheme] = useState(darkTheme);
 
   useEffect(() => {
-    return setTheme(darkTheme);
+    return setTheme(lightTheme);
   }, []);
 
   return (

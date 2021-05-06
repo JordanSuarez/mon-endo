@@ -1,10 +1,10 @@
-export interface RouteModel {
+export type RouteModel = {
   id: string;
   exact: boolean;
   path: string;
   component: any;
-}
+};
 
-export interface RoutesModel {
+export type RoutesModel = {
   routes: Array<RouteModel>;
-}
+};

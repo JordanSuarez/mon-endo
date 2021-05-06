@@ -1,5 +1,5 @@
 import { HOME } from "common/routing/routesResolver";
-import { RouteModel } from "common/interfaces/router";
+import { RouteModel } from "common/types/router";
 import Home from "../index";
 
 export default {
