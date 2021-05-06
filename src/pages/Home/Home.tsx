@@ -1,10 +1,16 @@
-import React, { ReactElement } from "react";
+import React from "react";
 
 import { classes as classesProps } from "common/classes";
+import { ClassNameMap } from "@material-ui/styles";
+import { StylesInterface } from "./styles";
 
-const Home = ({ classe }: any): ReactElement => {
-  console.log(classe, classes);
-  return <div className={classe.title}>toto</div>;
+interface Props {
+  classes: Partial<ClassNameMap<keyof StylesInterface>>;
+}
+
+const Home = ({ classes }: Props): JSX.Element => {
+  console.log(classes);
+  return <div className={classes.home}>tessssss</div>;
 };
 
 Home.propTypes = {

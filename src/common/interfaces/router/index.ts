@@ -1,10 +1,8 @@
-import { FunctionComponent } from "react";
-
 export interface RouteModel {
   id: string;
   exact: boolean;
   path: string;
-  component: FunctionComponent<Element>;
+  component: any;
 }
 
 export interface RoutesModel {
