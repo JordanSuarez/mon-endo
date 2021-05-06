@@ -9,8 +9,7 @@ interface Props {
 }
 
 const Home = ({ classes }: Props): JSX.Element => {
-  console.log(classes);
-  return <div className={classes.home}>tessssss</div>;
+  return <div className={classes.home}>Home</div>;
 };
 
 Home.propTypes = {
