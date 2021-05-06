@@ -3,16 +3,18 @@ import { Styles } from "common/types/styles";
 
 export type StylesInterface = {
   root: string;
-  paper: string;
+  calendar: string;
 };
 
 export const styles = ({ palette }: Theme): Styles => ({
   root: {
-    color: palette.primary.main,
+    maxWidth: "40rem",
   },
-  paper: {
-    margin: "1rem",
-    width: "10rem",
-    height: "20rem",
+  calendar: {
+    "&.react-calendar": {
+      width: "100%",
+      margin: "0.1rem",
+      border: "none",
+    },
   },
 });
