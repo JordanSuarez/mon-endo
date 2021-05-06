@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Home from "pages/Home";
 import { arrayOf, bool, shape, string } from "prop-types";
-import { RoutesModel } from "common/interfaces/router";
+import { RoutesModel } from "common/types/router";
 
 const Router = ({ routes }: RoutesModel): JSX.Element => {
   return (
