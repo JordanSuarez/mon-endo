@@ -8,7 +8,6 @@ import {
 import { ClassNameMap } from "@material-ui/styles";
 
 import { NavigationInterface } from "common/types/navigation";
-import { classes as classesProps } from "common/classes";
 import { StylesInterface } from "./styles";
 
 type Props = {
@@ -32,10 +31,6 @@ const BottomNavigation = ({ classes, navigationItems }: Props): JSX.Element => {
       ))}
     </BottoNavigationMui>
   );
-};
-
-BottomNavigation.propTypes = {
-  ...classesProps,
 };
 
 export default BottomNavigation;

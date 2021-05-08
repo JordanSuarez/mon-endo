@@ -2,7 +2,6 @@ import React from "react";
 
 import { ClassNameMap } from "@material-ui/styles";
 
-import { classes as classesProps } from "common/classes";
 import { StylesInterface } from "./styles";
 import Navigation from "../Navigation";
 
@@ -22,10 +21,6 @@ const Page = ({ classes, title, children }: Props): JSX.Element => {
       </div>
     </div>
   );
-};
-
-Page.propTypes = {
-  ...classesProps,
 };
 
 export default Page;

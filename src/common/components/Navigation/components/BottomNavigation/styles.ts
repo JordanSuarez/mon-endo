@@ -1,5 +1,5 @@
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
-import { Styles } from "common/classes";
+import { Styles } from "common/types/styles";
 
 export type StylesInterface = {
   root: string;
@@ -14,6 +14,7 @@ export const styles = ({ palette }: Theme): Styles => ({
     position: "absolute",
     bottom: "0",
     width: "100%",
+    zIndex: "1",
   },
   button: {
     color: palette.secondary.light,

@@ -1,5 +1,5 @@
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
-import { Styles } from "common/classes";
+import { Styles } from "common/types/styles";
 
 export type StylesInterface = {
   root: string;
@@ -8,11 +8,12 @@ export type StylesInterface = {
   drawer: string;
   paper: string;
   title: string;
+  addButton: string;
   link: string;
   content: string;
   listItem: string;
   logout: string;
-  button: string;
+  logoutButton: string;
 };
 
 export const styles = ({ palette }: Theme): Styles => ({
@@ -30,6 +31,11 @@ export const styles = ({ palette }: Theme): Styles => ({
     fontSize: "2rem",
     margin: "1rem auto",
     textAlign: "center",
+  },
+  addButton: {
+    backgroundColor: palette.primary.light,
+    textTransform: "none",
+    margin: "1rem",
   },
   link: {
     textDecoration: "none",
@@ -49,7 +55,7 @@ export const styles = ({ palette }: Theme): Styles => ({
     display: "flex",
     flexDirection: "column",
   },
-  button: {
+  logoutButton: {
     backgroundColor: palette.primary.light,
     textTransform: "none",
   },

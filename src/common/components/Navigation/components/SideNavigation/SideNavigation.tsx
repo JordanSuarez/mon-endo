@@ -13,9 +13,9 @@ import {
   ListItemText,
 } from "@material-ui/core";
 
-import { classes as classesProps } from "common/classes";
 import { getHomeRoute } from "common/routing/routesResolver";
 import { NavigationInterface } from "common/types/navigation";
+import AddIcon from "@material-ui/icons/Add";
 import { StylesInterface } from "./styles";
 
 type Props = {
@@ -41,6 +41,14 @@ const SideNavigation = ({ classes, navigationItems }: Props): JSX.Element => {
           </Link>
         </h1>
         <Divider />
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.addButton}
+          endIcon={<AddIcon>send</AddIcon>}
+        >
+          Ajouter une douleur
+        </Button>
         <Toolbar />
         <div className={classes.content}>
           <List>
@@ -55,7 +63,7 @@ const SideNavigation = ({ classes, navigationItems }: Props): JSX.Element => {
             <Button
               variant="contained"
               color="primary"
-              className={classes.button}
+              className={classes.logoutButton}
               endIcon={<ExitToAppIcon>send</ExitToAppIcon>}
             >
               Logout
@@ -65,10 +73,6 @@ const SideNavigation = ({ classes, navigationItems }: Props): JSX.Element => {
       </Drawer>
     </div>
   );
-};
-
-SideNavigation.propTypes = {
-  ...classesProps,
 };
 
 export default SideNavigation;
