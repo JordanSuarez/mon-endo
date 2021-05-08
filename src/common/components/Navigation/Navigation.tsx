@@ -16,8 +16,8 @@ import BottomNavigation from "./components/BottomNavigation";
 
 const Navigation = (): JSX.Element => {
   const navigationItems = [
-    { label: "Home", icon: <HomeIcon />, route: getHomeRoute() },
     { label: "Profile", icon: <PersonIcon />, route: getProfileRoute() },
+    { label: "Home", icon: <HomeIcon />, route: getHomeRoute() },
     { label: "Calendar", icon: <CalendarIcon />, route: getCalendarRoute() },
   ] as Array<NavigationInterface>;
 

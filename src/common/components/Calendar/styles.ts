@@ -12,7 +12,7 @@ export const styles = ({ palette }: Theme): Styles => ({
   },
   calendar: {
     "&.react-calendar": {
-      width: "100%",
+      width: "99%",
       margin: "0.1rem",
       border: "none",
     },

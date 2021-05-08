@@ -14,6 +14,7 @@ export const styles = ({ palette }: Theme): Styles => ({
     position: "absolute",
     bottom: "0",
     width: "100%",
+    zIndex: "1",
   },
   button: {
     color: palette.secondary.light,

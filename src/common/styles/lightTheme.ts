@@ -11,7 +11,7 @@ const palette = {
   },
   primary: {
     dark: "#54507D",
-    main: "#20278E",
+    main: "#54507D",
     light: "#5D60A4",
   },
   error: {

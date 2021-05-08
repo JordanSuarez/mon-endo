@@ -14,7 +14,9 @@ export const styles = ({ palette }: Theme): Styles => ({
     overflow: "auto",
   },
   content: {
-    margin: "2rem",
+    margin: "2rem 2rem 5rem",
+    height: "fit-content",
     color: palette.primary.main,
+    width: "100%",
   },
 });
