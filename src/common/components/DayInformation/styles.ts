@@ -11,7 +11,6 @@ export type StylesInterface = {
   listItemText: string;
   iconsContainer: string;
   icon: string;
-  button: string;
   text: string;
   form: string;
 };
@@ -64,16 +63,6 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     [breakpoints.down("sm")]: {
       display: "flex",
       flexDirection: "column",
-    },
-  },
-  button: {
-    margin: "1rem",
-    display: "flex",
-    width: "13rem",
-    backgroundColor: palette.primary.light,
-    textTransform: "none",
-    [breakpoints.down("xs")]: {
-      width: "100%",
     },
   },
   text: {

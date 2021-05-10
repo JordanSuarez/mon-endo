@@ -1,23 +1,36 @@
-import React from "react";
+import React, { RefObject } from "react";
 
 import { ClassNameMap } from "@material-ui/styles";
 
+import Navigation from "common/components/Navigation";
+import AddPain from "common/components/AddPain";
+import { Typography } from "@material-ui/core";
 import { StylesInterface } from "./styles";
-import Navigation from "../Navigation";
 
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   title: string;
   children: JSX.Element;
+  toggleDrawer: () => void;
+  drawerRef: RefObject<JSX.Element>;
+  isOpen: boolean;
 };
 
-const Page = ({ classes, title, children }: Props): JSX.Element => {
+const Page = ({
+  classes,
+  title,
+  children,
+  toggleDrawer,
+  drawerRef,
+  isOpen,
+}: Props): JSX.Element => {
   return (
     <div className={classes.root}>
-      <Navigation />
+      <Navigation toggleDrawer={toggleDrawer} />
       <div className={classes.content}>
-        <h2>{title}</h2>
+        <Typography variant="h5">{title}</Typography>
         {children}
+        <AddPain ref={drawerRef} toggleDrawer={toggleDrawer} isOpen={isOpen} />
       </div>
     </div>
   );

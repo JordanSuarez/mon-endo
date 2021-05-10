@@ -3,7 +3,11 @@ export type Styles = {
     [key: string]:
       | string
       | {
-          [key: string]: string;
+          [key: string]:
+            | string
+            | {
+                [key: string]: string;
+              };
         };
   };
 };

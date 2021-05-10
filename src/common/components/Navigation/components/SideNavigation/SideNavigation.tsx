@@ -15,15 +15,21 @@ import {
 
 import { getHomeRoute } from "common/routing/routesResolver";
 import { NavigationInterface } from "common/types/navigation";
+import ActionButton from "common/components/ActionButton";
 import AddIcon from "@material-ui/icons/Add";
 import { StylesInterface } from "./styles";
 
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   navigationItems: Array<NavigationInterface>;
+  toggleDrawer: () => void;
 };
 
-const SideNavigation = ({ classes, navigationItems }: Props): JSX.Element => {
+const SideNavigation = ({
+  classes,
+  navigationItems,
+  toggleDrawer,
+}: Props): JSX.Element => {
   const history = useHistory();
 
   return (
@@ -41,14 +47,11 @@ const SideNavigation = ({ classes, navigationItems }: Props): JSX.Element => {
           </Link>
         </h1>
         <Divider />
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.addButton}
+        <ActionButton
+          onClick={toggleDrawer}
           endIcon={<AddIcon>send</AddIcon>}
-        >
-          Ajouter une douleur
-        </Button>
+          label="Ajouter une douleur"
+        />
         <Toolbar />
         <div className={classes.content}>
           <List>
