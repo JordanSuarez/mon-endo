@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { ClassNameMap } from "@material-ui/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import AddIcon from "@material-ui/icons/Add";
 import { Form } from "react-final-form";
 import SendIcon from "@material-ui/icons/Send";
 import ClearIcon from "@material-ui/icons/Clear";
@@ -17,30 +16,29 @@ import {
   ListItemSecondaryAction,
   IconButton,
   Typography,
-  Button,
 } from "@material-ui/core";
 
 import { DayInformationInterface } from "common/types/dayInformation";
+import ActionButton from "common/components/ActionButton";
+import AddIcon from "@material-ui/icons/Add";
 import { StylesInterface } from "./styles";
 
-// TODO items and onClick types
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   items: Array<DayInformationInterface>;
-  handleCreateEvent: () => void;
+  toggleDrawer: () => void;
 };
 
 const DayInformation = ({
   classes,
   items,
-  handleCreateEvent,
+  toggleDrawer,
 }: Props): JSX.Element => {
   const [itemId, setItemId] = useState(-1);
   const resetField = () => setItemId(-1);
 
-  const handleClick = (e: number) => {
-    console.log(e);
-    setItemId(e);
+  const handleClick = (id: number) => {
+    setItemId(id);
   };
 
   // TODO submit new values, reset itemId state and get new data list from api
@@ -54,15 +52,11 @@ const DayInformation = ({
         <Typography variant="h6" className={classes.title}>
           Jeudi 8 Avril 2020
         </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.button}
+        <ActionButton
+          onClick={toggleDrawer}
           endIcon={<AddIcon>send</AddIcon>}
-          onClick={handleCreateEvent}
-        >
-          Ajouter une douleur
-        </Button>
+          label="Ajouter une douleur"
+        />
       </div>
       <div className={classes.list}>
         {items.length > 0 ? (

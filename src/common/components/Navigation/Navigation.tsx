@@ -14,7 +14,11 @@ import { NavigationInterface } from "common/types/navigation";
 import SideNavigation from "./components/SideNavigation";
 import BottomNavigation from "./components/BottomNavigation";
 
-const Navigation = (): JSX.Element => {
+type Props = {
+  toggleDrawer: () => void;
+};
+
+const Navigation = ({ toggleDrawer }: Props): JSX.Element => {
   const navigationItems = [
     { label: "Profile", icon: <PersonIcon />, route: getProfileRoute() },
     { label: "Home", icon: <HomeIcon />, route: getHomeRoute() },
@@ -24,7 +28,10 @@ const Navigation = (): JSX.Element => {
   return (
     <>
       <Hidden smDown>
-        <SideNavigation navigationItems={navigationItems} />
+        <SideNavigation
+          navigationItems={navigationItems}
+          toggleDrawer={toggleDrawer}
+        />
       </Hidden>
       <Hidden mdUp>
         <BottomNavigation navigationItems={navigationItems} />

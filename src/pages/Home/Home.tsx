@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 
 import { ClassNameMap } from "@material-ui/styles";
 
 import Page from "common/components/Page";
 import DayInformation from "common/components/DayInformation";
 import { DayInformationInterface } from "common/types/dayInformation";
+
 import { StylesInterface } from "./styles";
 
 type Props = {
@@ -27,13 +28,21 @@ const Home = ({ classes }: Props): JSX.Element => {
     { id: 7, label: "Lorem ipsum dolor sit amet", date: "A 8h00" },
   ] as Array<DayInformationInterface>;
 
-  const handleCreateEvent = () => {
-    // TODO create new event, open event form creation with a modal
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const drawerRef = useRef<JSX.Element>(null);
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
   };
   return (
-    <Page title="Home">
+    <Page
+      title="Home"
+      drawerRef={drawerRef}
+      toggleDrawer={toggleDrawer}
+      isOpen={isDrawerOpen}
+    >
       <div className={classes.root}>
-        <DayInformation items={items} handleCreateEvent={handleCreateEvent} />
+        <DayInformation items={items} toggleDrawer={toggleDrawer} />
       </div>
     </Page>
   );
