@@ -50,5 +50,6 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   },
   button: {
     textTransform: "none",
+    backgroundColor: palette.primary.light,
   },
 });

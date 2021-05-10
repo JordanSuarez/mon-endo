@@ -13,6 +13,12 @@ type Props = {
 };
 
 const Home = ({ classes }: Props): JSX.Element => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const drawerRef = useRef<JSX.Element>(null);
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
   const items = [
     { id: 2, label: "Lorem ipsum dolor sit amet", date: "A 8h00" },
     {
@@ -28,12 +34,6 @@ const Home = ({ classes }: Props): JSX.Element => {
     { id: 7, label: "Lorem ipsum dolor sit amet", date: "A 8h00" },
   ] as Array<DayInformationInterface>;
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const drawerRef = useRef<JSX.Element>(null);
-
-  const toggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
-  };
   return (
     <Page
       title="Home"

@@ -8,11 +8,11 @@ import { TextField } from "mui-rff";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import DateFnsUtils from "@date-io/date-fns";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-
 import SendIcon from "@material-ui/icons/Send";
-import { StylesInterface } from "./styles";
 
-// TODO items and onClick types
+import { StylesInterface } from "./styles";
+import locale from "./locale";
+
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   toggleDrawer: () => void;
@@ -25,15 +25,20 @@ const AddPain = forwardRef(
     ref: ForwardedRef<JSX.Element>
   ): JSX.Element => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+
     const handleDateChange = (date: MaterialUiPickersDate) => {
       setSelectedDate(date);
     };
+
     // TODO submit values, close drawer and display submitted values
     const onSubmit = (values: { description: string }) => {
-      // console.log(`${format(date, "dd MMMM yyyy HH:mm")}`);
       const inputValues = { ...values, date: selectedDate };
-      console.log(inputValues);
-      toggleDrawer();
+      if (values.description) {
+        // TODO post to API
+        console.log(inputValues);
+        // console.log(`${format(date, "dd MMMM yyyy HH:mm")}`);
+        toggleDrawer();
+      }
     };
 
     return (
@@ -45,26 +50,26 @@ const AddPain = forwardRef(
         className={classes.root}
       >
         <Paper className={classes.paper}>
-          <Typography variant="h6">Ajouter une douleur</Typography>
+          <Typography variant="h6">{locale.title}</Typography>
           <Form
             onSubmit={onSubmit}
-            render={({ handleSubmit, submitting, valid }) => (
+            render={({ handleSubmit, submitting }) => (
               <form onSubmit={handleSubmit} className={classes.form}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils} locale={frLocale}>
                   <DateTimePicker
                     inputVariant="outlined"
                     ampm={false}
-                    label="Date"
+                    label={locale.field.date.label}
                     value={selectedDate}
                     onChange={handleDateChange}
-                    format="dd MMMM yyyy HH:mm"
+                    format={locale.field.date.format}
                     disableFuture
                     className={classes.field}
                   />
                 </MuiPickersUtilsProvider>
                 <TextField
-                  label="Description"
-                  name="description"
+                  label={locale.field.description.label}
+                  name={locale.field.description.name}
                   variant="outlined"
                   className={classes.field}
                 />
@@ -74,9 +79,9 @@ const AddPain = forwardRef(
                   className={classes.button}
                   endIcon={<SendIcon />}
                   type="submit"
-                  disabled={submitting || !valid}
+                  disabled={submitting}
                 >
-                  Ajouter
+                  {locale.field.button.label}
                 </Button>
               </form>
             )}
