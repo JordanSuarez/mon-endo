@@ -13,7 +13,7 @@ import {
   ListItemText,
 } from "@material-ui/core";
 
-import { getHomeRoute } from "common/routing/routesResolver";
+import { getHomeRoute, getLogoutRoute } from "common/routing/routesResolver";
 import { NavigationInterface } from "common/types/navigation";
 import ActionButton from "common/components/ActionButton";
 import AddIcon from "@material-ui/icons/Add";
@@ -68,6 +68,7 @@ const SideNavigation = ({
               color="primary"
               className={classes.logoutButton}
               endIcon={<ExitToAppIcon>send</ExitToAppIcon>}
+              onClick={() => history.push(getLogoutRoute())}
             >
               Logout
             </Button>

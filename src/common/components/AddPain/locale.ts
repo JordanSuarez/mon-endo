@@ -4,6 +4,7 @@ export default {
     date: {
       label: "Date",
       format: "dd MMMM yyyy HH:mm",
+      name: "date",
     },
     description: {
       label: "Description",
