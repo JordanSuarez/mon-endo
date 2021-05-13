@@ -1,11 +1,10 @@
 import React from "react";
 
-import firebase from "firebase/app";
 import { useHistory } from "react-router-dom";
 
-import { getLoginRoute } from "common/routing/routesResolver";
-import { setToken } from "common/authentication/authProvider";
+import { getHomeRoute, getLoginRoute } from "common/routing/routesResolver";
 import AuthForm from "common/components/AuthForm";
+import { register } from "common/firebase/authentication";
 import locale from "./config/locale";
 import textFields from "./config/textFields";
 import schema from "./validation/schema";
@@ -14,19 +13,9 @@ const Register = (): JSX.Element => {
   const history = useHistory();
   const onSubmit = (values: { email: string; password: string }) => {
     const { email, password } = values;
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(async ({ user }) => {
-        const token = await user?.getIdToken();
-        if (token) {
-          setToken(token);
-        }
-        history.push(getLoginRoute());
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    register(email, password)
+      .then(() => history.push(getHomeRoute()))
+      .catch((err) => console.log(err));
   };
   return (
     <AuthForm

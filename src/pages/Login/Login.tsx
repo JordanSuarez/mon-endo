@@ -3,12 +3,11 @@ import React from "react";
 import { ClassNameMap } from "@material-ui/styles";
 import { Button } from "@material-ui/core";
 
-import firebase from "firebase/app";
 import { useHistory } from "react-router-dom";
 
 import { getHomeRoute, getRegisterRoute } from "common/routing/routesResolver";
-import { setToken } from "common/authentication/authProvider";
 import AuthForm from "common/components/AuthForm/";
+import { login } from "common/firebase/authentication";
 import { StylesInterface } from "./styles";
 import schema from "./validation/schema";
 import locale from "./config/locale";
@@ -22,19 +21,9 @@ const Login = ({ classes }: Props): JSX.Element => {
   const history = useHistory();
   const onSubmit = (values: { email: string; password: string }) => {
     const { email, password } = values;
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(async ({ user }) => {
-        const token = await user?.getIdToken();
-        if (token) {
-          setToken(token);
-        }
-        history.push(getHomeRoute());
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    login(email, password)
+      .then(() => history.push(getHomeRoute()))
+      .catch((err) => console.log(err));
   };
 
   return (
