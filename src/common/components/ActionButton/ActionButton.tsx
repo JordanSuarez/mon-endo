@@ -7,7 +7,7 @@ import { StylesInterface } from "./styles";
 
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
-  onClick: (value?: any) => void;
+  onClick: () => void;
   endIcon: JSX.Element;
   label: string;
 };
