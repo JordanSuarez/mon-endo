@@ -14,6 +14,9 @@ const palette = {
     main: "#54507D",
     light: "#5D60A4",
   },
+  common: {
+    white: "#FAFBFE",
+  },
   error: {
     dark: "#DF302E",
     main: "#DF302E",
@@ -22,7 +25,7 @@ const palette = {
 } as PaletteOptions;
 
 const typography = {
-  main: "Poppins, sans-serif",
+  fontFamily: "Poppins, sans-serif",
 } as TypographyOptions;
 
 const breakpoints = {

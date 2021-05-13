@@ -1,14 +1,14 @@
-import React, { forwardRef, ForwardedRef, useState } from "react";
+import React, { forwardRef, ForwardedRef } from "react";
 
 import { ClassNameMap } from "@material-ui/styles";
 import frLocale from "date-fns/locale/fr";
 import { Drawer, Paper, Button, Typography } from "@material-ui/core";
 import { Form } from "react-final-form";
-import { TextField } from "mui-rff";
-import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
+import { TextField, DateTimePicker } from "mui-rff";
 import DateFnsUtils from "@date-io/date-fns";
-import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import SendIcon from "@material-ui/icons/Send";
+import firebase from "firebase/app";
+import { format } from "date-fns";
 
 import { StylesInterface } from "./styles";
 import locale from "./locale";
@@ -24,20 +24,44 @@ const AddPain = forwardRef(
     { classes, toggleDrawer, isOpen }: Props,
     ref: ForwardedRef<JSX.Element>
   ): JSX.Element => {
-    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-
-    const handleDateChange = (date: MaterialUiPickersDate) => {
-      setSelectedDate(date);
-    };
-
     // TODO submit values, close drawer and display submitted values
-    const onSubmit = (values: { description: string }) => {
-      const inputValues = { ...values, date: selectedDate };
-      if (values.description) {
-        // TODO post to API
-        console.log(inputValues);
-        // console.log(`${format(date, "dd MMMM yyyy HH:mm")}`);
-        toggleDrawer();
+    const onSubmit = ({
+      date,
+      description,
+    }: {
+      date: Date;
+      description: string;
+    }) => {
+      if (date && description) {
+        const formattedDate = `${format(date, "dd MMMM yyyy HH:mm", {
+          locale: frLocale,
+        })}`;
+        const formattedValues = {
+          date: formattedDate,
+          description,
+        };
+
+        const fireBaseUser = firebase.auth().currentUser;
+
+        if (fireBaseUser) {
+          fireBaseUser
+            .getIdTokenResult()
+            .then(({ claims }) => {
+              const pains = firebase.database().ref("toto");
+              pains
+                .push({ ...formattedValues, userId: claims.user_id })
+                .then(() => {
+                  // TODO add feedback
+                  toggleDrawer();
+                })
+                .catch(() => {
+                  // TODO add feedback
+                });
+            })
+            .catch(() => {});
+        } else {
+          console.log("nope");
+        }
       }
     };
 
@@ -55,23 +79,24 @@ const AddPain = forwardRef(
             onSubmit={onSubmit}
             render={({ handleSubmit, submitting }) => (
               <form onSubmit={handleSubmit} className={classes.form}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={frLocale}>
-                  <DateTimePicker
-                    inputVariant="outlined"
-                    ampm={false}
-                    label={locale.field.date.label}
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    format={locale.field.date.format}
-                    disableFuture
-                    className={classes.field}
-                  />
-                </MuiPickersUtilsProvider>
+                <DateTimePicker
+                  inputVariant="outlined"
+                  ampm={false}
+                  label={locale.field.date.label}
+                  name={locale.field.date.name}
+                  dateFunsUtils={DateFnsUtils}
+                  locale={frLocale}
+                  required
+                  format={locale.field.date.format}
+                  disableFuture
+                  className={classes.field}
+                />
                 <TextField
                   label={locale.field.description.label}
                   name={locale.field.description.name}
                   variant="outlined"
                   className={classes.field}
+                  required
                 />
                 <Button
                   variant="contained"
