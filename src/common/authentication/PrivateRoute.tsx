@@ -13,7 +13,7 @@ const PrivateRoute = ({
   id,
 }: RouteModel): JSX.Element => {
   const location = useLocation();
-  console.log(isAuthenticated());
+
   return isAuthenticated() ? (
     <Route key={id} exact={exact} path={path} component={component} />
   ) : (

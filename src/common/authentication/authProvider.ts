@@ -1,13 +1,24 @@
 import firebase from "firebase/app";
 
-export const getToken = async (): Promise<string | null> => {
+const TOKEN = "token";
+
+export const setToken = (token: string): void =>
+  localStorage.setItem(TOKEN, token);
+
+export const getToken = (): string | null => localStorage.getItem(TOKEN);
+
+export const isAuthenticated = (): string | null => getToken();
+
+export const getFirebaseUserToken = async (): Promise<string | null> => {
   const fireBaseUser = firebase.auth().currentUser;
-  if (!fireBaseUser) {
-    return null;
+  if (fireBaseUser) {
+    return fireBaseUser.getIdToken();
   }
-  return fireBaseUser.getIdToken(true).then((token) => token);
+  return null;
 };
 
-export const isAuthenticated = (): any => getToken().then((result) => result);
-
-export const logout = (): Promise<void> => firebase.auth().signOut();
+export const logout = async (): Promise<void[]> => {
+  const signOut = firebase.auth().signOut();
+  const removeToken = localStorage.removeItem(TOKEN);
+  return Promise.all([signOut, removeToken]);
+};
