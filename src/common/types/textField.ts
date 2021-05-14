@@ -1,5 +1,5 @@
 import { TextFieldProps } from "mui-rff";
 
-export interface TextFieldsProps extends TextFieldProps {
+export type TextFieldsProps = TextFieldProps & {
   icon: JSX.Element;
-}
+};
