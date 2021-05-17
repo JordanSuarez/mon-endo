@@ -4,7 +4,7 @@ import { TypeAction } from "common/types/redux";
 import { ToastState } from "common/components/Toast/redux/reducers/types";
 import { showToast } from "common/components/Toast/redux/actions";
 import { Dispatch, FunctionComponent } from "react";
-import Login from "./Login";
+import PasswordRecovery from "./PasswordRecovery";
 
 const mapDispatchToProps = (dispatch: Dispatch<TypeAction>) => ({
   showToast: (toast: ToastState) => {
@@ -12,4 +12,7 @@ const mapDispatchToProps = (dispatch: Dispatch<TypeAction>) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(Login as FunctionComponent);
+export default connect(
+  null,
+  mapDispatchToProps
+)(PasswordRecovery as FunctionComponent);

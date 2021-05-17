@@ -1,4 +1,4 @@
-export type Locale = {
+export type AuthFormLocale = {
   title: string;
   form: {
     title: string;
@@ -18,6 +18,9 @@ export type Locale = {
     };
     button: {
       submit: {
+        label: string;
+      };
+      forgot: {
         label: string;
       };
     };

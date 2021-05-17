@@ -1,13 +1,16 @@
 import firebase from "firebase/app";
 
-const TOKEN = "token";
+export const TOKEN = "token";
+export const EMAIL = "email";
 
-export const setToken = (token: string): void =>
-  localStorage.setItem(TOKEN, token);
+export const setItemToLocalStorage = (key: string, item: string): void =>
+  localStorage.setItem(key, item);
 
-export const getToken = (): string | null => localStorage.getItem(TOKEN);
+export const getItemFromLocalStorage = (key: string): string | null =>
+  localStorage.getItem(key);
 
-export const isAuthenticated = (): string | null => getToken();
+export const isAuthenticated = (): string | null =>
+  getItemFromLocalStorage(TOKEN);
 
 export const getFirebaseUserToken = async (): Promise<string | null> => {
   const fireBaseUser = firebase.auth().currentUser;

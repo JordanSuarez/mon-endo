@@ -6,6 +6,8 @@ export type StylesInterface = {
 
 export const styles = (): Styles => ({
   root: {
-    minWidth: "15rem",
+    textTransform: "none",
+    textAlign: "center",
+    textDecoration: "underline",
   },
 });

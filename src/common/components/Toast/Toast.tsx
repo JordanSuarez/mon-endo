@@ -24,7 +24,6 @@ const Toast = ({
   return (
     <Snackbar
       open={isOpen}
-      autoHideDuration={6000}
       onClose={handleClose}
       anchorOrigin={{
         vertical: "bottom",
