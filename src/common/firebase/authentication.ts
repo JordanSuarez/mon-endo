@@ -1,24 +1,29 @@
-import firebase from "firebase";
-import { setToken } from "../authentication/authProvider";
+import firebase from "firebase/app";
+import {
+  setItemToLocalStorage,
+  TOKEN,
+} from "common/authentication/authProvider";
 
-const getFirebaseToken = async (user: firebase.User | null): Promise<void> => {
+export const getFirebaseToken = async (
+  user: firebase.User | null
+): Promise<void> => {
   const token = await user?.getIdToken();
   if (token) {
-    setToken(token);
+    setItemToLocalStorage(TOKEN, token);
   }
 };
 
-export const login = async (email: string, password: string): Promise<void> =>
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(async ({ user }) => getFirebaseToken(user));
+export const login = async (
+  email: string,
+  password: string
+): Promise<firebase.auth.UserCredential> =>
+  firebase.auth().signInWithEmailAndPassword(email, password);
 
 export const register = async (
   email: string,
   password: string
-): Promise<void> =>
-  firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(async ({ user }) => getFirebaseToken(user));
+): Promise<firebase.auth.UserCredential> =>
+  firebase.auth().createUserWithEmailAndPassword(email, password);
+
+export const resetPassword = async (emailAddress: string): Promise<void> =>
+  firebase.auth().sendPasswordResetEmail(emailAddress);

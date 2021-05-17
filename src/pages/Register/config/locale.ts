@@ -25,6 +25,9 @@ export default {
       submit: {
         label: "Créer un compte",
       },
+      forgot: {
+        label: "",
+      },
     },
     link: {
       text: "Déjà un compte?",

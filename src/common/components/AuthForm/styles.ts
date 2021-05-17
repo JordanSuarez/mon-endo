@@ -95,6 +95,20 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     textTransform: "none",
     marginTop: "1rem",
   },
+  // button: {
+  //   display: "flex",
+  //   justifyContent: "flex-end",
+  //   alignSelf: "flex-end",
+  //   textTransform: "none",
+  //   fontSize: "1rem",
+  //   color: palette.primary.dark,
+  //   padding: "0",
+  //   marginBottom: "1rem",
+  //   "&:hover": {
+  //     textDecoration: "underline",
+  //     backgroundColor: palette.common.white,
+  //   },
+  // },
   icon: {
     color: palette.primary.light,
   },

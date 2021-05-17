@@ -6,21 +6,31 @@ export type FirebaseErrorMessage = {
   toastPayload: ToastPayload;
 };
 
+export const emailAlreadyInUse = "auth/email-already-in-use";
+export const userNotFound = "auth/user-not-found";
+export const wrongPassword = "auth/wrong-password";
+export const invalidEmail = "auth/invalid-email";
+export const unverifiedEmail = "auth/unverified-email";
+
 export const firebaseErrorMessages = [
   {
-    code: "auth/email-already-in-use",
+    code: emailAlreadyInUse,
     toastPayload: toastLocale.register.error.emailAlreadyTaken,
   },
   {
-    code: "auth/user-not-found",
+    code: userNotFound,
     toastPayload: toastLocale.login.error.userNotFound,
   },
   {
-    code: "auth/wrong-password",
+    code: wrongPassword,
     toastPayload: toastLocale.login.error.wrongCredentials,
   },
   {
-    code: "auth/invalid-email",
+    code: invalidEmail,
     toastPayload: toastLocale.register.error.invalidEmail,
+  },
+  {
+    code: unverifiedEmail,
+    toastPayload: toastLocale.login.error.unverifiedEmail,
   },
 ] as Array<FirebaseErrorMessage>;

@@ -1,35 +1,44 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { ClassNameMap } from "@material-ui/styles";
 import { Button, InputAdornment, Typography, Box } from "@material-ui/core";
 import { Form } from "react-final-form";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { makeRequired, makeValidate, TextField } from "mui-rff";
 
 import { TextFieldsProps } from "common/types/textField";
-import { Locale } from "common/types/authForm";
+import { AuthFormLocale } from "common/types/authForm";
 import { AnySchema } from "yup/lib/schema";
+import { AuthFormContext } from "common/context/AuthFormContext";
+import { LOGIN, RECOVERY } from "common/constants/context";
+import {
+  getPasswordRecoveryRoute,
+  getLoginRoute,
+  getRegisterRoute,
+} from "common/routing/routesResolver";
 import { StylesInterface } from "./styles";
 
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
-  children?: JSX.Element;
-  locale: Locale;
+  locale: AuthFormLocale;
   yupSchema: AnySchema<unknown, unknown, unknown>;
   textFields: Array<TextFieldsProps>;
-  route: () => string;
   onSubmit: (values: { email: string; password: string }) => void;
 };
 
 const AuthForm = ({
   classes,
-  children,
   locale,
   yupSchema,
   textFields,
-  route,
   onSubmit,
 }: Props): JSX.Element => {
+  const history = useHistory();
+  const context = useContext(AuthFormContext);
+
+  const route = () =>
+    context === LOGIN ? getRegisterRoute() : getLoginRoute();
+
   const validate = makeValidate(yupSchema);
   const required = makeRequired(yupSchema);
   return (
@@ -66,7 +75,16 @@ const AuthForm = ({
                 />
               </Box>
             ))}
-            {children}
+            {context === LOGIN && (
+              <Button
+                type="button"
+                color="primary"
+                className={classes.button}
+                onClick={() => history.push(getPasswordRecoveryRoute())}
+              >
+                {locale.form.button.forgot.label}
+              </Button>
+            )}
             <Button
               type="submit"
               fullWidth
@@ -77,18 +95,25 @@ const AuthForm = ({
             >
               {locale.form.button.submit.label}
             </Button>
-            <Link to={route()} className={classes.link}>
-              {locale.form.link.text} <span>{locale.form.link.span}</span>
-            </Link>
+            {context !== RECOVERY ? (
+              <Link to={route()} className={classes.link}>
+                {locale.form.link.text} <span>{locale.form.link.span}</span>
+              </Link>
+            ) : (
+              <Button
+                type="button"
+                color="primary"
+                className={classes.button}
+                onClick={() => history.push(getLoginRoute())}
+              >
+                Retour
+              </Button>
+            )}
           </form>
         )}
       />
     </div>
   );
-};
-
-AuthForm.defaultProps = {
-  children: undefined,
 };
 
 export default AuthForm;
