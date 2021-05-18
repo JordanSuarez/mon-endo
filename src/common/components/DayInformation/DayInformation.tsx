@@ -18,14 +18,16 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import { DayInformationInterface } from "common/types/dayInformation";
 import ActionButton from "common/components/ActionButton";
 import AddIcon from "@material-ui/icons/Add";
+import { Pain } from "common/types/pains";
+import frLocale from "date-fns/locale/fr";
+import { fullDate, formatDate, dateWithHours } from "common/helpers/date";
 import { StylesInterface } from "./styles";
 
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
-  items: Array<DayInformationInterface>;
+  items: Array<Pain>;
   toggleDrawer: () => void;
 };
 
@@ -34,23 +36,25 @@ const DayInformation = ({
   items,
   toggleDrawer,
 }: Props): JSX.Element => {
-  const [itemId, setItemId] = useState(-1);
-  const resetField = () => setItemId(-1);
+  const [itemId, setItemId] = useState("");
+  const resetField = () => setItemId("");
+  const title = formatDate(frLocale, new Date(), fullDate);
 
-  const handleClick = (id: number) => {
+  const handleClick = (id: string) => {
     setItemId(id);
   };
 
   // TODO submit new values, reset itemId state and get new data list from api
-  const onSubmit = (values: { field: string }) => {
-    console.log(values);
+  const onSubmit = (values: { description: string }) => {
+    console.log({ ...values, id: itemId });
     resetField();
   };
+
   return (
     <Paper elevation={3} className={classes.root}>
       <div className={classes.header}>
         <Typography variant="h6" className={classes.title}>
-          Jeudi 8 Avril 2020
+          {title}
         </Typography>
         <ActionButton
           onClick={toggleDrawer}
@@ -61,15 +65,19 @@ const DayInformation = ({
       <div className={classes.list}>
         {items.length > 0 ? (
           <List dense={false}>
-            {items.map(({ id, date, label }) => (
+            {items.map(({ id, date, description }) => (
               <div key={id}>
                 <Divider className={classes.divider} />
                 <ListItem className={classes.listItem}>
                   {itemId !== id ? (
                     <>
                       <ListItemText
-                        primary={label}
-                        secondary={date}
+                        primary={description}
+                        secondary={formatDate(
+                          frLocale,
+                          new Date(date),
+                          dateWithHours
+                        )}
                         className={classes.listItemText}
                       />
                       <ListItemSecondaryAction
@@ -96,16 +104,20 @@ const DayInformation = ({
                   ) : (
                     <Form
                       onSubmit={onSubmit}
-                      initialValues={{ field: label }}
+                      initialValues={{ description }}
                       render={({ handleSubmit, submitting, valid }) => (
                         <form onSubmit={handleSubmit} className={classes.form}>
                           <ListItemText
-                            secondary={date}
+                            secondary={formatDate(
+                              frLocale,
+                              new Date(date),
+                              dateWithHours
+                            )}
                             className={classes.listItemText}
                           />
                           <TextField
                             label="Description"
-                            name="field"
+                            name="description"
                             variant="filled"
                           />
                           <ListItemSecondaryAction

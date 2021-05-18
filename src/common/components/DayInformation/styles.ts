@@ -29,6 +29,7 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   },
   title: {
     padding: "1rem",
+    textTransform: "capitalize",
   },
   divider: {
     margin: "0 1rem",

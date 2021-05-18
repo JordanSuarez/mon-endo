@@ -8,7 +8,6 @@ import { TextField, DateTimePicker } from "mui-rff";
 import DateFnsUtils from "@date-io/date-fns";
 import SendIcon from "@material-ui/icons/Send";
 import firebase from "firebase/app";
-import { format } from "date-fns";
 
 import { StylesInterface } from "./styles";
 import locale from "./locale";
@@ -25,31 +24,21 @@ const AddPain = forwardRef(
     ref: ForwardedRef<JSX.Element>
   ): JSX.Element => {
     // TODO submit values, close drawer and display submitted values
-    const onSubmit = ({
-      date,
-      description,
-    }: {
-      date: Date;
-      description: string;
-    }) => {
-      if (date && description) {
-        const formattedDate = `${format(date, "dd MMMM yyyy HH:mm", {
-          locale: frLocale,
-        })}`;
-        const formattedValues = {
-          date: formattedDate,
-          description,
-        };
-
+    const onSubmit = (values: { date: Date; description: string }) => {
+      if (values.date && values.description) {
         const fireBaseUser = firebase.auth().currentUser;
-
         if (fireBaseUser) {
           fireBaseUser
             .getIdTokenResult()
             .then(({ claims }) => {
-              const pains = firebase.database().ref("toto");
-              pains
-                .push({ ...formattedValues, userId: claims.user_id })
+              firebase
+                .database()
+                .ref(`pains/${claims.user_id}`)
+                .push({
+                  ...values,
+                  date: values.date.toString(),
+                  userId: claims.user_id,
+                })
                 .then(() => {
                   // TODO add feedback
                   toggleDrawer();
