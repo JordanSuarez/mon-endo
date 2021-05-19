@@ -32,6 +32,7 @@ export type Props = {
   toggleDrawer: () => void;
   deletePain: (painId: string) => void;
   updatePain: (pain: Pain) => void;
+  dateTime: string;
 };
 
 // TODO add locale
@@ -41,10 +42,11 @@ const DayInformation = ({
   toggleDrawer,
   deletePain,
   updatePain,
+  dateTime,
 }: Props): JSX.Element => {
   const [selectedPain, setSelectedPain] = useState({} as Pain);
   const resetField = () => setSelectedPain({} as Pain);
-  const title = formatDate(frLocale, new Date(), fullDate);
+  const title = formatDate(frLocale, new Date(dateTime), fullDate);
 
   const handleClick = (pain: Pain, context: string) => {
     if (context === DELETE) {

@@ -1,4 +1,5 @@
 import homeRouting from "pages/Home/config/routing";
+import calendarRouting from "pages/Calendar/config/routing";
 import loginRouting from "pages/Login/config/routing";
 import registerRouting from "pages/Register/config/routing";
 import logoutRouting from "pages/Logout/config/routing";
@@ -12,4 +13,5 @@ export default [
   logoutRouting,
   registerRouting,
   passwordRecoveryRouting,
+  calendarRouting,
 ];

@@ -22,13 +22,13 @@ type Props = {
 const App = ({ saveRoot }: Props): JSX.Element => {
   const [theme, setTheme] = useState(darkTheme);
 
-  const date = new Date();
-  const currentDate = formatDate(frLocale, date, dateWithoutHours);
+  // const date = new Date();
+  // const currentDate = formatDate(frLocale, date, dateWithoutHours);
 
   useEffect(() => {
-    saveRoot({ date: currentDate });
+    // saveRoot({ date: currentDate });
     return setTheme(lightTheme);
-  }, [currentDate, saveRoot]);
+  }, []);
 
   if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);

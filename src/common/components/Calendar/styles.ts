@@ -6,15 +6,34 @@ export type StylesInterface = {
   calendar: string;
 };
 
-export const styles = ({ palette }: Theme): Styles => ({
+export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   root: {
-    maxWidth: "40rem",
+    margin: "2rem auto",
+    [breakpoints.down("md")]: {
+      width: "100%",
+    },
+    [breakpoints.up("md")]: {
+      maxWidth: "45rem",
+    },
   },
   calendar: {
-    "&.react-calendar": {
-      width: "99%",
-      margin: "0.1rem",
-      border: "none",
+    width: "100%",
+    margin: "0.1rem",
+    border: "none",
+    color: palette.primary.light,
+    backgroundColor: palette.common.white,
+    "& .react-calendar__month-view__days__day--weekend": {
+      color: palette.primary.light,
+    },
+    "& .react-calendar__month-view__days__day--neighboringMonth": {
+      color: palette.primary.light,
+    },
+    "& .react-calendar__tile--now": {
+      background: palette.secondary.dark,
+    },
+    "& .react-calendar__tile": {
+      borderRadius: "15px",
+      margin: "0.5rem",
     },
   },
 });
