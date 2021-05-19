@@ -74,9 +74,9 @@ const DayInformation = ({
           label="Ajouter une douleur"
         />
       </div>
-      <div className={classes.list}>
+      <div>
         {items.length > 0 ? (
-          <List dense={false}>
+          <List dense={false} className={classes.list}>
             {items.map(({ id, date, description }, index) => (
               <div key={id}>
                 <Divider className={classes.divider} />
@@ -130,7 +130,9 @@ const DayInformation = ({
                           <TextField
                             label="Description"
                             name="description"
-                            variant="filled"
+                            variant="outlined"
+                            multiline
+                            className={classes.textField}
                           />
                           <ListItemSecondaryAction
                             className={classes.iconsContainer}

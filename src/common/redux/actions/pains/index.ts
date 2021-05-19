@@ -2,22 +2,22 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import firebase from "firebase/app";
 
-import { Pain } from "common/types/pains";
-import { AppState } from "common/types/redux";
-import { keys } from "lodash";
-import frLocale from "date-fns/locale/fr";
 import {
   createPain,
   editPain,
   painsRef,
   removePain,
 } from "common/firebase/pains";
-import { dateWithoutHours, formatDate } from "common/helpers/date";
-import { showToast } from "common/components/Toast/redux/actions";
 import {
   generateToastPayload,
   handleErrorMessage,
 } from "common/helpers/toast/toastMessage";
+import { dateWithoutHours, formatDate } from "common/helpers/date";
+import { showToast } from "common/components/Toast/redux/actions";
+import { Pain } from "common/types/pains";
+import { AppState } from "common/types/redux";
+import { keys } from "lodash";
+import frLocale from "date-fns/locale/fr";
 import { ToastState } from "common/components/Toast/redux/reducers/types";
 import toastLocale from "common/helpers/toast/locale";
 import { hidePainForm } from "common/components/PainForm/redux/actions";
@@ -68,7 +68,11 @@ export const getDailyPains = (): ThunkAction<
             dispatch(savePains(pains));
           });
         } catch (err) {
-          console.log(err);
+          dispatch(
+            showToast(
+              generateToastPayload(handleErrorMessage(err) as ToastState)
+            )
+          );
         }
       }
     });
