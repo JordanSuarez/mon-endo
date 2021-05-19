@@ -72,25 +72,27 @@ export default {
       },
     },
   },
-  addPain: {
-    success: {
-      title: "test",
-      content: "toto",
-      severity: SUCCESS,
+  pain: {
+    create: {
+      success: {
+        title: "Création réussi",
+        content: "La douleur a été créée avec succès",
+        severity: SUCCESS,
+      },
     },
-  },
-  updatePain: {
-    success: {
-      title: "test",
-      content: "toto",
-      severity: SUCCESS,
+    update: {
+      success: {
+        title: "Modification réussi",
+        content: "La douleur a été modifiée avec succès",
+        severity: SUCCESS,
+      },
     },
-  },
-  removePain: {
-    success: {
-      title: "test",
-      content: "toto",
-      severity: SUCCESS,
+    delete: {
+      success: {
+        title: "Suppression réussi",
+        content: "La douleur a été supprimée avec succès",
+        severity: SUCCESS,
+      },
     },
   },
 };

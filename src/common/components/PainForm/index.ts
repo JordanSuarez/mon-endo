@@ -1,22 +1,23 @@
 import { withStyles } from "@material-ui/core";
-
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 
-import { getDailyPains } from "common/redux/actions/pains";
-import { Pain } from "common/types/pains";
+import { addPain, getDailyPains } from "common/redux/actions/pains";
 import { AppState } from "common/types/redux";
+import { Pain } from "common/types/pains";
+import { PainFormState } from "./redux/reducers/types";
+import { hidePainForm } from "./redux/actions";
 import { styles } from "./styles";
-import Home from "./Home";
+import PainForm from "./PainForm";
 
 type State = {
-  pains: Array<Pain>;
+  painForm: PainFormState;
 };
 
-const mapStateToProps = ({ pains }: State) => ({
-  ...pains,
+const mapStateToProps = ({ painForm: painState }: State) => ({
+  ...painState,
 });
 
 const mapDispatchToProps = (
@@ -25,6 +26,12 @@ const mapDispatchToProps = (
   getDailyPains: async () => {
     dispatch(await getDailyPains());
   },
+  toggleDrawer: () => {
+    dispatch(hidePainForm());
+  },
+  createPain: async (pain: Omit<Pain, "userId, id">) => {
+    dispatch(await addPain(pain));
+  },
 });
 
 export default compose(
@@ -32,4 +39,4 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps)
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-)(Home);
+)(PainForm);

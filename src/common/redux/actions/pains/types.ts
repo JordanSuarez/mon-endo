@@ -4,4 +4,4 @@ import { PainsState } from "common/redux/reducers/pains/types";
 
 export type PainsAction = PainsState & AnyAction;
 
-export type DispatchType = (arg: any) => PainsAction;
+export type DispatchType = () => PainsAction;

@@ -4,19 +4,24 @@ import { connect } from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 
-import { showAddPain } from "common/components/AddPain/redux/actions";
+import { showPainForm } from "common/components/PainForm/redux/actions";
+import { deletePain, updatePain } from "common/redux/actions/pains";
+import { AppState } from "common/types/redux";
+import { Pain } from "common/types/pains";
 import DayInformation from "./DayInformation";
 import { styles } from "./styles";
 
 const mapDispatchToProps = (
-  dispatch: ThunkDispatch<
-    Record<string, unknown>,
-    Record<string, unknown>,
-    AnyAction
-  >
+  dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>
 ) => ({
   toggleDrawer: () => {
-    dispatch(showAddPain());
+    dispatch(showPainForm());
+  },
+  deletePain: (painId: string) => {
+    dispatch(deletePain(painId));
+  },
+  updatePain: (pain: Pain) => {
+    dispatch(updatePain(pain));
   },
 });
 

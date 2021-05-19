@@ -30,7 +30,7 @@ const Toast = ({
         horizontal: "center",
       }}
     >
-      <Alert severity={severity} className={classes.root}>
+      <Alert severity={severity} className={classes.root} onClose={handleClose}>
         <AlertTitle>{title}</AlertTitle>
         {content}
       </Alert>

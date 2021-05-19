@@ -7,57 +7,27 @@ import { Form } from "react-final-form";
 import { TextField, DateTimePicker } from "mui-rff";
 import DateFnsUtils from "@date-io/date-fns";
 import SendIcon from "@material-ui/icons/Send";
-import firebase from "firebase/app";
 
-import { DispatchType } from "common/redux/actions/pains/types";
-import { dateWithoutHours, formatDate } from "common/helpers/date";
+import { Pain } from "common/types/pains";
 import { StylesInterface } from "./styles";
 import locale from "./locale";
 
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
-  toggleDrawer: () => void;
   isOpen: boolean;
-  getDailyPains: DispatchType;
-  currentDate: string;
+  createPain: (pain: Omit<Pain, "userId, id">) => void;
+  toggleDrawer: () => void;
 };
 
-const AddPain = ({
+const PainForm = ({
   classes,
-  toggleDrawer,
   isOpen,
-  getDailyPains,
-  currentDate,
+  createPain,
+  toggleDrawer,
 }: Props): JSX.Element => {
-  // TODO submit values, close drawer and display submitted values
-  const onSubmit = (values: { date: Date; description: string }) => {
+  const onSubmit = (values: Omit<Pain, "userId, id">) => {
     if (values.date && values.description) {
-      const fireBaseUser = firebase.auth().currentUser;
-      if (fireBaseUser) {
-        fireBaseUser
-          .getIdTokenResult()
-          .then(({ claims }) => {
-            firebase
-              .database()
-              .ref(`pains/${claims.user_id}`)
-              .push({
-                ...values,
-                date: values.date.toString(),
-                userId: claims.user_id,
-              })
-              .then(() => {
-                // TODO add feedback
-                getDailyPains(currentDate);
-                toggleDrawer();
-              })
-              .catch(() => {
-                // TODO add feedback
-              });
-          })
-          .catch(() => {});
-      } else {
-        console.log("nope");
-      }
+      createPain(values);
     }
   };
 
@@ -65,7 +35,7 @@ const AddPain = ({
     <Drawer
       anchor="bottom"
       open={isOpen}
-      onClose={() => toggleDrawer()}
+      onClose={toggleDrawer}
       className={classes.root}
     >
       <Paper className={classes.paper}>
@@ -111,4 +81,4 @@ const AddPain = ({
   );
 };
 
-export default AddPain;
+export default PainForm;

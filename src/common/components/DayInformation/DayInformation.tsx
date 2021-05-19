@@ -18,36 +18,48 @@ import {
   Typography,
 } from "@material-ui/core";
 
+import { fullDate, formatDate, dateWithHours } from "common/helpers/date";
+import { DELETE, UPDATE } from "common/constants/context";
 import ActionButton from "common/components/ActionButton";
 import AddIcon from "@material-ui/icons/Add";
 import { Pain } from "common/types/pains";
 import frLocale from "date-fns/locale/fr";
-import { fullDate, formatDate, dateWithHours } from "common/helpers/date";
 import { StylesInterface } from "./styles";
 
 export type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   items: Array<Pain>;
   toggleDrawer: () => void;
+  deletePain: (painId: string) => void;
+  updatePain: (pain: Pain) => void;
 };
 
+// TODO add locale
 const DayInformation = ({
   classes,
   items,
   toggleDrawer,
+  deletePain,
+  updatePain,
 }: Props): JSX.Element => {
-  const [itemId, setItemId] = useState("");
-  const resetField = () => setItemId("");
+  const [selectedPain, setSelectedPain] = useState({} as Pain);
+  const resetField = () => setSelectedPain({} as Pain);
   const title = formatDate(frLocale, new Date(), fullDate);
 
-  const handleClick = (id: string) => {
-    setItemId(id);
+  const handleClick = (pain: Pain, context: string) => {
+    if (context === DELETE) {
+      return deletePain(pain.id);
+    }
+    return setSelectedPain(pain);
   };
 
-  // TODO submit new values, reset itemId state and get new data list from api
   const onSubmit = (values: { description: string }) => {
-    console.log({ ...values, id: itemId });
+    const painUpdated = {
+      ...selectedPain,
+      description: values.description,
+    };
     resetField();
+    return updatePain(painUpdated);
   };
 
   return (
@@ -65,11 +77,11 @@ const DayInformation = ({
       <div className={classes.list}>
         {items.length > 0 ? (
           <List dense={false}>
-            {items.map(({ id, date, description }) => (
+            {items.map(({ id, date, description }, index) => (
               <div key={id}>
                 <Divider className={classes.divider} />
                 <ListItem className={classes.listItem}>
-                  {itemId !== id ? (
+                  {selectedPain.id !== id ? (
                     <>
                       <ListItemText
                         primary={description}
@@ -86,7 +98,7 @@ const DayInformation = ({
                         <IconButton
                           edge="end"
                           aria-label="edit"
-                          onClick={() => handleClick(id)}
+                          onClick={() => handleClick(items[index], UPDATE)}
                           color="primary"
                         >
                           <EditIcon />
@@ -94,7 +106,7 @@ const DayInformation = ({
                         <IconButton
                           edge="end"
                           aria-label="delete"
-                          onClick={() => handleClick(id)}
+                          onClick={() => handleClick(items[index], DELETE)}
                           color="secondary"
                         >
                           <DeleteIcon />

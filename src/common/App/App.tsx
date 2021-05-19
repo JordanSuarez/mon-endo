@@ -11,7 +11,7 @@ import darkTheme from "common/styles/darkTheme";
 import Router from "common/routing/router";
 import firebaseConfig from "common/firebase/firebaseConfig";
 import Toast from "common/components/Toast";
-import AddPain from "common/components/AddPain";
+import PainForm from "common/components/PainForm";
 import frLocale from "date-fns/locale/fr";
 import { RootState } from "common/redux/reducers/root/types";
 import { dateWithoutHours, formatDate } from "../helpers/date";
@@ -38,7 +38,7 @@ const App = ({ saveRoot }: Props): JSX.Element => {
     <MuiThemeProvider theme={theme}>
       <Router routes={routes} />
       <Toast />
-      <AddPain />
+      <PainForm />
     </MuiThemeProvider>
   );
 };

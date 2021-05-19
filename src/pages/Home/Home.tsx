@@ -12,19 +12,12 @@ type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   getDailyPains: DispatchType;
   pains: Array<Pain>;
-  currentDate: string;
 };
 
-const Home = ({
-  classes,
-  getDailyPains,
-  pains,
-  currentDate,
-}: Props): JSX.Element => {
+const Home = ({ classes, getDailyPains, pains }: Props): JSX.Element => {
   useEffect(() => {
-    getDailyPains(currentDate);
-  }, [currentDate, getDailyPains]);
-  console.log(currentDate, pains);
+    getDailyPains();
+  }, [getDailyPains]);
   return (
     <Page title="Home">
       <div className={classes.root}>

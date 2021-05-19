@@ -1,13 +1,27 @@
 import firebase from "firebase/app";
+import { Pain } from "../types/pains";
 
-// eslint-disable-next-line import/prefer-default-export
+const painsPath = (userId: string) => `pains/${userId}`;
+const firebaseDatabaseRef = (path: string) => firebase.database().ref(path);
+
 export const painsRef = async (
   userId: string
 ): Promise<firebase.database.Reference> =>
-  firebase.database().ref(`pains/${userId}`);
+  firebaseDatabaseRef(painsPath(userId));
 
-// TODO refacto addPain components
-// export const createDailyPain = (values: any, userId: number): void => {
-//   const pains = firebase.database().ref(`pains/${userId}`);
-//   pains.push({ ...values, userId });
-// };
+export const createPain = async (
+  pain: Omit<Pain, "id">
+): Promise<firebase.database.Reference> =>
+  firebaseDatabaseRef(painsPath(pain.userId)).push(pain);
+
+export const removePain = async (
+  painId: string,
+  userId: string
+): Promise<firebase.database.Reference> =>
+  firebaseDatabaseRef(painsPath(userId)).child(painId).remove();
+
+export const editPain = async (
+  pain: Pain,
+  userId: string
+): Promise<firebase.database.Reference> =>
+  firebaseDatabaseRef(painsPath(userId)).child(pain.id).update(pain);

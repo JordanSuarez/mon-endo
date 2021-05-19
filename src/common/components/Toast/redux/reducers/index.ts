@@ -25,7 +25,7 @@ const toastReducer = (
     case HIDE_TOAST:
       return {
         ...state,
-        ...initialState,
+        isOpen: false,
       };
 
     default:
