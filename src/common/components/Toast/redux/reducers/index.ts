@@ -1,4 +1,5 @@
-import { TOAST_HIDE, TOAST_SHOW, ToastAction } from "../actions/types";
+import { ToastAction } from "../actions/types";
+import { HIDE_TOAST, SHOW_TOAST } from "../actions";
 import { ToastState } from "./types";
 
 const initialState = {
@@ -13,7 +14,7 @@ const toastReducer = (
   action: ToastAction
 ): ToastState => {
   switch (action.type) {
-    case TOAST_SHOW:
+    case SHOW_TOAST:
       return {
         ...state,
         isOpen: action.isOpen,
@@ -21,7 +22,7 @@ const toastReducer = (
         title: action.title,
         severity: action.severity,
       };
-    case TOAST_HIDE:
+    case HIDE_TOAST:
       return {
         ...state,
         ...initialState,

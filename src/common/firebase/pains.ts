@@ -6,7 +6,7 @@ export const painsRef = async (
 ): Promise<firebase.database.Reference> =>
   firebase.database().ref(`pains/${userId}`);
 
-// TODO refacto addPain component
+// TODO refacto addPain components
 // export const createDailyPain = (values: any, userId: number): void => {
 //   const pains = firebase.database().ref(`pains/${userId}`);
 //   pains.push({ ...values, userId });

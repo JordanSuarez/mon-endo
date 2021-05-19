@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from "react";
 
-import { Provider } from "react-redux";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/auth";
 
-import store from "common/redux/store";
 import routes from "common/routing/routes";
 import lightTheme from "common/styles/lightTheme";
 import darkTheme from "common/styles/darkTheme";
 import Router from "common/routing/router";
 import firebaseConfig from "common/firebase/firebaseConfig";
 import Toast from "common/components/Toast";
+import AddPain from "common/components/AddPain";
+import frLocale from "date-fns/locale/fr";
+import { RootState } from "common/redux/reducers/root/types";
+import { dateWithoutHours, formatDate } from "../helpers/date";
 
-const App = (): JSX.Element => {
+type Props = {
+  saveRoot: (state: RootState) => void;
+};
+const App = ({ saveRoot }: Props): JSX.Element => {
   const [theme, setTheme] = useState(darkTheme);
 
+  const date = new Date();
+  const currentDate = formatDate(frLocale, date, dateWithoutHours);
+
   useEffect(() => {
+    saveRoot({ date: currentDate });
     return setTheme(lightTheme);
-  }, []);
+  }, [currentDate, saveRoot]);
 
   if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);
@@ -27,10 +36,9 @@ const App = (): JSX.Element => {
 
   return (
     <MuiThemeProvider theme={theme}>
-      <Provider store={store}>
-        <Router routes={routes} />
-        <Toast />
-      </Provider>
+      <Router routes={routes} />
+      <Toast />
+      <AddPain />
     </MuiThemeProvider>
   );
 };

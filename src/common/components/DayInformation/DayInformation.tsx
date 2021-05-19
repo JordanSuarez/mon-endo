@@ -25,7 +25,7 @@ import frLocale from "date-fns/locale/fr";
 import { fullDate, formatDate, dateWithHours } from "common/helpers/date";
 import { StylesInterface } from "./styles";
 
-type Props = {
+export type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   items: Array<Pain>;
   toggleDrawer: () => void;

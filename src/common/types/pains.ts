@@ -1,5 +1,5 @@
 export type Pain = {
-  date: Date;
+  date: string;
   description: string;
   userId: string;
   id: string;

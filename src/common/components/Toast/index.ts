@@ -2,8 +2,8 @@ import { Dispatch } from "react";
 import { compose } from "recompose";
 import { withStyles } from "@material-ui/core";
 import { connect } from "react-redux";
+import { AnyAction } from "redux";
 
-import { TypeAction } from "common/types/redux";
 import { hideToast } from "./redux/actions";
 import { styles } from "./styles";
 import Toast from "./Toast";
@@ -19,7 +19,7 @@ const mapStateToProps = ({ toast }: State) => {
   };
 };
 
-const mapsDispatchToProps = (dispatch: Dispatch<TypeAction>) => ({
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
   hideToast: () => {
     dispatch(hideToast());
   },
@@ -27,7 +27,7 @@ const mapsDispatchToProps = (dispatch: Dispatch<TypeAction>) => ({
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, mapsDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps)
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
 )(Toast);
