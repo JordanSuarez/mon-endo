@@ -68,6 +68,10 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     [breakpoints.down("xs")]: {
       top: "2rem",
     },
+    [breakpoints.up("sm")]: {
+      display: "flex",
+      flexDirection: "column",
+    },
   },
   text: {
     padding: "4rem",
@@ -82,8 +86,6 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     minHeight: "8rem",
     [breakpoints.down("xs")]: {
       width: "100%",
-      //   flexWrap: "wrap",
-      //   justifyContent: "flex-end",
     },
   },
 });
