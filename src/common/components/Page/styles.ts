@@ -6,7 +6,7 @@ export type StylesInterface = {
   content: string;
 };
 
-export const styles = ({ palette }: Theme): Styles => ({
+export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   root: {
     display: "flex",
     flexDirection: "row",
@@ -18,5 +18,8 @@ export const styles = ({ palette }: Theme): Styles => ({
     height: "fit-content",
     color: palette.primary.main,
     width: "100%",
+    [breakpoints.down("md")]: {
+      margin: "2rem 1rem 5rem",
+    },
   },
 });

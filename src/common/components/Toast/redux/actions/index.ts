@@ -1,11 +1,16 @@
-import { TOAST_HIDE, TOAST_SHOW, ToastAction } from "./types";
+import { AnyAction } from "redux";
+
+import { ToastAction } from "./types";
 import { ToastState } from "../reducers/types";
 
+export const SHOW_TOAST = "TOAST/SHOW";
+export const HIDE_TOAST = "TOAST/HIDE";
+
 export const showToast = (toast: ToastState): ToastAction => ({
-  type: TOAST_SHOW,
+  type: SHOW_TOAST,
   ...toast,
 });
 
-export const hideToast = (): { type: string } => ({
-  type: TOAST_HIDE,
+export const hideToast = (): AnyAction => ({
+  type: HIDE_TOAST,
 });

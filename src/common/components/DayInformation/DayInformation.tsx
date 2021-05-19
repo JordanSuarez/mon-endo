@@ -18,39 +18,55 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import { DayInformationInterface } from "common/types/dayInformation";
+import { fullDate, formatDate, dateWithHours } from "common/helpers/date";
+import { DELETE, UPDATE } from "common/constants/context";
 import ActionButton from "common/components/ActionButton";
 import AddIcon from "@material-ui/icons/Add";
+import { Pain } from "common/types/pains";
+import frLocale from "date-fns/locale/fr";
 import { StylesInterface } from "./styles";
 
-type Props = {
+export type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
-  items: Array<DayInformationInterface>;
+  items: Array<Pain>;
   toggleDrawer: () => void;
+  deletePain: (painId: string) => void;
+  updatePain: (pain: Pain) => void;
 };
 
+// TODO add locale
 const DayInformation = ({
   classes,
   items,
   toggleDrawer,
+  deletePain,
+  updatePain,
 }: Props): JSX.Element => {
-  const [itemId, setItemId] = useState(-1);
-  const resetField = () => setItemId(-1);
+  const [selectedPain, setSelectedPain] = useState({} as Pain);
+  const resetField = () => setSelectedPain({} as Pain);
+  const title = formatDate(frLocale, new Date(), fullDate);
 
-  const handleClick = (id: number) => {
-    setItemId(id);
+  const handleClick = (pain: Pain, context: string) => {
+    if (context === DELETE) {
+      return deletePain(pain.id);
+    }
+    return setSelectedPain(pain);
   };
 
-  // TODO submit new values, reset itemId state and get new data list from api
-  const onSubmit = (values: { field: string }) => {
-    console.log(values);
+  const onSubmit = (values: { description: string }) => {
+    const painUpdated = {
+      ...selectedPain,
+      description: values.description,
+    };
     resetField();
+    return updatePain(painUpdated);
   };
+
   return (
     <Paper elevation={3} className={classes.root}>
       <div className={classes.header}>
         <Typography variant="h6" className={classes.title}>
-          Jeudi 8 Avril 2020
+          {title}
         </Typography>
         <ActionButton
           onClick={toggleDrawer}
@@ -58,18 +74,22 @@ const DayInformation = ({
           label="Ajouter une douleur"
         />
       </div>
-      <div className={classes.list}>
+      <div>
         {items.length > 0 ? (
-          <List dense={false}>
-            {items.map(({ id, date, label }) => (
+          <List dense={false} className={classes.list}>
+            {items.map(({ id, date, description }, index) => (
               <div key={id}>
                 <Divider className={classes.divider} />
                 <ListItem className={classes.listItem}>
-                  {itemId !== id ? (
+                  {selectedPain.id !== id ? (
                     <>
                       <ListItemText
-                        primary={label}
-                        secondary={date}
+                        primary={description}
+                        secondary={formatDate(
+                          frLocale,
+                          new Date(date),
+                          dateWithHours
+                        )}
                         className={classes.listItemText}
                       />
                       <ListItemSecondaryAction
@@ -78,7 +98,7 @@ const DayInformation = ({
                         <IconButton
                           edge="end"
                           aria-label="edit"
-                          onClick={() => handleClick(id)}
+                          onClick={() => handleClick(items[index], UPDATE)}
                           color="primary"
                         >
                           <EditIcon />
@@ -86,7 +106,7 @@ const DayInformation = ({
                         <IconButton
                           edge="end"
                           aria-label="delete"
-                          onClick={() => handleClick(id)}
+                          onClick={() => handleClick(items[index], DELETE)}
                           color="secondary"
                         >
                           <DeleteIcon />
@@ -96,17 +116,23 @@ const DayInformation = ({
                   ) : (
                     <Form
                       onSubmit={onSubmit}
-                      initialValues={{ field: label }}
+                      initialValues={{ description }}
                       render={({ handleSubmit, submitting, valid }) => (
                         <form onSubmit={handleSubmit} className={classes.form}>
                           <ListItemText
-                            secondary={date}
+                            secondary={formatDate(
+                              frLocale,
+                              new Date(date),
+                              dateWithHours
+                            )}
                             className={classes.listItemText}
                           />
                           <TextField
                             label="Description"
-                            name="field"
-                            variant="filled"
+                            name="description"
+                            variant="outlined"
+                            multiline
+                            className={classes.textField}
                           />
                           <ListItemSecondaryAction
                             className={classes.iconsContainer}

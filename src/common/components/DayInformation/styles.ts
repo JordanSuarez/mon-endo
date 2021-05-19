@@ -12,6 +12,7 @@ export type StylesInterface = {
   iconsContainer: string;
   icon: string;
   text: string;
+  textField: string;
   form: string;
 };
 
@@ -29,13 +30,10 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   },
   title: {
     padding: "1rem",
+    textTransform: "capitalize",
   },
   divider: {
     margin: "0 1rem",
-  },
-  list: {
-    // overflow: "scroll",
-    // height: "15rem",
   },
   listItem: {
     minHeight: "8rem",
@@ -43,6 +41,7 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   listItemText: {
     display: "flex",
     flexDirection: "column-reverse",
+    overflowWrap: "break-word",
     "& span, p": {
       width: "70%",
     },
@@ -53,6 +52,12 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
       borderLeft: `0.3rem solid ${palette.secondary.dark}`,
       padding: "1rem",
       marginTop: "0.5rem",
+      [breakpoints.down("xs")]: {
+        width: "90%",
+      },
+    },
+    [breakpoints.down("xs")]: {
+      marginTop: "1.4rem",
     },
   },
   iconsContainer: {
@@ -60,7 +65,10 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     "& button": {
       margin: "0.2rem",
     },
-    [breakpoints.down("sm")]: {
+    [breakpoints.down("xs")]: {
+      top: "2rem",
+    },
+    [breakpoints.up("sm")]: {
       display: "flex",
       flexDirection: "column",
     },
@@ -70,7 +78,14 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     textAlign: "center",
     fontStyle: "italic",
   },
+  textField: {
+    marginTop: "0.5rem",
+  },
   form: {
     width: "76%",
+    minHeight: "8rem",
+    [breakpoints.down("xs")]: {
+      width: "100%",
+    },
   },
 });

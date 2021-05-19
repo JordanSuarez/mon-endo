@@ -13,24 +13,33 @@ import {
   ListItemText,
 } from "@material-ui/core";
 
-import { getHomeRoute, getLogoutRoute } from "common/routing/routesResolver";
+import {
+  getCalendarRoute,
+  getHomeRoute,
+  getLogoutRoute,
+  getProfileRoute,
+} from "common/routing/routesResolver";
 import { NavigationInterface } from "common/types/navigation";
 import ActionButton from "common/components/ActionButton";
 import AddIcon from "@material-ui/icons/Add";
+import PersonIcon from "@material-ui/icons/Person";
+import HomeIcon from "@material-ui/icons/Home";
+import CalendarIcon from "@material-ui/icons/CalendarToday";
 import { StylesInterface } from "./styles";
 
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
-  navigationItems: Array<NavigationInterface>;
   toggleDrawer: () => void;
 };
 
-const SideNavigation = ({
-  classes,
-  navigationItems,
-  toggleDrawer,
-}: Props): JSX.Element => {
+const SideNavigation = ({ classes, toggleDrawer }: Props): JSX.Element => {
   const history = useHistory();
+
+  const navigationItems = [
+    { label: "Profile", icon: <PersonIcon />, route: getProfileRoute() },
+    { label: "Home", icon: <HomeIcon />, route: getHomeRoute() },
+    { label: "Calendar", icon: <CalendarIcon />, route: getCalendarRoute() },
+  ] as Array<NavigationInterface>;
 
   return (
     <div className={classes.root}>
