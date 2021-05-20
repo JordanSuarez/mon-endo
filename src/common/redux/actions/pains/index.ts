@@ -30,22 +30,16 @@ export const savePains = (pains: Array<Pain>): PainsAction => ({
   pains,
 });
 
-// thunk action
-export const getDailyPains = (): ThunkAction<
-  Promise<void>,
-  AppState,
-  Record<string, unknown>,
-  AnyAction
-> => {
+export const getPains = (
+  date: string
+): ThunkAction<Promise<void>, AppState, Record<string, unknown>, AnyAction> => {
   return async (
     dispatch: ThunkDispatch<
       Record<string, unknown>,
       Record<string, unknown>,
       AnyAction
-    >,
-    getState: () => AppState
+    >
   ): Promise<void> => {
-    const currentDate = getState().root.date;
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         try {
@@ -55,11 +49,11 @@ export const getDailyPains = (): ThunkAction<
             const pains = keys(painsObject)
               .filter((id) => {
                 const datePain = formatDate(
-                  frLocale,
                   new Date(painsObject[id].date),
+                  frLocale,
                   dateWithoutHours
                 );
-                return datePain === currentDate;
+                return datePain === date;
               })
               .map((id) => ({
                 id,
@@ -76,6 +70,21 @@ export const getDailyPains = (): ThunkAction<
         }
       }
     });
+  };
+};
+
+export const getDailyPains = (): ThunkAction<
+  Promise<void>,
+  AppState,
+  Record<string, unknown>,
+  AnyAction
+> => {
+  return async (
+    dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>,
+    getState: () => AppState
+  ): Promise<void> => {
+    const currentDate = getState().root.date;
+    dispatch(await getPains(currentDate));
   };
 };
 
