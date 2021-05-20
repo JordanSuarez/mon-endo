@@ -18,12 +18,12 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   },
   calendar: {
     width: "100%",
-    margin: "0.1rem",
     border: "none",
     color: palette.primary.light,
     backgroundColor: palette.common.white,
     "& *": {
       fontFamily: "Poppins, sans-serif",
+      textTransform: "capitalize",
     },
     "& .react-calendar__month-view__days__day--weekend": {
       color: palette.common.black,
