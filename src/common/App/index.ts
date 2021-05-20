@@ -13,7 +13,7 @@ const mapDispatchToProps = (
     AnyAction
   >
 ) => ({
-  saveRoot: (state: RootState) => {
+  saveDate: (state: RootState) => {
     dispatch(saveRoot(state));
   },
 });

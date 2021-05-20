@@ -49,8 +49,8 @@ export const getPains = (
             const pains = keys(painsObject)
               .filter((id) => {
                 const datePain = formatDate(
-                  frLocale,
                   new Date(painsObject[id].date),
+                  frLocale,
                   dateWithoutHours
                 );
                 return datePain === date;

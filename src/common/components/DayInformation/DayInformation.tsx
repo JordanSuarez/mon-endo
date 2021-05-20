@@ -46,7 +46,7 @@ const DayInformation = ({
 }: Props): JSX.Element => {
   const [selectedPain, setSelectedPain] = useState({} as Pain);
   const resetField = () => setSelectedPain({} as Pain);
-  const title = formatDate(frLocale, new Date(dateTime), fullDate);
+  const title = formatDate(new Date(dateTime), frLocale, fullDate);
 
   const handleClick = (pain: Pain, context: string) => {
     if (context === DELETE) {
@@ -88,8 +88,8 @@ const DayInformation = ({
                       <ListItemText
                         primary={description}
                         secondary={formatDate(
-                          frLocale,
                           new Date(date),
+                          frLocale,
                           dateWithHours
                         )}
                         className={classes.listItemText}
@@ -123,8 +123,8 @@ const DayInformation = ({
                         <form onSubmit={handleSubmit} className={classes.form}>
                           <ListItemText
                             secondary={formatDate(
-                              frLocale,
                               new Date(date),
+                              frLocale,
                               dateWithHours
                             )}
                             className={classes.listItemText}

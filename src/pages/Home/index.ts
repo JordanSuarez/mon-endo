@@ -27,7 +27,7 @@ const mapDispatchToProps = (
   getDailyPains: async () => {
     dispatch(await getDailyPains());
   },
-  saveRoot: (state: RootState) => {
+  saveDate: (state: RootState) => {
     dispatch(saveRoot(state));
   },
 });

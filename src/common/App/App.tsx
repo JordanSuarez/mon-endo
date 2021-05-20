@@ -14,21 +14,20 @@ import Toast from "common/components/Toast";
 import PainForm from "common/components/PainForm";
 import frLocale from "date-fns/locale/fr";
 import { RootState } from "common/redux/reducers/root/types";
-import { dateWithoutHours, formatDate } from "../helpers/date";
+import { dateWithoutHours, formatDate } from "common/helpers/date";
 
 type Props = {
-  saveRoot: (state: RootState) => void;
+  saveDate: (state: RootState) => void;
 };
-const App = ({ saveRoot }: Props): JSX.Element => {
+const App = ({ saveDate }: Props): JSX.Element => {
   const [theme, setTheme] = useState(darkTheme);
 
-  // const date = new Date();
-  // const currentDate = formatDate(frLocale, date, dateWithoutHours);
+  const currentDate = formatDate(new Date(), frLocale, dateWithoutHours);
 
   useEffect(() => {
-    // saveRoot({ date: currentDate });
+    saveDate({ date: currentDate });
     return setTheme(lightTheme);
-  }, []);
+  }, [currentDate, saveDate]);
 
   if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);
