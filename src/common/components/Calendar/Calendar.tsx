@@ -10,21 +10,16 @@ import { StylesInterface } from "./styles";
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   onClickDay: DateCallback;
-  activeStartDate: Date;
 };
 
-const Calendar = ({
-  classes,
-  onClickDay,
-  activeStartDate,
-}: Props): JSX.Element => {
+const Calendar = ({ classes, onClickDay }: Props): JSX.Element => {
   return (
     <Paper elevation={3} className={classes.root}>
       <ReactCalendar
         className={classes.calendar}
         onClickDay={onClickDay}
-        activeStartDate={activeStartDate}
-        value={activeStartDate}
+        maxDate={new Date()}
+        defaultValue={new Date()}
       />
     </Paper>
   );

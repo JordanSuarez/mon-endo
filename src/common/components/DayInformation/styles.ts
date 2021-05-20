@@ -74,7 +74,8 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     },
   },
   text: {
-    padding: "4rem",
+    paddingBottom: "3rem",
+    marginTop: "3rem",
     textAlign: "center",
     fontStyle: "italic",
   },

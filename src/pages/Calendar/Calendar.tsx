@@ -44,10 +44,7 @@ const Calendar = ({
   return (
     <Page title="Calendar">
       <div className={classes.root}>
-        <ReactCalendar
-          onClickDay={handleClickDay}
-          activeStartDate={dateSelected}
-        />
+        <ReactCalendar onClickDay={handleClickDay} />
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
         <DayInformation items={pains} dateTime={dateSelected} />
