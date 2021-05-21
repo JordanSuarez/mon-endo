@@ -3,14 +3,14 @@ import { Dispatch } from "react";
 import { connect } from "react-redux";
 import { AnyAction } from "redux";
 
-import { showPainForm } from "common/components/PainForm/redux/actions";
+import { showDrawer } from "common/components/Drawer/redux/actions";
 import { compose } from "recompose";
 import SideNavigation from "./SideNavigation";
 import { styles } from "./styles";
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
-  toggleDrawer: () => {
-    dispatch(showPainForm());
+  toggleDrawer: (context: string) => {
+    dispatch(showDrawer(context));
   },
 });
 

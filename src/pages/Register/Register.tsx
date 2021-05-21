@@ -11,7 +11,7 @@ import {
 import toastLocale from "common/helpers/toast/locale";
 import { ToastState } from "common/components/Toast/redux/reducers/types";
 import { DispatchType } from "common/components/Toast/redux/actions/types";
-import { AuthFormContext } from "common/context/AuthFormContext";
+import { AuthFormContext } from "common/context";
 import { REGISTER } from "common/constants/context";
 import { getLoginRoute } from "common/routing/routesResolver";
 import locale from "./config/locale";

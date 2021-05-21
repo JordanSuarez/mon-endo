@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import AuthForm from "common/components/AuthForm";
 import { resetPassword } from "common/firebase/authentication";
 import { DispatchType } from "common/components/Toast/redux/actions/types";
-import { AuthFormContext } from "common/context/AuthFormContext";
+import { AuthFormContext } from "common/context";
 import { RECOVERY } from "common/constants/context";
 import {
   generateToastPayload,

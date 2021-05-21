@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 
-import { showPainForm } from "common/components/PainForm/redux/actions";
+import { showDrawer } from "common/components/Drawer/redux/actions";
 import { deletePain, updatePain } from "common/redux/actions/pains";
 import { AppState } from "common/types/redux";
 import { Pain } from "common/types/pains";
@@ -14,8 +14,8 @@ import { styles } from "./styles";
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>
 ) => ({
-  toggleDrawer: () => {
-    dispatch(showPainForm());
+  toggleDrawer: (context: string) => {
+    dispatch(showDrawer(context));
   },
   deletePain: (painId: string) => {
     dispatch(deletePain(painId));

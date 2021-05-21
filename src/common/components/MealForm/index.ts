@@ -6,7 +6,11 @@ import { ThunkDispatch } from "redux-thunk";
 
 import { AppState } from "common/types/redux";
 import { Meal } from "common/types/meal";
-import { addMeal, getDailyMeal, updateMeal } from "common/redux/actions/meal";
+import {
+  createMeal,
+  getDailyMeal,
+  updateMeal,
+} from "common/redux/actions/meal";
 import { styles } from "./styles";
 import MealForm from "./MealForm";
 
@@ -25,7 +29,7 @@ const mapDispatchToProps = (
     dispatch(await getDailyMeal());
   },
   createMeal: async (meal: Omit<Meal, "userId" | "id">) => {
-    dispatch(await addMeal(meal));
+    dispatch(await createMeal(meal));
   },
   updateMeal: async (meal: Meal) => {
     dispatch(await updateMeal(meal));

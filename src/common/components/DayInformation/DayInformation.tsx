@@ -19,7 +19,7 @@ import {
 } from "@material-ui/core";
 
 import { fullDate, formatDate, dateWithHours } from "common/helpers/date";
-import { DELETE, UPDATE } from "common/constants/context";
+import { DELETE, PAIN_FORM, UPDATE } from "common/constants/context";
 import ActionButton from "common/components/ActionButton";
 import AddIcon from "@material-ui/icons/Add";
 import { Pain } from "common/types/pains";
@@ -29,7 +29,7 @@ import { StylesInterface } from "./styles";
 export type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   items: Array<Pain>;
-  toggleDrawer: () => void;
+  toggleDrawer: (context: string) => void;
   deletePain: (painId: string) => void;
   updatePain: (pain: Pain) => void;
   dateTime: string;
@@ -71,7 +71,7 @@ const DayInformation = ({
           {title}
         </Typography>
         <ActionButton
-          onClick={toggleDrawer}
+          onClick={() => toggleDrawer(PAIN_FORM)}
           endIcon={<AddIcon>send</AddIcon>}
           label="Ajouter une douleur"
         />

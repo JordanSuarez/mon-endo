@@ -1,7 +1,6 @@
 import firebase from "firebase/app";
 
 export const TOKEN = "token";
-export const EMAIL = "email";
 
 export const setItemToLocalStorage = (key: string, item: string): void =>
   localStorage.setItem(key, item);
@@ -11,14 +10,6 @@ export const getItemFromLocalStorage = (key: string): string | null =>
 
 export const isAuthenticated = (): string | null =>
   getItemFromLocalStorage(TOKEN);
-
-export const getFirebaseUserToken = async (): Promise<string | null> => {
-  const fireBaseUser = firebase.auth().currentUser;
-  if (fireBaseUser) {
-    return fireBaseUser.getIdToken();
-  }
-  return null;
-};
 
 export const logout = async (): Promise<void[]> => {
   const signOut = firebase.auth().signOut();

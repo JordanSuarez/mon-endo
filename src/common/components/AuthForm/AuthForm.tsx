@@ -6,10 +6,10 @@ import { Form } from "react-final-form";
 import { Link, useHistory } from "react-router-dom";
 import { makeRequired, makeValidate, TextField } from "mui-rff";
 
-import { TextFieldsProps } from "common/types/textField";
+import { TextFieldsProps } from "common/types/fields";
 import { AuthFormLocale } from "common/types/authForm";
 import { AnySchema } from "yup/lib/schema";
-import { AuthFormContext } from "common/context/AuthFormContext";
+import { AuthFormContext } from "common/context";
 import { LOGIN, RECOVERY } from "common/constants/context";
 import {
   getPasswordRecoveryRoute,

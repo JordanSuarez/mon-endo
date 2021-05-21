@@ -1,21 +1,19 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import firebase from "firebase/app";
-import { keys } from "lodash";
 
-import { createMeal, editMeal, mealRef } from "common/firebase/meal";
 import {
   generateToastPayload,
   handleErrorMessage,
 } from "common/helpers/toast/toastMessage";
-import { dateWithoutHours, formatDate } from "common/helpers/date";
 import { showToast } from "common/components/Toast/redux/actions";
 import { AppState } from "common/types/redux";
-
-import frLocale from "date-fns/locale/fr";
 import { ToastState } from "common/components/Toast/redux/reducers/types";
 import toastLocale from "common/helpers/toast/locale";
 import { Meal } from "common/types/meal";
+import Firebase from "common/firebase/Firebase";
+import { MEAL } from "common/constants/ressources";
+import { formatDataSnapshotValues } from "common/helpers/ressources";
 import { MealAction } from "./types";
 
 export const SAVE_MEAL = "SAVE_MEAL";
@@ -38,26 +36,13 @@ export const getMeal = (
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          const reference = await mealRef(user.uid);
-          await reference.once("value", (snap) => {
-            const mealObject = snap.val();
-            const meal = keys(mealObject)
-              .filter((id) => {
-                const dateMeal = formatDate(
-                  new Date(mealObject[id].date),
-                  frLocale,
-                  dateWithoutHours
-                );
-                return dateMeal === date;
-              })
-              .map((id) => ({
-                id,
-                ...mealObject[id],
-              }));
-            if (meal.length > 0) {
-              dispatch(saveMeal(meal[0]));
-            }
-          });
+          const ressource = new Firebase(user.uid, MEAL);
+          const mealObject = await ressource.getDataSnapshot();
+          const meal = formatDataSnapshotValues(date, mealObject);
+
+          if (meal.length > 0) {
+            dispatch(saveMeal(meal[0]));
+          }
         } catch (err) {
           dispatch(
             showToast(
@@ -85,7 +70,7 @@ export const getDailyMeal = (): ThunkAction<
   };
 };
 
-export const addMeal = (
+export const createMeal = (
   meal: Omit<Meal, "userId" | "id">
 ): ThunkAction<Promise<void>, AppState, Record<string, unknown>, AnyAction> => {
   return async (
@@ -94,12 +79,13 @@ export const addMeal = (
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         try {
+          const ressource = new Firebase(user.uid, MEAL);
           const newMeal = {
             ...meal,
             date: meal.date.toString(),
             userId: user.uid,
           };
-          await createMeal(newMeal);
+          await ressource.create(newMeal);
           await dispatch(getDailyMeal());
           dispatch(
             showToast(
@@ -129,7 +115,8 @@ export const updateMeal = (
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          await editMeal(meal, user.uid);
+          const ressource = new Firebase(user.uid, MEAL);
+          await ressource.edit(meal);
           await dispatch(getDailyMeal());
           dispatch(
             showToast(

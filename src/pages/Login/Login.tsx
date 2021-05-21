@@ -12,7 +12,7 @@ import {
   handleErrorMessage,
 } from "common/helpers/toast/toastMessage";
 import toastLocale from "common/helpers/toast/locale";
-import { AuthFormContext } from "common/context/AuthFormContext";
+import { AuthFormContext } from "common/context";
 import { LOGIN } from "common/constants/context";
 import { unverifiedEmail } from "common/firebase/errorMessages";
 import schema from "./validation/schema";
