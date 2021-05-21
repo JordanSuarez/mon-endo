@@ -10,6 +10,7 @@ import { RootState } from "common/redux/reducers/root/types";
 import { RootAction } from "common/redux/actions/root/types";
 import frLocale from "date-fns/locale/fr";
 import { dateWithoutHours, formatDate } from "common/helpers/date";
+import MealForm from "common/components/MealForm";
 import { StylesInterface } from "./styles";
 
 type Props = {
@@ -36,6 +37,7 @@ const Home = ({
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
         <DayInformation items={pains} dateTime={new Date()} />
+        <MealForm />
       </div>
     </Page>
   );

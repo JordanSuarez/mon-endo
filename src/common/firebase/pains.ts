@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import { Pain } from "../types/pains";
+import { Pain } from "common/types/pains";
 
 const painsPath = (userId: string) => `pains/${userId}`;
 const firebaseDatabaseRef = (path: string) => firebase.database().ref(path);

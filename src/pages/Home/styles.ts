@@ -5,9 +5,15 @@ export type StylesInterface = {
   root: string;
 };
 
-export const styles = ({ palette }: Theme): Styles => ({
+export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   root: {
     color: palette.primary.main,
-    maxWidth: "70rem",
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    [breakpoints.down("sm")]: {
+      flexDirection: "column",
+    },
   },
 });
