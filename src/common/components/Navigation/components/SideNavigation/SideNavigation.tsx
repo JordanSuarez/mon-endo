@@ -3,6 +3,7 @@ import React from "react";
 import { useHistory, Link } from "react-router-dom";
 import { ClassNameMap } from "@material-ui/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import AddIcon from "@material-ui/icons/Add";
 import {
   Drawer,
   List,
@@ -13,33 +14,19 @@ import {
   ListItemText,
 } from "@material-ui/core";
 
-import {
-  getCalendarRoute,
-  getHomeRoute,
-  getLogoutRoute,
-  getProfileRoute,
-} from "common/routing/routesResolver";
-import { NavigationInterface } from "common/types/navigation";
+import { getHomeRoute, getLogoutRoute } from "common/routing/routesResolver";
 import ActionButton from "common/components/ActionButton";
-import AddIcon from "@material-ui/icons/Add";
-import PersonIcon from "@material-ui/icons/Person";
-import HomeIcon from "@material-ui/icons/Home";
-import CalendarIcon from "@material-ui/icons/CalendarToday";
+import { PAIN_FORM } from "common/constants/context";
 import { StylesInterface } from "./styles";
+import navigationItems from "./config/navigationItems";
 
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
-  toggleDrawer: () => void;
+  toggleDrawer: (context: string) => void;
 };
 
 const SideNavigation = ({ classes, toggleDrawer }: Props): JSX.Element => {
   const history = useHistory();
-
-  const navigationItems = [
-    { label: "Profile", icon: <PersonIcon />, route: getProfileRoute() },
-    { label: "Home", icon: <HomeIcon />, route: getHomeRoute() },
-    { label: "Calendar", icon: <CalendarIcon />, route: getCalendarRoute() },
-  ] as Array<NavigationInterface>;
 
   return (
     <div className={classes.root}>
@@ -57,7 +44,7 @@ const SideNavigation = ({ classes, toggleDrawer }: Props): JSX.Element => {
         </h1>
         <Divider />
         <ActionButton
-          onClick={toggleDrawer}
+          onClick={() => toggleDrawer(PAIN_FORM)}
           endIcon={<AddIcon>send</AddIcon>}
           label="Ajouter une douleur"
         />

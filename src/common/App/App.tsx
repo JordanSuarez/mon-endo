@@ -11,7 +11,7 @@ import darkTheme from "common/styles/darkTheme";
 import Router from "common/routing/router";
 import firebaseConfig from "common/firebase/firebaseConfig";
 import Toast from "common/components/Toast";
-import PainForm from "common/components/PainForm";
+import Drawer from "common/components/Drawer";
 import frLocale from "date-fns/locale/fr";
 import { RootState } from "common/redux/reducers/root/types";
 import { dateWithoutHours, formatDate } from "common/helpers/date";
@@ -37,7 +37,7 @@ const App = ({ saveDate }: Props): JSX.Element => {
     <MuiThemeProvider theme={theme}>
       <Router routes={routes} />
       <Toast />
-      <PainForm />
+      <Drawer />
     </MuiThemeProvider>
   );
 };

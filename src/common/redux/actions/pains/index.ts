@@ -20,7 +20,7 @@ import { keys } from "lodash";
 import frLocale from "date-fns/locale/fr";
 import { ToastState } from "common/components/Toast/redux/reducers/types";
 import toastLocale from "common/helpers/toast/locale";
-import { hidePainForm } from "common/components/PainForm/redux/actions";
+import { hideDrawer } from "common/components/Drawer/redux/actions";
 import { PainsAction } from "./types";
 
 export const SAVE_PAINS = "SAVE_PAINS";
@@ -104,7 +104,7 @@ export const addPain = (
           };
           await createPain(newPain);
           await dispatch(getDailyPains());
-          dispatch(hidePainForm());
+          dispatch(hideDrawer());
           dispatch(
             showToast(
               generateToastPayload(
