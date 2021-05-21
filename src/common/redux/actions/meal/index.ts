@@ -1,36 +1,31 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import firebase from "firebase/app";
+import { keys } from "lodash";
 
-import {
-  createPain,
-  editPain,
-  painsRef,
-  removePain,
-} from "common/firebase/pains";
+import { createMeal, editMeal, mealRef } from "common/firebase/meal";
 import {
   generateToastPayload,
   handleErrorMessage,
 } from "common/helpers/toast/toastMessage";
 import { dateWithoutHours, formatDate } from "common/helpers/date";
 import { showToast } from "common/components/Toast/redux/actions";
-import { Pain } from "common/types/pains";
 import { AppState } from "common/types/redux";
-import { keys } from "lodash";
+
 import frLocale from "date-fns/locale/fr";
 import { ToastState } from "common/components/Toast/redux/reducers/types";
 import toastLocale from "common/helpers/toast/locale";
-import { hidePainForm } from "common/components/PainForm/redux/actions";
-import { PainsAction } from "./types";
+import { Meal } from "common/types/meal";
+import { MealAction } from "./types";
 
-export const SAVE_PAINS = "SAVE_PAINS";
+export const SAVE_MEAL = "SAVE_MEAL";
 
-export const savePains = (pains: Array<Pain>): PainsAction => ({
-  type: SAVE_PAINS,
-  pains,
+export const saveMeal = (meal: Meal): MealAction => ({
+  type: SAVE_MEAL,
+  ...meal,
 });
 
-export const getPains = (
+export const getMeal = (
   date: string
 ): ThunkAction<Promise<void>, AppState, Record<string, unknown>, AnyAction> => {
   return async (
@@ -43,23 +38,25 @@ export const getPains = (
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          const reference = await painsRef(user.uid);
+          const reference = await mealRef(user.uid);
           await reference.once("value", (snap) => {
-            const painsObject = snap.val();
-            const pains = keys(painsObject)
+            const mealObject = snap.val();
+            const meal = keys(mealObject)
               .filter((id) => {
-                const datePain = formatDate(
-                  new Date(painsObject[id].date),
+                const dateMeal = formatDate(
+                  new Date(mealObject[id].date),
                   frLocale,
                   dateWithoutHours
                 );
-                return datePain === date;
+                return dateMeal === date;
               })
               .map((id) => ({
                 id,
-                ...painsObject[id],
+                ...mealObject[id],
               }));
-            dispatch(savePains(pains));
+            if (meal.length > 0) {
+              dispatch(saveMeal(meal[0]));
+            }
           });
         } catch (err) {
           dispatch(
@@ -73,7 +70,7 @@ export const getPains = (
   };
 };
 
-export const getDailyPains = (): ThunkAction<
+export const getDailyMeal = (): ThunkAction<
   Promise<void>,
   AppState,
   Record<string, unknown>,
@@ -84,12 +81,12 @@ export const getDailyPains = (): ThunkAction<
     getState: () => AppState
   ): Promise<void> => {
     const currentDate = getState().root.date;
-    dispatch(await getPains(currentDate));
+    dispatch(await getMeal(currentDate));
   };
 };
 
-export const addPain = (
-  pain: Omit<Pain, "userId" | "id">
+export const addMeal = (
+  meal: Omit<Meal, "userId" | "id">
 ): ThunkAction<Promise<void>, AppState, Record<string, unknown>, AnyAction> => {
   return async (
     dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>
@@ -97,14 +94,13 @@ export const addPain = (
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          const newPain = {
-            ...pain,
-            date: pain.date.toString(),
+          const newMeal = {
+            ...meal,
+            date: meal.date.toString(),
             userId: user.uid,
           };
-          await createPain(newPain);
-          await dispatch(getDailyPains());
-          dispatch(hidePainForm());
+          await createMeal(newMeal);
+          await dispatch(getDailyMeal());
           dispatch(
             showToast(
               generateToastPayload(
@@ -124,8 +120,8 @@ export const addPain = (
   };
 };
 
-export const deletePain = (
-  painId: string
+export const updateMeal = (
+  meal: Meal
 ): ThunkAction<Promise<void>, AppState, Record<string, unknown>, AnyAction> => {
   return async (
     dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>
@@ -133,38 +129,8 @@ export const deletePain = (
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          await removePain(painId, user.uid);
-          await dispatch(getDailyPains());
-          dispatch(
-            showToast(
-              generateToastPayload(
-                toastLocale.pain.delete.success as ToastState
-              )
-            )
-          );
-        } catch (err) {
-          dispatch(
-            showToast(
-              generateToastPayload(handleErrorMessage(err) as ToastState)
-            )
-          );
-        }
-      }
-    });
-  };
-};
-
-export const updatePain = (
-  pain: Pain
-): ThunkAction<Promise<void>, AppState, Record<string, unknown>, AnyAction> => {
-  return async (
-    dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>
-  ): Promise<void> => {
-    firebase.auth().onAuthStateChanged(async (user) => {
-      if (user) {
-        try {
-          await editPain(pain, user.uid);
-          await dispatch(getDailyPains());
+          await editMeal(meal, user.uid);
+          await dispatch(getDailyMeal());
           dispatch(
             showToast(
               generateToastPayload(

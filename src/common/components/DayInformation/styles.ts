@@ -19,8 +19,11 @@ export type StylesInterface = {
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   root: {
     marginTop: "1rem",
-    width: "100%",
     minHeight: "15rem",
+    width: "60%",
+    [breakpoints.down("sm")]: {
+      width: "100%",
+    },
   },
   header: {
     display: "flex",

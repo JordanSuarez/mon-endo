@@ -10,12 +10,12 @@ import SendIcon from "@material-ui/icons/Send";
 
 import { Pain } from "common/types/pains";
 import { StylesInterface } from "./styles";
-import locale from "./locale";
+import locale from "./config/locale";
 
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   isOpen: boolean;
-  createPain: (pain: Omit<Pain, "userId, id">) => void;
+  createPain: (pain: Omit<Pain, "userId" | "id">) => void;
   toggleDrawer: () => void;
 };
 
@@ -25,7 +25,7 @@ const PainForm = ({
   createPain,
   toggleDrawer,
 }: Props): JSX.Element => {
-  const onSubmit = (values: Omit<Pain, "userId, id">) => {
+  const onSubmit = (values: Omit<Pain, "userId" | "id">) => {
     if (values.date && values.description) {
       createPain(values);
     }

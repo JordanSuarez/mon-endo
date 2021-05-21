@@ -4,33 +4,31 @@ import { connect } from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 
-import { addPain, getDailyPains } from "common/redux/actions/pains";
 import { AppState } from "common/types/redux";
-import { Pain } from "common/types/pains";
-import { PainFormState } from "./redux/reducers/types";
-import { hidePainForm } from "./redux/actions";
+import { Meal } from "common/types/meal";
+import { addMeal, getDailyMeal, updateMeal } from "common/redux/actions/meal";
 import { styles } from "./styles";
-import PainForm from "./PainForm";
+import MealForm from "./MealForm";
 
 type State = {
-  painForm: PainFormState;
+  meal: Meal;
 };
 
-const mapStateToProps = ({ painForm: painState }: State) => ({
-  ...painState,
+const mapStateToProps = ({ meal }: State) => ({
+  meal,
 });
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>
 ) => ({
-  getDailyPains: async () => {
-    dispatch(await getDailyPains());
+  getDailyMeal: async () => {
+    dispatch(await getDailyMeal());
   },
-  toggleDrawer: () => {
-    dispatch(hidePainForm());
+  createMeal: async (meal: Omit<Meal, "userId" | "id">) => {
+    dispatch(await addMeal(meal));
   },
-  createPain: async (pain: Omit<Pain, "userId" | "id">) => {
-    dispatch(await addPain(pain));
+  updateMeal: async (meal: Meal) => {
+    dispatch(await updateMeal(meal));
   },
 });
 
@@ -39,4 +37,4 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps)
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-)(PainForm);
+)(MealForm);
