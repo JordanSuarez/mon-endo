@@ -2,7 +2,7 @@ import React from "react";
 
 import PersonIcon from "@material-ui/icons/Person";
 
-import { TextFieldsProps } from "common/types/textField";
+import { TextFieldsProps } from "common/types/fields";
 import locale from "./locale";
 
 export default [

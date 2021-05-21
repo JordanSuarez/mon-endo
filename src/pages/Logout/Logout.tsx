@@ -12,6 +12,7 @@ const Logout = (): null => {
     logout()
       .then(() => {
         history.push(getLoginRoute());
+        window.location.reload();
       })
       .catch(() => {});
   }, [history]);

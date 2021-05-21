@@ -3,24 +3,18 @@ import { AnyAction } from "redux";
 import firebase from "firebase/app";
 
 import {
-  createPain,
-  editPain,
-  painsRef,
-  removePain,
-} from "common/firebase/pains";
-import {
   generateToastPayload,
   handleErrorMessage,
 } from "common/helpers/toast/toastMessage";
-import { dateWithoutHours, formatDate } from "common/helpers/date";
 import { showToast } from "common/components/Toast/redux/actions";
 import { Pain } from "common/types/pains";
 import { AppState } from "common/types/redux";
-import { keys } from "lodash";
-import frLocale from "date-fns/locale/fr";
 import { ToastState } from "common/components/Toast/redux/reducers/types";
 import toastLocale from "common/helpers/toast/locale";
 import { hideDrawer } from "common/components/Drawer/redux/actions";
+import { PAINS } from "common/constants/ressources";
+import Firebase from "common/firebase/Firebase";
+import { formatDataSnapshotValues } from "common/helpers/ressources";
 import { PainsAction } from "./types";
 
 export const SAVE_PAINS = "SAVE_PAINS";
@@ -43,24 +37,10 @@ export const getPains = (
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          const reference = await painsRef(user.uid);
-          await reference.once("value", (snap) => {
-            const painsObject = snap.val();
-            const pains = keys(painsObject)
-              .filter((id) => {
-                const datePain = formatDate(
-                  new Date(painsObject[id].date),
-                  frLocale,
-                  dateWithoutHours
-                );
-                return datePain === date;
-              })
-              .map((id) => ({
-                id,
-                ...painsObject[id],
-              }));
-            dispatch(savePains(pains));
-          });
+          const ressource = new Firebase(user.uid, PAINS);
+          const painsObject = await ressource.getDataSnapshot();
+          const pains = formatDataSnapshotValues(date, painsObject);
+          dispatch(savePains(pains));
         } catch (err) {
           dispatch(
             showToast(
@@ -88,7 +68,7 @@ export const getDailyPains = (): ThunkAction<
   };
 };
 
-export const addPain = (
+export const createPain = (
   pain: Omit<Pain, "userId" | "id">
 ): ThunkAction<Promise<void>, AppState, Record<string, unknown>, AnyAction> => {
   return async (
@@ -97,12 +77,13 @@ export const addPain = (
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         try {
+          const firebaseRef = new Firebase(user.uid, PAINS);
           const newPain = {
             ...pain,
             date: pain.date.toString(),
             userId: user.uid,
           };
-          await createPain(newPain);
+          await firebaseRef.create(newPain);
           await dispatch(getDailyPains());
           dispatch(hideDrawer());
           dispatch(
@@ -133,7 +114,8 @@ export const deletePain = (
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          await removePain(painId, user.uid);
+          const ressource = new Firebase(user.uid, PAINS);
+          await ressource.remove(painId);
           await dispatch(getDailyPains());
           dispatch(
             showToast(
@@ -163,7 +145,8 @@ export const updatePain = (
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          await editPain(pain, user.uid);
+          const ressource = new Firebase(user.uid, PAINS);
+          await ressource.edit(pain);
           await dispatch(getDailyPains());
           dispatch(
             showToast(

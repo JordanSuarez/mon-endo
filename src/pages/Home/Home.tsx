@@ -30,7 +30,6 @@ const Home = ({
     saveDate({ date: formatDate(new Date(), frLocale, dateWithoutHours) });
     getDailyPains();
   }, [getDailyPains, saveDate]);
-
   return (
     <Page title="Home">
       <div className={classes.root}>

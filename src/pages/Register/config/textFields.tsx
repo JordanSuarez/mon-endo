@@ -3,7 +3,7 @@ import React from "react";
 import PersonIcon from "@material-ui/icons/Person";
 import LockIcon from "@material-ui/icons/Lock";
 
-import { TextFieldsProps } from "common/types/textField";
+import { TextFieldsProps } from "common/types/fields";
 import locale from "./locale";
 
 export default [

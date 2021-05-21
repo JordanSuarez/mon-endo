@@ -4,20 +4,21 @@ import { connect } from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 
-import { addPain, getDailyPains } from "common/redux/actions/pains";
+import { createPain } from "common/redux/actions/pains";
 import { AppState } from "common/types/redux";
 import { Pain } from "common/types/pains";
+import { getPainTypes } from "common/redux/actions/painTypes";
 import { styles } from "./styles";
 import PainForm from "./PainForm";
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>
 ) => ({
-  getDailyPains: async () => {
-    dispatch(await getDailyPains());
+  getPainTypes: async () => {
+    dispatch(await getPainTypes());
   },
   createPain: async (pain: Omit<Pain, "userId" | "id">) => {
-    dispatch(await addPain(pain));
+    dispatch(await createPain(pain));
   },
 });
 

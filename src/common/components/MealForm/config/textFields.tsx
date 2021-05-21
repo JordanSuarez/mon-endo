@@ -1,4 +1,4 @@
-import { TextFieldsProps } from "common/types/textField";
+import { TextFieldsProps } from "common/types/fields";
 import locale from "./locale";
 
 export default [
