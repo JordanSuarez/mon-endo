@@ -14,7 +14,7 @@ import {
 import DateFnsUtils from "@date-io/date-fns";
 import SendIcon from "@material-ui/icons/Send";
 
-import { Pain } from "common/types/pains";
+import { Pain, PainType } from "common/types/pains";
 import { StylesInterface } from "./styles";
 import locale from "./config/locale";
 import selectFields from "./config/selectFields";
@@ -23,21 +23,24 @@ import yupSchema from "./validation/schema";
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   createPain: (pain: Omit<Pain, "userId" | "id">) => void;
-  getPainTypes: () => void;
+  getPainsType: () => void;
+  getPainsTypeIntensity: () => void;
 };
 
 const PainForm = ({
   classes,
   createPain,
-  getPainTypes,
+  getPainsType,
+  getPainsTypeIntensity,
 }: Props): JSX.Element => {
   const [displayDescriptionField, setDisplayDescriptionField] = useState(false);
   const validate = makeValidate(yupSchema(displayDescriptionField));
   const required = makeRequired(yupSchema(displayDescriptionField));
 
   useEffect(() => {
-    getPainTypes();
-  }, [getPainTypes]);
+    getPainsType();
+    getPainsTypeIntensity();
+  }, [getPainsType, getPainsTypeIntensity]);
 
   const onSubmit = (values: Omit<Pain, "userId" | "id">) => {
     createPain(values);
@@ -89,7 +92,7 @@ const PainForm = ({
               disableFuture
               className={classes.field}
             />
-            {selectFields.map(({ name, label, variant, painTypes }) => (
+            {selectFields.map(({ name, label, variant, painsType }) => (
               <Box className={classes.field} key={name}>
                 <Select
                   label={label}
@@ -97,7 +100,7 @@ const PainForm = ({
                   variant={variant}
                   required={required[name]}
                 >
-                  {painTypes(
+                  {painsType<PainType>(
                     name === locale.field.pain.name ? pains : intensity
                   ).map(({ id, description }) => (
                     <MenuItem

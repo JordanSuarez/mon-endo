@@ -38,7 +38,7 @@ export const getMeal = (
         try {
           const ressource = new Firebase(user.uid, MEAL);
           const mealSnap = await ressource.getFilteredDataSnapshotByDate(date);
-          const meal = formatDataSnapshotValues(date, mealSnap);
+          const meal = formatDataSnapshotValues<Meal>(mealSnap);
           if (meal.length > 0) {
             dispatch(saveMeal(meal[0]));
           }
@@ -84,7 +84,7 @@ export const createMeal = (
             date: meal.date.toString(),
             userId: user.uid,
           };
-          await ressource.create(newMeal);
+          await ressource.create<Omit<Meal, "id">>(newMeal);
           await dispatch(getDailyMeal());
           dispatch(
             showToast(
@@ -115,7 +115,7 @@ export const updateMeal = (
       if (user) {
         try {
           const ressource = new Firebase(user.uid, MEAL);
-          await ressource.edit(meal);
+          await ressource.edit<Meal>(meal);
           await dispatch(getDailyMeal());
           dispatch(
             showToast(

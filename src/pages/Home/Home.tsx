@@ -5,7 +5,6 @@ import { ClassNameMap } from "@material-ui/styles";
 import Page from "common/components/Page";
 import DayInformation from "common/components/DayInformation";
 import { Pain } from "common/types/pains";
-import { DispatchType } from "common/redux/actions/pains/types";
 import { RootState } from "common/redux/reducers/root/types";
 import { RootAction } from "common/redux/actions/root/types";
 import MealForm from "common/components/MealForm";
@@ -13,8 +12,8 @@ import { StylesInterface } from "./styles";
 
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
-  getDailyPains: DispatchType;
-  pains: Array<Pain>;
+  getDailyPains: () => void;
+  pains: Pain[];
   saveDate: (state: RootState) => RootAction;
 };
 

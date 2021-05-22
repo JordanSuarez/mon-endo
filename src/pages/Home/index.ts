@@ -14,7 +14,7 @@ import { styles } from "./styles";
 import Home from "./Home";
 
 type State = {
-  pains: Array<Pain>;
+  pains: Pain[];
 };
 
 const mapStateToProps = ({ pains }: State) => ({

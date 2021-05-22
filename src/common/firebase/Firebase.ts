@@ -16,14 +16,22 @@ export default class Firebase {
   /**
    *
    */
-  public getDatabaseRef = (): firebase.database.Reference =>
-    firebase.database().ref(`${this.ressource}/${this.userId}`);
+  public getDatabaseRef = (
+    isUserRessource = true
+  ): firebase.database.Reference =>
+    firebase
+      .database()
+      .ref(
+        isUserRessource ? `${this.ressource}/${this.userId}` : this.ressource
+      );
 
   /**
    *
    */
-  public getDataSnapshot = (): Promise<firebase.database.DataSnapshot> =>
-    this.getDatabaseRef().once("value", (snap) => snap);
+  public getDataSnapshot = (
+    isUserRessource: boolean
+  ): Promise<firebase.database.DataSnapshot> =>
+    this.getDatabaseRef(isUserRessource).once("value", (snap) => snap);
 
   /**
    *
@@ -45,7 +53,9 @@ export default class Firebase {
    *
    * @param values
    */
-  public create = async (values: any): Promise<firebase.database.Reference> => {
+  public create = async <T>(
+    values: T
+  ): Promise<firebase.database.Reference> => {
     return this.getDatabaseRef().push(values);
   };
 
@@ -60,6 +70,8 @@ export default class Firebase {
    *
    * @param values
    */
-  public edit = async (values: any): Promise<firebase.database.Reference> =>
+  public edit = async <T>(
+    values: T & { id: string }
+  ): Promise<firebase.database.Reference> =>
     this.getDatabaseRef().child(values.id).update(values);
 }

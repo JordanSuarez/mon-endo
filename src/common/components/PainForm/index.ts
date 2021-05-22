@@ -6,16 +6,30 @@ import { ThunkDispatch } from "redux-thunk";
 
 import { createPain } from "common/redux/actions/pains";
 import { AppState } from "common/types/redux";
-import { Pain } from "common/types/pains";
-import { getPainTypes } from "common/redux/actions/painTypes";
+import { Pain, PainType, PainTypeIntensity } from "common/types/pains";
+import { getPainsType } from "common/redux/actions/painsType";
+import { getPainsTypeIntensity } from "common/redux/actions/painsTypeIntensity";
 import { styles } from "./styles";
 import PainForm from "./PainForm";
+
+type State = {
+  painsType: PainType[];
+  painsTypeIntensity: PainTypeIntensity[];
+};
+
+const mapStateToProps = ({ painsType, painsTypeIntensity }: State) => ({
+  ...painsType,
+  ...painsTypeIntensity,
+});
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>
 ) => ({
-  getPainTypes: async () => {
-    dispatch(await getPainTypes());
+  getPainsType: async () => {
+    dispatch(await getPainsType());
+  },
+  getPainsTypeIntensity: async () => {
+    dispatch(await getPainsTypeIntensity());
   },
   createPain: async (pain: Omit<Pain, "userId" | "id">) => {
     dispatch(await createPain(pain));
@@ -24,7 +38,7 @@ const mapDispatchToProps = (
 
 export default compose(
   withStyles(styles),
-  connect(null, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps)
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
 )(PainForm);

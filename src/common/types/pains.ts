@@ -4,3 +4,10 @@ export type Pain = {
   userId: string;
   id: string;
 };
+
+export type PainType = {
+  id: string;
+  description: string;
+};
+
+export type PainTypeIntensity = PainType;

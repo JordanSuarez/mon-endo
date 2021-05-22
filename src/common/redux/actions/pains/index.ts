@@ -19,7 +19,7 @@ import { PainsAction } from "./types";
 
 export const SAVE_PAINS = "SAVE_PAINS";
 
-export const savePains = (pains: Array<Pain>): PainsAction => ({
+export const savePains = (pains: Pain[]): PainsAction => ({
   type: SAVE_PAINS,
   pains,
 });
@@ -39,7 +39,8 @@ export const getPains = (
         try {
           const ressource = new Firebase(user.uid, PAINS);
           const painsSnap = await ressource.getFilteredDataSnapshotByDate(date);
-          const pains = formatDataSnapshotValues(date, painsSnap);
+          const pains = formatDataSnapshotValues<Pain>(painsSnap);
+          console.log(pains);
           dispatch(savePains(pains));
         } catch (err) {
           dispatch(
@@ -83,7 +84,7 @@ export const createPain = (
             date: pain.date.toString(),
             userId: user.uid,
           };
-          await firebaseRef.create(newPain);
+          await firebaseRef.create<Omit<Pain, "id">>(newPain);
           await dispatch(getDailyPains());
           dispatch(hideDrawer());
           dispatch(
@@ -146,7 +147,7 @@ export const updatePain = (
       if (user) {
         try {
           const ressource = new Firebase(user.uid, PAINS);
-          await ressource.edit(pain);
+          await ressource.edit<Pain>(pain);
           await dispatch(getDailyPains());
           dispatch(
             showToast(

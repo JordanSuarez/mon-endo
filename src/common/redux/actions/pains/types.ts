@@ -1,7 +1,6 @@
-import { AnyAction } from "redux";
+import { Pain } from "common/types/pains";
 
-import { PainsState } from "common/redux/reducers/pains/types";
-
-export type PainsAction = PainsState & AnyAction;
-
-export type DispatchType = () => PainsAction;
+export type PainsAction = {
+  type: string;
+  pains: Pain[];
+};
