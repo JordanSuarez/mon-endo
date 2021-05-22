@@ -1,10 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button, Typography, MenuItem, Box } from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/styles";
 import frLocale from "date-fns/locale/fr";
 import { Form } from "react-final-form";
-import { Select, DateTimePicker, makeValidate, makeRequired } from "mui-rff";
+import {
+  Select,
+  DateTimePicker,
+  makeValidate,
+  makeRequired,
+  TextField,
+} from "mui-rff";
 import DateFnsUtils from "@date-io/date-fns";
 import SendIcon from "@material-ui/icons/Send";
 
@@ -25,8 +31,9 @@ const PainForm = ({
   createPain,
   getPainTypes,
 }: Props): JSX.Element => {
-  const validate = makeValidate(yupSchema);
-  const required = makeRequired(yupSchema);
+  const [displayDescriptionField, setDisplayDescriptionField] = useState(false);
+  const validate = makeValidate(yupSchema(displayDescriptionField));
+  const required = makeRequired(yupSchema(displayDescriptionField));
 
   useEffect(() => {
     getPainTypes();
@@ -34,6 +41,14 @@ const PainForm = ({
 
   const onSubmit = (values: Omit<Pain, "userId" | "id">) => {
     createPain(values);
+    setDisplayDescriptionField(false);
+  };
+
+  const handleClick = (values: { id: string; description: string }) => {
+    if (values.description === "Autre") {
+      return setDisplayDescriptionField(true);
+    }
+    return setDisplayDescriptionField(false);
   };
 
   const pains = [
@@ -43,6 +58,7 @@ const PainForm = ({
     { id: "4", description: "main" },
     { id: "5", description: "pied" },
     { id: "6", description: "tete" },
+    { id: "7", description: "Autre" },
   ];
 
   const intensity = [
@@ -84,20 +100,34 @@ const PainForm = ({
                   {painTypes(
                     name === locale.field.pain.name ? pains : intensity
                   ).map(({ id, description }) => (
-                    <MenuItem key={id} value={id}>
+                    <MenuItem
+                      key={id}
+                      value={id}
+                      onClick={() => handleClick({ id, description })}
+                    >
                       {description}
                     </MenuItem>
                   ))}
                 </Select>
               </Box>
             ))}
+            {displayDescriptionField && (
+              <TextField
+                label={locale.field.description.label}
+                name={locale.field.description.name}
+                variant="outlined"
+                className={classes.field}
+              />
+            )}
             <Button
               variant="contained"
               color="primary"
               className={classes.button}
               endIcon={<SendIcon />}
               type="submit"
-              disabled={submitting || !valid || pristine}
+              disabled={
+                (submitting || !valid || pristine) && displayDescriptionField
+              }
             >
               {locale.field.button.label}
             </Button>

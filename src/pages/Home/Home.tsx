@@ -8,8 +8,6 @@ import { Pain } from "common/types/pains";
 import { DispatchType } from "common/redux/actions/pains/types";
 import { RootState } from "common/redux/reducers/root/types";
 import { RootAction } from "common/redux/actions/root/types";
-import frLocale from "date-fns/locale/fr";
-import { dateWithoutHours, formatDate } from "common/helpers/date";
 import MealForm from "common/components/MealForm";
 import { StylesInterface } from "./styles";
 
