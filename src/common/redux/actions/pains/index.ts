@@ -40,7 +40,6 @@ export const getPains = (
           const ressource = new Firebase(user.uid, PAINS);
           const painsSnap = await ressource.getFilteredDataSnapshotByDate(date);
           const pains = formatDataSnapshotValues<Pain>(painsSnap);
-          console.log(pains);
           dispatch(savePains(pains));
         } catch (err) {
           dispatch(

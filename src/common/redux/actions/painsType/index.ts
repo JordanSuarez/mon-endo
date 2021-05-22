@@ -44,7 +44,6 @@ export const getPainsType = (): ThunkAction<
           );
           dispatch(savePainsType(painsType));
         } catch (err) {
-          console.log(err);
           dispatch(
             showToast(
               generateToastPayload(handleErrorMessage(err) as ToastState)

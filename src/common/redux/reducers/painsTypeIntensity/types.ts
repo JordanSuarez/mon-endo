@@ -1,3 +1,5 @@
 import { PainTypeIntensity } from "common/types/pains";
 
-export type PainsTypeIntensityState = PainTypeIntensity[];
+export type PainsTypeIntensityState = {
+  painsTypeIntensity: PainTypeIntensity[];
+};

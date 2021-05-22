@@ -3,7 +3,9 @@ import { PainsAction } from "common/redux/actions/pains/types";
 import { SAVE_PAINS } from "common/redux/actions/pains";
 import { PainsState } from "./types";
 
-const initialState = ([] as Pain[]) as PainsState;
+const initialState = {
+  pains: [] as Pain[],
+} as PainsState;
 
 const painsReducer = (
   state = initialState,
@@ -11,7 +13,10 @@ const painsReducer = (
 ): PainsState => {
   switch (action.type) {
     case SAVE_PAINS:
-      return action.pains;
+      return {
+        ...state,
+        pains: action.pains,
+      };
     default:
       return { ...state };
   }

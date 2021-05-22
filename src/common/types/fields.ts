@@ -5,5 +5,5 @@ export type TextFieldsProps = TextFieldProps & {
 };
 
 export type SelectFieldsProps = SelectProps & {
-  painsType: <T>(arg: T[]) => T[];
+  callback: <T>(arg: T[]) => T[];
 };

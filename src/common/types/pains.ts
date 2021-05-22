@@ -7,7 +7,7 @@ export type Pain = {
 
 export type PainType = {
   id: string;
-  description: string;
+  name: string;
 };
 
 export type PainTypeIntensity = PainType;

@@ -7,12 +7,13 @@ export default [
     name: locale.field.intensity.name,
     label: locale.field.intensity.label,
     variant: "outlined",
-    painsType: (painsType: PainTypeIntensity[]) => painsType,
+    callback: (painsTypeIntensity: PainTypeIntensity[]): PainTypeIntensity[] =>
+      painsTypeIntensity,
   },
   {
     name: locale.field.pain.name,
     label: locale.field.pain.label,
     variant: "outlined",
-    painTypes: (painTypes: PainType[]) => painTypes,
+    callback: (painsType: PainType[]): PainType[] => painsType,
   },
 ] as Array<SelectFieldsProps>;

@@ -14,7 +14,7 @@ import {
 import DateFnsUtils from "@date-io/date-fns";
 import SendIcon from "@material-ui/icons/Send";
 
-import { Pain, PainType } from "common/types/pains";
+import { Pain, PainType, PainTypeIntensity } from "common/types/pains";
 import { StylesInterface } from "./styles";
 import locale from "./config/locale";
 import selectFields from "./config/selectFields";
@@ -25,6 +25,8 @@ type Props = {
   createPain: (pain: Omit<Pain, "userId" | "id">) => void;
   getPainsType: () => void;
   getPainsTypeIntensity: () => void;
+  painsType: PainType[];
+  painsTypeIntensity: PainTypeIntensity[];
 };
 
 const PainForm = ({
@@ -32,6 +34,8 @@ const PainForm = ({
   createPain,
   getPainsType,
   getPainsTypeIntensity,
+  painsType,
+  painsTypeIntensity,
 }: Props): JSX.Element => {
   const [displayDescriptionField, setDisplayDescriptionField] = useState(false);
   const validate = makeValidate(yupSchema(displayDescriptionField));
@@ -47,28 +51,12 @@ const PainForm = ({
     setDisplayDescriptionField(false);
   };
 
-  const handleClick = (values: { id: string; description: string }) => {
-    if (values.description === "Autre") {
+  const handleClick = (values: PainType) => {
+    if (values.name === "Autre") {
       return setDisplayDescriptionField(true);
     }
     return setDisplayDescriptionField(false);
   };
-
-  const pains = [
-    { id: "1", description: "ovaire" },
-    { id: "2", description: "jambe" },
-    { id: "3", description: "ventre" },
-    { id: "4", description: "main" },
-    { id: "5", description: "pied" },
-    { id: "6", description: "tete" },
-    { id: "7", description: "Autre" },
-  ];
-
-  const intensity = [
-    { id: "1", description: "faible" },
-    { id: "2", description: "modéré" },
-    { id: "3", description: "intense" },
-  ];
 
   return (
     <>
@@ -92,28 +80,32 @@ const PainForm = ({
               disableFuture
               className={classes.field}
             />
-            {selectFields.map(({ name, label, variant, painsType }) => (
-              <Box className={classes.field} key={name}>
-                <Select
-                  label={label}
-                  name={name}
-                  variant={variant}
-                  required={required[name]}
-                >
-                  {painsType<PainType>(
-                    name === locale.field.pain.name ? pains : intensity
-                  ).map(({ id, description }) => (
-                    <MenuItem
-                      key={id}
-                      value={id}
-                      onClick={() => handleClick({ id, description })}
-                    >
-                      {description}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Box>
-            ))}
+            {selectFields.map(
+              ({ name: fieldName, label, variant, callback }) => (
+                <Box className={classes.field} key={fieldName}>
+                  <Select
+                    label={label}
+                    name={fieldName}
+                    variant={variant}
+                    required={required[fieldName]}
+                  >
+                    {callback(
+                      fieldName === locale.field.pain.name
+                        ? painsType
+                        : painsTypeIntensity
+                    ).map(({ id, name }) => (
+                      <MenuItem
+                        key={id}
+                        value={id}
+                        onClick={() => handleClick({ id, name })}
+                      >
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Box>
+              )
+            )}
             {displayDescriptionField && (
               <TextField
                 label={locale.field.description.label}

@@ -3,7 +3,9 @@ import { PainsTypeIntensityAction } from "common/redux/actions/painsTypeIntensit
 import { SAVE_PAINS_TYPE_INTENSITY } from "common/redux/actions/painsTypeIntensity";
 import { PainsTypeIntensityState } from "./types";
 
-const initialState = ([] as PainTypeIntensity[]) as PainsTypeIntensityState;
+const initialState = {
+  painsTypeIntensity: [] as PainTypeIntensity[],
+} as PainsTypeIntensityState;
 
 const painsTypeIntensityReducer = (
   state = initialState,
@@ -13,7 +15,7 @@ const painsTypeIntensityReducer = (
     case SAVE_PAINS_TYPE_INTENSITY:
       return {
         ...state,
-        ...action.painsTypeIntensity,
+        painsTypeIntensity: action.painsTypeIntensity,
       };
     default:
       return { ...state };
