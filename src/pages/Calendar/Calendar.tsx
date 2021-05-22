@@ -28,17 +28,14 @@ const Calendar = ({
 }: Props): JSX.Element => {
   const [dateSelected, setDateSelected] = useState(new Date() as Date);
 
-  const dateFormatted = (date: Date) =>
-    formatDate(date, frLocale, dateWithoutHours);
-
   useEffect(() => {
-    getPains(dateFormatted(dateSelected));
+    getPains(dateSelected.toString());
   }, [dateSelected, getPains]);
 
   const handleClickDay = (date: Date) => {
     setDateSelected(date);
-    saveDate({ date: dateFormatted(date) });
-    getPains(dateFormatted(date));
+    saveDate({ date: date.toString() });
+    getPains(date.toString());
   };
 
   return (

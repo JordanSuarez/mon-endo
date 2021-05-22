@@ -38,8 +38,8 @@ export const getPains = (
       if (user) {
         try {
           const ressource = new Firebase(user.uid, PAINS);
-          const painsObject = await ressource.getDataSnapshot();
-          const pains = formatDataSnapshotValues(date, painsObject);
+          const painsSnap = await ressource.getFilteredDataSnapshotByDate(date);
+          const pains = formatDataSnapshotValues(date, painsSnap);
           dispatch(savePains(pains));
         } catch (err) {
           dispatch(

@@ -14,7 +14,6 @@ import toastLocale from "common/helpers/toast/locale";
 import { hideDrawer } from "common/components/Drawer/redux/actions";
 import Firebase from "common/firebase/Firebase";
 import { PAIN_TYPES } from "common/constants/ressources";
-import { formatDataSnapshotValues } from "common/helpers/ressources";
 import { PainTypesAction } from "./types";
 
 export const SAVE_PAIN_TYPES = "SAVE_PAIN_TYPES";
@@ -44,7 +43,6 @@ export const getPainTypes = (): ThunkAction<
         try {
           const ressource = new Firebase(user.uid, PAIN_TYPES);
           const painTypeObject = await ressource.getDataSnapshot();
-          console.log(painTypeObject);
           // const painType = formatDataSnapshotValues(date, mealObject);
           // dispatch(savePainTypes(painType));
         } catch (err) {

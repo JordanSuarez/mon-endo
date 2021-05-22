@@ -37,9 +37,8 @@ export const getMeal = (
       if (user) {
         try {
           const ressource = new Firebase(user.uid, MEAL);
-          const mealObject = await ressource.getDataSnapshot();
-          const meal = formatDataSnapshotValues(date, mealObject);
-
+          const mealSnap = await ressource.getFilteredDataSnapshotByDate(date);
+          const meal = formatDataSnapshotValues(date, mealSnap);
           if (meal.length > 0) {
             dispatch(saveMeal(meal[0]));
           }

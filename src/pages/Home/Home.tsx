@@ -27,7 +27,7 @@ const Home = ({
   saveDate,
 }: Props): JSX.Element => {
   useEffect(() => {
-    saveDate({ date: formatDate(new Date(), frLocale, dateWithoutHours) });
+    saveDate({ date: new Date().toString() });
     getDailyPains();
   }, [getDailyPains, saveDate]);
   return (
