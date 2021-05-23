@@ -6,7 +6,7 @@ const initialState = {
   isLoading: false,
 } as LoaderState;
 
-const toastReducer = (
+const LoaderReducer = (
   state = initialState,
   action: LoaderAction
 ): LoaderState => {
@@ -27,4 +27,4 @@ const toastReducer = (
   }
 };
 
-export default toastReducer;
+export default LoaderReducer;

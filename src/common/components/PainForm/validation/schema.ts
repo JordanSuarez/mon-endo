@@ -8,7 +8,6 @@ const pain = local.field.pain.name;
 const intensity = local.field.intensity.name;
 const description = local.field.description.name;
 
-// TODO add validation
 export default (descriptionFieldIsActive: boolean) =>
   Yup.object().shape({
     [date]: Yup.string().required(requiredField),
