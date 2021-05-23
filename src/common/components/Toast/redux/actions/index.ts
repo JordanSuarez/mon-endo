@@ -3,8 +3,8 @@ import { AnyAction } from "redux";
 import { ToastAction } from "./types";
 import { ToastState } from "../reducers/types";
 
-export const SHOW_TOAST = "TOAST/SHOW";
-export const HIDE_TOAST = "TOAST/HIDE";
+export const SHOW_TOAST = "SHOW_TOAST";
+export const HIDE_TOAST = "HIDE_TOAST";
 
 export const showToast = (toast: ToastState): ToastAction => ({
   type: SHOW_TOAST,

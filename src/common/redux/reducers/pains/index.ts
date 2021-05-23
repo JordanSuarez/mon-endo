@@ -4,7 +4,7 @@ import { SAVE_PAINS } from "common/redux/actions/pains";
 import { PainsState } from "./types";
 
 const initialState = {
-  pains: [] as Array<Pain>,
+  pains: [] as Pain[],
 } as PainsState;
 
 const painsReducer = (

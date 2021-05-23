@@ -3,7 +3,7 @@ import React from "react";
 import { ClassNameMap } from "@material-ui/styles";
 import { Drawer as MUIDrawer, Paper } from "@material-ui/core";
 
-import { PAIN_FORM, PAIN_TYPE_FORM } from "common/constants/context";
+import { PAIN_FORM } from "common/constants/context";
 import PainForm from "common/components/PainForm";
 import { StylesInterface } from "./styles";
 
@@ -29,7 +29,6 @@ const Drawer = ({
     >
       <Paper className={classes.paper}>
         {context === PAIN_FORM && <PainForm />}
-        {context === PAIN_TYPE_FORM && <PainForm />}
       </Paper>
     </MUIDrawer>
   );

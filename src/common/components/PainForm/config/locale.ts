@@ -15,6 +15,10 @@ export default {
       label: "Intensité de la douleur",
       name: "intensity",
     },
+    description: {
+      label: "Description de la douleur",
+      name: "description",
+    },
     button: {
       label: "Enregistrer",
     },

@@ -1,4 +1,5 @@
 // Ressources
 export const PAINS = "pains";
 export const MEAL = "meal";
-export const PAIN_TYPES = "painTypes";
+export const PAINS_TYPE = "painsType";
+export const PAINS_TYPE_INTENSITY = "painsIntensity";
