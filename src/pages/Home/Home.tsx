@@ -8,6 +8,7 @@ import { Pain } from "common/types/pains";
 import { RootState } from "common/redux/reducers/root/types";
 import { RootAction } from "common/redux/actions/root/types";
 import MealForm from "common/components/MealForm";
+import SportActivity from "common/components/SportActivity";
 import { StylesInterface } from "./styles";
 
 type Props = {
@@ -33,7 +34,10 @@ const Home = ({
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
         <DayInformation items={pains} dateTime={new Date()} />
-        <MealForm />
+        <div className={classes.container}>
+          <MealForm />
+          <SportActivity />
+        </div>
       </div>
     </Page>
   );

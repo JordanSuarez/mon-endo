@@ -3,6 +3,7 @@ import { Styles } from "common/types/styles";
 
 export type StylesInterface = {
   root: string;
+  container: string;
 };
 
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
@@ -15,5 +16,8 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     [breakpoints.down("sm")]: {
       flexDirection: "column",
     },
+  },
+  container: {
+    width: "35%",
   },
 });

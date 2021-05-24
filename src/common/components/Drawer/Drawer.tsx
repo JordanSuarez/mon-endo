@@ -3,8 +3,9 @@ import React from "react";
 import { ClassNameMap } from "@material-ui/styles";
 import { Drawer as MUIDrawer, Paper } from "@material-ui/core";
 
-import { PAIN_FORM, CREATE } from "common/constants/context";
+import { PAIN_FORM, CREATE, SPORT_ACTIVITY } from "common/constants/context";
 import PainForm from "common/components/PainForm";
+import SportActivityForm from "common/components/SportActivityForm";
 import { Pain } from "common/types/pains";
 import locale from "common/components/PainForm/config/locale";
 import { PainFormContext } from "common/context";
@@ -48,6 +49,7 @@ const Drawer = ({
             />
           </PainFormContext.Provider>
         )}
+        {context === SPORT_ACTIVITY && <SportActivityForm />}
       </Paper>
     </MUIDrawer>
   );

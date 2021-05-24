@@ -3,10 +3,9 @@ import { Styles } from "common/types/styles";
 
 export type StylesInterface = {
   root: string;
+  addIcon: string;
   divider: string;
-  form: string;
-  field: string;
-  button: string;
+  text: string;
 };
 
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
@@ -20,17 +19,18 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   divider: {
     margin: "0 1rem",
   },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    padding: "1rem",
-  },
-  field: {
-    width: "100%",
-    margin: "1rem 0",
-  },
-  button: {
-    textTransform: "none",
+  addIcon: {
+    margin: "1rem",
+    color: palette.common.white,
     backgroundColor: palette.primary.light,
+    "&:hover": {
+      backgroundColor: palette.primary.dark,
+    },
+  },
+  text: {
+    paddingBottom: "3rem",
+    marginTop: "3rem",
+    textAlign: "center",
+    fontStyle: "italic",
   },
 });

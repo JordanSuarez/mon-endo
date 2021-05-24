@@ -7,17 +7,15 @@ import {
   List,
   ListItem,
   ListItemText,
-  Paper,
   Divider,
   ListItemSecondaryAction,
-  IconButton,
-  Typography,
 } from "@material-ui/core";
 
 import { fullDate, formatDate, dateWithHours } from "common/helpers/date";
 import { DELETE, PAIN_FORM, UPDATE } from "common/constants/context";
-import ActionButton from "common/components/ActionButton";
+import IconButton from "common/components/IconButton";
 import PainForm from "common/components/PainForm";
+import Paper from "common/components/Paper";
 import AddIcon from "@material-ui/icons/Add";
 import { Pain, PainType, PainTypeIntensity } from "common/types/pains";
 import frLocale from "date-fns/locale/fr";
@@ -67,18 +65,17 @@ const DayInformation = ({
     updatePain(painUpdated);
   };
 
+  const button = (
+    <IconButton
+      title="Ajouter une douleur"
+      onClick={() => toggleDrawer(PAIN_FORM)}
+      className={classes.addIcon}
+    >
+      <AddIcon>send</AddIcon>
+    </IconButton>
+  );
   return (
-    <Paper elevation={3} className={classes.root}>
-      <div className={classes.header}>
-        <Typography variant="h6" className={classes.title}>
-          {title}
-        </Typography>
-        <ActionButton
-          onClick={() => toggleDrawer(PAIN_FORM)}
-          endIcon={<AddIcon>send</AddIcon>}
-          label="Ajouter une douleur"
-        />
-      </div>
+    <Paper className={classes.root} title={title} button={button}>
       <div>
         {items.length > 0 ? (
           <List dense={false} className={classes.list}>
@@ -101,7 +98,7 @@ const DayInformation = ({
                           className={classes.listItemText}
                         >
                           <div>Type: {painType.name}</div>
-                          <div>Intensité: {painTypeIntensity.name}</div>
+                          <div>Douleur: {painTypeIntensity.name}</div>
                           {description.length > 0 && (
                             <div>Description: {description}</div>
                           )}
@@ -110,18 +107,16 @@ const DayInformation = ({
                           className={classes.iconsContainer}
                         >
                           <IconButton
-                            edge="end"
-                            aria-label="edit"
+                            title="Modifier"
+                            className={classes.editIcon}
                             onClick={() => handleClick(items[index], UPDATE)}
-                            color="primary"
                           >
                             <EditIcon />
                           </IconButton>
                           <IconButton
-                            edge="end"
-                            aria-label="delete"
+                            title="Supprimer"
+                            className={classes.deleteIcon}
                             onClick={() => handleClick(items[index], DELETE)}
-                            color="secondary"
                           >
                             <DeleteIcon />
                           </IconButton>

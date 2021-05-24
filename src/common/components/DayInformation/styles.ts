@@ -3,17 +3,17 @@ import { Styles } from "common/types/styles";
 
 export type StylesInterface = {
   root: string;
-  header: string;
-  title: string;
   divider: string;
   list: string;
   listItem: string;
   listItemText: string;
   iconsContainer: string;
-  icon: string;
   text: string;
   textField: string;
   form: string;
+  addIcon: string;
+  editIcon: string;
+  deleteIcon: string;
 };
 
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
@@ -25,18 +25,11 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
       width: "100%",
     },
   },
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
-  },
-  title: {
-    padding: "1rem",
-    textTransform: "capitalize",
-  },
   divider: {
     margin: "0 1rem",
+  },
+  list: {
+    paddingTop: "0",
   },
   listItem: {
     minHeight: "8rem",
@@ -89,8 +82,21 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     width: "100%",
     minHeight: "8rem",
     position: "relative",
-    // [breakpoints.down("xs")]: {
-    //   width: "100%",
-    // },
+  },
+  addIcon: {
+    margin: "1rem",
+    color: palette.common.white,
+    backgroundColor: palette.primary.light,
+    "&:hover": {
+      backgroundColor: palette.primary.dark,
+    },
+  },
+  editIcon: {
+    color: palette.primary.main,
+    backgroundColor: palette.common.white,
+  },
+  deleteIcon: {
+    color: palette.secondary.main,
+    backgroundColor: palette.common.white,
   },
 });
