@@ -86,10 +86,11 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     marginTop: "0.5rem",
   },
   form: {
-    width: "76%",
+    width: "100%",
     minHeight: "8rem",
-    [breakpoints.down("xs")]: {
-      width: "100%",
-    },
+    position: "relative",
+    // [breakpoints.down("xs")]: {
+    //   width: "100%",
+    // },
   },
 });

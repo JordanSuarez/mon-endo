@@ -3,10 +3,6 @@ import React, { useState } from "react";
 import { ClassNameMap } from "@material-ui/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import { Form } from "react-final-form";
-import SendIcon from "@material-ui/icons/Send";
-import ClearIcon from "@material-ui/icons/Clear";
-import { TextField } from "mui-rff";
 import {
   List,
   ListItem,
@@ -21,10 +17,13 @@ import {
 import { fullDate, formatDate, dateWithHours } from "common/helpers/date";
 import { DELETE, PAIN_FORM, UPDATE } from "common/constants/context";
 import ActionButton from "common/components/ActionButton";
+import PainForm from "common/components/PainForm";
 import AddIcon from "@material-ui/icons/Add";
-import { Pain } from "common/types/pains";
+import { Pain, PainType, PainTypeIntensity } from "common/types/pains";
 import frLocale from "date-fns/locale/fr";
+import { PainFormContext } from "common/context";
 import { StylesInterface } from "./styles";
+import locale from "../PainForm/config/locale";
 
 export type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
@@ -33,6 +32,10 @@ export type Props = {
   deletePain: (painId: string) => void;
   updatePain: (pain: Pain) => void;
   dateTime: string;
+  getPainsType: () => void;
+  getPainsTypeIntensity: () => void;
+  painsType: PainType[];
+  painsTypeIntensity: PainTypeIntensity[];
 };
 
 // TODO add locale
@@ -45,7 +48,7 @@ const DayInformation = ({
   dateTime,
 }: Props): JSX.Element => {
   const [selectedPain, setSelectedPain] = useState({} as Pain);
-  const resetField = () => setSelectedPain({} as Pain);
+  const resetSelectedPain = () => setSelectedPain({} as Pain);
   const title = formatDate(new Date(dateTime), frLocale, fullDate);
 
   const handleClick = (pain: Pain, context: string) => {
@@ -55,13 +58,13 @@ const DayInformation = ({
     return setSelectedPain(pain);
   };
 
-  const onSubmit = (values: { description: string }) => {
+  const handleSubmitForm = (inputValues: Omit<Pain, "userId" | "id">): void => {
     const painUpdated = {
       ...selectedPain,
-      description: values.description,
+      ...inputValues,
     };
-    resetField();
-    return updatePain(painUpdated);
+    resetSelectedPain();
+    updatePain(painUpdated);
   };
 
   return (
@@ -79,91 +82,72 @@ const DayInformation = ({
       <div>
         {items.length > 0 ? (
           <List dense={false} className={classes.list}>
-            {items.map(({ id, date, description }, index) => (
-              <div key={id}>
-                <Divider className={classes.divider} />
-                <ListItem className={classes.listItem}>
-                  {selectedPain.id !== id ? (
-                    <>
-                      <ListItemText
-                        primary={description}
-                        secondary={formatDate(
-                          new Date(date),
-                          frLocale,
-                          dateWithHours
-                        )}
-                        className={classes.listItemText}
-                      />
-                      <ListItemSecondaryAction
-                        className={classes.iconsContainer}
-                      >
-                        <IconButton
-                          edge="end"
-                          aria-label="edit"
-                          onClick={() => handleClick(items[index], UPDATE)}
-                          color="primary"
+            {items.map(
+              (
+                { id, date, description, painType, painTypeIntensity },
+                index
+              ) => (
+                <div key={id}>
+                  <Divider className={classes.divider} />
+                  <ListItem className={classes.listItem}>
+                    {selectedPain.id !== id ? (
+                      <>
+                        <ListItemText
+                          secondary={formatDate(
+                            new Date(date),
+                            frLocale,
+                            dateWithHours
+                          )}
+                          className={classes.listItemText}
                         >
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          edge="end"
-                          aria-label="delete"
-                          onClick={() => handleClick(items[index], DELETE)}
-                          color="secondary"
+                          <div>Type: {painType.name}</div>
+                          <div>Intensité: {painTypeIntensity.name}</div>
+                          {description.length > 0 && (
+                            <div>Description: {description}</div>
+                          )}
+                        </ListItemText>
+                        <ListItemSecondaryAction
+                          className={classes.iconsContainer}
                         >
-                          <DeleteIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    </>
-                  ) : (
-                    <Form
-                      onSubmit={onSubmit}
-                      initialValues={{ description }}
-                      render={({ handleSubmit, submitting, valid }) => (
-                        <form onSubmit={handleSubmit} className={classes.form}>
-                          <ListItemText
-                            secondary={formatDate(
-                              new Date(date),
-                              frLocale,
-                              dateWithHours
-                            )}
-                            className={classes.listItemText}
-                          />
-                          <TextField
-                            label="Description"
-                            name="description"
-                            variant="outlined"
-                            multiline
-                            className={classes.textField}
-                          />
-                          <ListItemSecondaryAction
-                            className={classes.iconsContainer}
+                          <IconButton
+                            edge="end"
+                            aria-label="edit"
+                            onClick={() => handleClick(items[index], UPDATE)}
+                            color="primary"
                           >
-                            <IconButton
-                              edge="end"
-                              aria-label="cancel"
-                              onClick={resetField}
-                              color="secondary"
-                            >
-                              <ClearIcon />
-                            </IconButton>
-                            <IconButton
-                              edge="end"
-                              aria-label="submit"
-                              type="submit"
-                              disabled={submitting || !valid}
-                              color="primary"
-                            >
-                              <SendIcon />
-                            </IconButton>
-                          </ListItemSecondaryAction>
-                        </form>
-                      )}
-                    />
-                  )}
-                </ListItem>
-              </div>
-            ))}
+                            <EditIcon />
+                          </IconButton>
+                          <IconButton
+                            edge="end"
+                            aria-label="delete"
+                            onClick={() => handleClick(items[index], DELETE)}
+                            color="secondary"
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </>
+                    ) : (
+                      <div className={classes.form}>
+                        <PainFormContext.Provider value={UPDATE}>
+                          <PainForm
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            // @ts-ignore
+                            title={locale.title.edit}
+                            initialValues={selectedPain}
+                            descriptionFieldIsActive={
+                              selectedPain.description.length > 1
+                            }
+                            onCancel={resetSelectedPain}
+                            handleSubmitForm={handleSubmitForm}
+                          />
+                        </PainFormContext.Provider>
+                      </div>
+                    )}
+                  </ListItem>
+                </div>
+              )
+            )}
           </List>
         ) : (
           <p className={classes.text}>Aucune douleur enregistrée</p>

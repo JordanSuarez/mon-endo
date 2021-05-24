@@ -3,8 +3,11 @@ import React from "react";
 import { ClassNameMap } from "@material-ui/styles";
 import { Drawer as MUIDrawer, Paper } from "@material-ui/core";
 
-import { PAIN_FORM } from "common/constants/context";
+import { PAIN_FORM, CREATE } from "common/constants/context";
 import PainForm from "common/components/PainForm";
+import { Pain } from "common/types/pains";
+import locale from "common/components/PainForm/config/locale";
+import { PainFormContext } from "common/context";
 import { StylesInterface } from "./styles";
 
 type Props = {
@@ -12,6 +15,7 @@ type Props = {
   isOpen: boolean;
   context: string;
   closeDrawer: (context: string) => void;
+  createPain: (pain: Omit<Pain, "userId" | "id">) => void;
 };
 
 const Drawer = ({
@@ -19,7 +23,12 @@ const Drawer = ({
   isOpen,
   closeDrawer,
   context,
+  createPain,
 }: Props): JSX.Element => {
+  const handleSubmitForm = (inputValues: Omit<Pain, "userId" | "id">): void => {
+    createPain(inputValues);
+  };
+
   return (
     <MUIDrawer
       anchor="bottom"
@@ -28,7 +37,17 @@ const Drawer = ({
       className={classes.root}
     >
       <Paper className={classes.paper}>
-        {context === PAIN_FORM && <PainForm />}
+        {context === PAIN_FORM && (
+          <PainFormContext.Provider value={CREATE}>
+            <PainForm
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              inittialValues={{}}
+              title={locale.title.create}
+              handleSubmitForm={handleSubmitForm}
+            />
+          </PainFormContext.Provider>
+        )}
       </Paper>
     </MUIDrawer>
   );

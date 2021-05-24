@@ -4,9 +4,8 @@ import { connect } from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 
-import { createPain } from "common/redux/actions/pains";
 import { AppState } from "common/types/redux";
-import { Pain, PainType, PainTypeIntensity } from "common/types/pains";
+import { PainType, PainTypeIntensity } from "common/types/pains";
 import { getPainsType } from "common/redux/actions/painsType";
 import { getPainsTypeIntensity } from "common/redux/actions/painsTypeIntensity";
 import { styles } from "./styles";
@@ -30,9 +29,6 @@ const mapDispatchToProps = (
   },
   getPainsTypeIntensity: async () => {
     dispatch(await getPainsTypeIntensity());
-  },
-  createPain: async (pain: Omit<Pain, "userId" | "id">) => {
-    dispatch(await createPain(pain));
   },
 });
 

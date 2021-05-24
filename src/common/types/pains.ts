@@ -1,6 +1,8 @@
 export type Pain = {
   date: string;
   description: string;
+  painType: PainType;
+  painTypeIntensity: PainTypeIntensity;
   userId: string;
   id: string;
 };

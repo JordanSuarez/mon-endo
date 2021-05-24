@@ -1,5 +1,8 @@
 export default {
-  title: "Enregistrer une douleur",
+  title: {
+    create: "Enregistrer une douleur",
+    edit: "Modifier la douleur",
+  },
   field: {
     required: "Le champ est requis",
     date: {
@@ -7,13 +10,13 @@ export default {
       format: "dd MMMM yyyy HH:mm",
       name: "date",
     },
-    pain: {
+    painType: {
       label: "Type de douleur",
-      name: "pain",
+      name: "painType",
     },
-    intensity: {
+    painTypeIntensity: {
       label: "Intensité de la douleur",
-      name: "intensity",
+      name: "painTypeIntensity",
     },
     description: {
       label: "Description de la douleur",

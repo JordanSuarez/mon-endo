@@ -5,6 +5,8 @@ import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 
 import { AppState } from "common/types/redux";
+import { Pain } from "common/types/pains";
+import { createPain } from "common/redux/actions/pains";
 import { DrawerState } from "./redux/reducers/types";
 import { hideDrawer } from "./redux/actions";
 import { styles } from "./styles";
@@ -13,7 +15,6 @@ import Drawer from "./Drawer";
 type State = {
   drawer: DrawerState;
 };
-
 const mapStateToProps = ({ drawer }: State) => ({
   ...drawer,
 });
@@ -23,6 +24,9 @@ const mapDispatchToProps = (
 ) => ({
   closeDrawer: () => {
     dispatch(hideDrawer());
+  },
+  createPain: async (pain: Omit<Pain, "userId" | "id">) => {
+    dispatch(await createPain(pain));
   },
 });
 

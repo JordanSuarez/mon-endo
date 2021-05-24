@@ -7,3 +7,4 @@ export const PAIN_FORM = "painForm";
 // Methods
 export const DELETE = "delete";
 export const UPDATE = "update";
+export const CREATE = "create";

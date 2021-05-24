@@ -8,6 +8,8 @@ import { showDrawer } from "common/components/Drawer/redux/actions";
 import { deletePain, updatePain } from "common/redux/actions/pains";
 import { AppState } from "common/types/redux";
 import { Pain } from "common/types/pains";
+import { getPainsType } from "common/redux/actions/painsType";
+import { getPainsTypeIntensity } from "common/redux/actions/painsTypeIntensity";
 import DayInformation from "./DayInformation";
 import { styles } from "./styles";
 
@@ -17,11 +19,17 @@ const mapDispatchToProps = (
   toggleDrawer: (context: string) => {
     dispatch(showDrawer(context));
   },
-  deletePain: (painId: string) => {
-    dispatch(deletePain(painId));
+  deletePain: async (painId: string) => {
+    dispatch(await deletePain(painId));
   },
-  updatePain: (pain: Pain) => {
-    dispatch(updatePain(pain));
+  updatePain: async (pain: Pain) => {
+    dispatch(await updatePain(pain));
+  },
+  getPainsType: async () => {
+    dispatch(await getPainsType());
+  },
+  getPainsTypeIntensity: async () => {
+    dispatch(await getPainsTypeIntensity());
   },
 });
 
