@@ -18,6 +18,7 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     },
   },
   title: {
+    fontSize: "1rem",
     marginBottom: "1rem",
     marginTop: "0.6rem",
   },
