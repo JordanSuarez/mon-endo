@@ -1,23 +1,25 @@
 import React, { useContext } from "react";
 
-import { Button, Typography, IconButton } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/styles";
 import SendIcon from "@material-ui/icons/Send";
 import ClearIcon from "@material-ui/icons/Clear";
 import { Form as FormRff } from "react-final-form";
 
 import { UPDATE } from "common/constants/context";
+import IconButton from "common/components/IconButton";
 import { FormContext } from "common/context";
+import { Config } from "final-form";
 import { StylesInterface } from "./styles";
 import locale from "./config/locale";
 
-type Props = {
+type Props = Partial<Config> & {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   onCancel: () => void;
   onSubmit: <T>(values: T) => void;
   title: string;
-  initialValues?: any;
   children: JSX.Element;
+  validate: any;
 };
 
 const Form = ({
@@ -27,6 +29,7 @@ const Form = ({
   onCancel,
   onSubmit,
   children,
+  validate,
 }: Props): JSX.Element => {
   const context = useContext(FormContext);
 
@@ -37,7 +40,7 @@ const Form = ({
       </Typography>
       <FormRff
         onSubmit={onSubmit}
-        // validate={validate}
+        validate={validate}
         initialValues={initialValues}
         render={({ handleSubmit, submitting, valid, pristine, error }) => (
           <form onSubmit={handleSubmit} className={classes.form}>
@@ -51,16 +54,19 @@ const Form = ({
               {children}
               {context === UPDATE ? (
                 <div className={classes.iconsContainer}>
-                  <IconButton title="Ajouter une douleur" onClick={onCancel}>
-                    <ClearIcon>Annuler</ClearIcon>
+                  <IconButton
+                    title={locale.button.cancel.label}
+                    onClick={onCancel}
+                    color="secondary"
+                  >
+                    <ClearIcon />
                   </IconButton>
                   <IconButton
-                    title="Ajouter une douleur"
-                    onClick={onCancel}
+                    title={locale.button.submit.label}
                     type="submit"
                     disabled={submitting || !valid || pristine || error}
                   >
-                    <SendIcon>Enregistrer</SendIcon>
+                    <SendIcon />
                   </IconButton>
                 </div>
               ) : (
@@ -72,7 +78,7 @@ const Form = ({
                   type="submit"
                   disabled={submitting || !valid || pristine || error}
                 >
-                  {locale.field.button.label}
+                  {locale.button.submit.label}
                 </Button>
               )}
             </div>
@@ -81,10 +87,6 @@ const Form = ({
       />
     </>
   );
-};
-
-Form.defaultProps = {
-  initialValues: {},
 };
 
 export default Form;

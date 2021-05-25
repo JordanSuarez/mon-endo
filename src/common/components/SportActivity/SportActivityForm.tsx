@@ -28,7 +28,7 @@ const SportActivityForm = ({
       onClick={() => toggleDrawer(SPORT_ACTIVITY)}
       className={classes.addIcon}
     >
-      <AddIcon>send</AddIcon>
+      <AddIcon />
     </IconButton>
   );
   // TODO add length check

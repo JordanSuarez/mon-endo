@@ -18,7 +18,7 @@ export const styles = (): Styles => ({
   title: {
     padding: "1rem",
     fontSize: "1rem",
-    textTransform: "capitalize",
+    textTransform: "initial",
   },
   divider: {
     margin: "0 1rem",
