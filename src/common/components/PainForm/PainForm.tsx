@@ -129,7 +129,9 @@ const PainForm = ({
         {selectFields.map((fieldProps) => (
           <Select
             key={fieldProps.name}
-            handleClick={handleClick}
+            handleClick={(values, fieldName) =>
+              handleClick(values as PainType, fieldName)
+            }
             required={required}
             fieldProps={fieldProps}
             options={

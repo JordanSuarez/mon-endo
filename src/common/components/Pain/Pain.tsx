@@ -58,17 +58,17 @@ const Pain = ({
 
   const generateChildrenItem = (values: IPain): JSX.Element => {
     return (
-      <>
-        <div>{locale.listItem.painType.label(values.painType.name)}</div>
-        <div>
+      <ul>
+        <li>{locale.listItem.painType.label(values.painType.name)}</li>
+        <li>
           {locale.listItem.painTypeIntensity.label(
             values.painTypeIntensity.name
           )}
-        </div>
+        </li>
         {values.description.length > 0 && (
-          <div>{locale.listItem.description.label(values.description)}</div>
+          <li>{locale.listItem.description.label(values.description)}</li>
         )}
-      </>
+      </ul>
     );
   };
 
@@ -101,7 +101,7 @@ const Pain = ({
                 title={locale.title.form.edit}
                 initialValues={selectedPain}
                 descriptionFieldIsActive={
-                  get(selectedPain, "description", "").length > 1
+                  get(selectedPain, "description", "").length > 0
                 }
                 handleCloseForm={resetSelectedPain}
                 handleSubmitForm={handleSubmitForm}

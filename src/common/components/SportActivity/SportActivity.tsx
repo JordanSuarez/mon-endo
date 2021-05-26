@@ -42,12 +42,11 @@ const SportActivity = ({
     if (action === DELETE) {
       return deleteSportActivity(sportActivity.id);
     }
-
     return setSelectedSportActivity(sportActivity);
   };
 
   const handleSubmitForm = (
-    inputValues: Omit<ISportActivity, "userId" | "id">
+    inputValues: Omit<ISportActivity, "userId" | "id" | "date">
   ): void => {
     const itemUpdated = {
       ...selectedSportActivity,
@@ -59,9 +58,12 @@ const SportActivity = ({
 
   const generateChildrenItem = (values: ISportActivity): JSX.Element => {
     return (
-      <>
-        <div>{values.activity}</div>
-      </>
+      <ul>
+        <li>{values.activity.name}</li>
+        <li>
+          {values.duration.time} {values.duration.type}
+        </li>
+      </ul>
     );
   };
 

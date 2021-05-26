@@ -13,12 +13,12 @@ import { Config, FormApi, SubmissionErrors } from "final-form";
 import { StylesInterface } from "./styles";
 import locale from "./config/locale";
 
-type Props = Partial<Config> & {
+type Props<T> = Partial<Config> & {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   onCancel: () => void;
   onSubmit: (
-    values: any,
-    form: FormApi<any, any>,
+    values: T,
+    form: FormApi<T>,
     callback?: (errors?: SubmissionErrors) => void
   ) => SubmissionErrors | Promise<SubmissionErrors> | void;
   title: string;
@@ -26,7 +26,7 @@ type Props = Partial<Config> & {
   validate: any;
 };
 
-const Form = ({
+const Form = <T,>({
   classes,
   title,
   initialValues,
@@ -34,7 +34,7 @@ const Form = ({
   onSubmit,
   children,
   validate,
-}: Props): JSX.Element => {
+}: Props<T>): JSX.Element => {
   const context = useContext(FormContext);
 
   return (

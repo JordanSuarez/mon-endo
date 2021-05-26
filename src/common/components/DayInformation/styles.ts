@@ -53,6 +53,9 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
         width: "90%",
       },
     },
+    "& ul": {
+      paddingLeft: "1rem",
+    },
     [breakpoints.down("xs")]: {
       marginTop: "1.4rem",
     },

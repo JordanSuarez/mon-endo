@@ -13,7 +13,7 @@ import { saveRoot } from "common/redux/actions/root";
 import { getSportActivities } from "common/redux/actions/sportActivities";
 import { SportActivity } from "common/types/sportActivity";
 import { styles } from "./styles";
-import Home from "./Home";
+import Home, { Props } from "./Home";
 
 type State = {
   pains: Pain[];
@@ -39,9 +39,7 @@ const mapDispatchToProps = (
   },
 });
 
-export default compose(
+export default compose<Props, Omit<Props, "classes">>(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps)
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
 )(Home);

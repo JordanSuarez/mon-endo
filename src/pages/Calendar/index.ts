@@ -11,7 +11,7 @@ import { AppState } from "common/types/redux";
 import { RootState } from "common/redux/reducers/root/types";
 import { saveRoot } from "common/redux/actions/root";
 import { styles } from "./styles";
-import Calendar from "./Calendar";
+import Calendar, { Props } from "./Calendar";
 
 type State = {
   pains: Array<Pain>;
@@ -32,9 +32,7 @@ const mapDispatchToProps = (
   },
 });
 
-export default compose(
+export default compose<Props, Omit<Props, "classes">>(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps)
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
 )(Calendar);

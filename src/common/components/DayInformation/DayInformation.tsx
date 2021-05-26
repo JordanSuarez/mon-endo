@@ -1,9 +1,5 @@
 import React from "react";
 
-import { ClassNameMap } from "@material-ui/styles";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import { get } from "lodash";
 import {
   List,
   ListItem,
@@ -11,6 +7,10 @@ import {
   ListItemSecondaryAction,
   ListItemText,
 } from "@material-ui/core";
+import { ClassNameMap } from "@material-ui/styles";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import { get } from "lodash";
 
 import { DELETE, UPDATE } from "common/constants/context";
 import IconButton from "common/components/IconButton";

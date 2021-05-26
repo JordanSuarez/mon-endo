@@ -24,7 +24,7 @@ const IconButton = ({
   color,
 }: Props): JSX.Element => {
   return (
-    <Tooltip title={title}>
+    <Tooltip title={!disabled ? title : ""}>
       <MuiIconButton
         className={className}
         aria-label={title}

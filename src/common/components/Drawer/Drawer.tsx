@@ -19,7 +19,7 @@ type Props = {
   closeDrawer: (context: string) => void;
   createPain: (pain: Omit<Pain, "userId" | "id">) => void;
   createSportActivity: (
-    sportActivity: Omit<SportActivity, "userId" | "id">
+    sportActivity: Omit<SportActivity, "userId" | "id" | "date">
   ) => void;
 };
 

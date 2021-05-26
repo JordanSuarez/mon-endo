@@ -12,7 +12,7 @@ import MealForm from "common/components/MealForm";
 import SportActivity from "common/components/SportActivity";
 import { StylesInterface } from "./styles";
 
-type Props = {
+export type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   getDailyPains: () => void;
   getSportActivities: () => void;
