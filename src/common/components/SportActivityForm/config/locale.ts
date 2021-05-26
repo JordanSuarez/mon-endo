@@ -1,20 +1,20 @@
 export default {
-  title: "Activité physique",
   field: {
-    breakfast: {
-      label: "Petit déjeuner",
-      name: "breakfast",
+    required: "Le champ est requis",
+    activity: {
+      label: "Activité",
+      name: "activity",
     },
-    lunch: {
-      label: "Déjeuner",
-      name: "lunch",
+    duration: {
+      label: "Durée",
+      name: "duration",
     },
-    dinner: {
-      label: "Diner",
-      name: "dinner",
+    type: {
+      label: "Type",
+      name: "type",
     },
     button: {
-      label: "Enregistrer les repas",
+      label: "Enregistrer",
     },
   },
 };

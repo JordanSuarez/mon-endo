@@ -4,26 +4,27 @@ import { connect } from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 
+import { showDrawer } from "common/components/Drawer/redux/actions";
+import { deletePain, updatePain } from "common/redux/actions/pains";
 import { AppState } from "common/types/redux";
-import { PainType, PainTypeIntensity } from "common/types/pains";
+import { Pain as IPain } from "common/types/pains";
 import { getPainsType } from "common/redux/actions/painsType";
 import { getPainsTypeIntensity } from "common/redux/actions/painsTypeIntensity";
+import Pain, { Props } from "./Pain";
 import { styles } from "./styles";
-import PainForm, { Props } from "./PainForm";
-
-type State = {
-  painsType: PainType[];
-  painsTypeIntensity: PainTypeIntensity[];
-};
-
-const mapStateToProps = ({ painsType, painsTypeIntensity }: State) => ({
-  ...painsType,
-  ...painsTypeIntensity,
-});
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>
 ) => ({
+  toggleDrawer: (context: string) => {
+    dispatch(showDrawer(context));
+  },
+  deletePain: async (painId: string) => {
+    dispatch(await deletePain(painId));
+  },
+  updatePain: async (pain: IPain) => {
+    dispatch(await updatePain(pain));
+  },
   getPainsType: async () => {
     dispatch(await getPainsType());
   },
@@ -32,17 +33,7 @@ const mapDispatchToProps = (
   },
 });
 
-export default compose<
-  Props,
-  Pick<
-    Props,
-    | "title"
-    | "initialValues"
-    | "descriptionFieldIsActive"
-    | "handleSubmitForm"
-    | "handleCloseForm"
-  >
->(
+export default compose<Props, Pick<Props, "pains" | "dateTime">>(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
-)(PainForm);
+  connect(null, mapDispatchToProps)
+)(Pain);

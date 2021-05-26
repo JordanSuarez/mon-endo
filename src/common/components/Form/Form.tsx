@@ -9,14 +9,18 @@ import { Form as FormRff } from "react-final-form";
 import { UPDATE } from "common/constants/context";
 import IconButton from "common/components/IconButton";
 import { FormContext } from "common/context";
-import { Config } from "final-form";
+import { Config, FormApi, SubmissionErrors } from "final-form";
 import { StylesInterface } from "./styles";
 import locale from "./config/locale";
 
 type Props = Partial<Config> & {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   onCancel: () => void;
-  onSubmit: <T>(values: T) => void;
+  onSubmit: (
+    values: any,
+    form: FormApi<any, any>,
+    callback?: (errors?: SubmissionErrors) => void
+  ) => SubmissionErrors | Promise<SubmissionErrors> | void;
   title: string;
   children: JSX.Element;
   validate: any;

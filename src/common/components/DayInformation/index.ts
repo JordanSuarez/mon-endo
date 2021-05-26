@@ -1,41 +1,6 @@
 import { withStyles } from "@material-ui/core";
-import { compose } from "recompose";
-import { connect } from "react-redux";
-import { AnyAction } from "redux";
-import { ThunkDispatch } from "redux-thunk";
 
-import { showDrawer } from "common/components/Drawer/redux/actions";
-import { deletePain, updatePain } from "common/redux/actions/pains";
-import { AppState } from "common/types/redux";
-import { Pain } from "common/types/pains";
-import { getPainsType } from "common/redux/actions/painsType";
-import { getPainsTypeIntensity } from "common/redux/actions/painsTypeIntensity";
 import DayInformation from "./DayInformation";
 import { styles } from "./styles";
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>
-) => ({
-  toggleDrawer: (context: string) => {
-    dispatch(showDrawer(context));
-  },
-  deletePain: async (painId: string) => {
-    dispatch(await deletePain(painId));
-  },
-  updatePain: async (pain: Pain) => {
-    dispatch(await updatePain(pain));
-  },
-  getPainsType: async () => {
-    dispatch(await getPainsType());
-  },
-  getPainsTypeIntensity: async () => {
-    dispatch(await getPainsTypeIntensity());
-  },
-});
-
-export default compose(
-  withStyles(styles),
-  connect(null, mapDispatchToProps)
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-)(DayInformation);
+export default withStyles(styles)(DayInformation);

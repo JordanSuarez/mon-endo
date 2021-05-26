@@ -4,20 +4,16 @@ import { Styles } from "common/types/styles";
 export type StylesInterface = {
   root: string;
   addIcon: string;
-  divider: string;
-  text: string;
 };
 
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   root: {
     marginTop: "1rem",
-    height: "fit-content",
-    [breakpoints.down("xs")]: {
+    minHeight: "15rem",
+    textTransform: "initial",
+    [breakpoints.down("sm")]: {
       width: "100%",
     },
-  },
-  divider: {
-    margin: "0 1rem",
   },
   addIcon: {
     margin: "1rem",
@@ -26,11 +22,5 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     "&:hover": {
       backgroundColor: palette.primary.dark,
     },
-  },
-  text: {
-    paddingBottom: "3rem",
-    marginTop: "3rem",
-    textAlign: "center",
-    fontStyle: "italic",
   },
 });

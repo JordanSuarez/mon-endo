@@ -19,5 +19,11 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   },
   container: {
     width: "35%",
+    [breakpoints.down("md")]: {
+      width: "48%",
+    },
+    [breakpoints.down("sm")]: {
+      width: "100%",
+    },
   },
 });

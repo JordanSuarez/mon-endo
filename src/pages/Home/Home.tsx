@@ -3,8 +3,9 @@ import React, { useEffect } from "react";
 import { ClassNameMap } from "@material-ui/styles";
 
 import Page from "common/components/Page";
-import DayInformation from "common/components/DayInformation";
-import { Pain } from "common/types/pains";
+import Pain from "common/components/Pain";
+import { Pain as IPain } from "common/types/pains";
+import { SportActivity as ISportActivity } from "common/types/sportActivity";
 import { RootState } from "common/redux/reducers/root/types";
 import { RootAction } from "common/redux/actions/root/types";
 import MealForm from "common/components/MealForm";
@@ -14,7 +15,9 @@ import { StylesInterface } from "./styles";
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   getDailyPains: () => void;
-  pains: Pain[];
+  getSportActivities: () => void;
+  sportActivities: ISportActivity[];
+  pains: IPain[];
   saveDate: (state: RootState) => RootAction;
 };
 
@@ -23,20 +26,22 @@ const Home = ({
   getDailyPains,
   pains,
   saveDate,
+  getSportActivities,
+  sportActivities,
 }: Props): JSX.Element => {
   useEffect(() => {
     saveDate({ date: new Date().toString() });
     getDailyPains();
-  }, [getDailyPains, saveDate]);
+    getSportActivities();
+  }, [getDailyPains, getSportActivities, saveDate]);
+
   return (
     <Page title="Home">
       <div className={classes.root}>
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore */}
-        <DayInformation items={pains} dateTime={new Date()} />
+        <Pain pains={pains} dateTime={new Date().toString()} />
         <div className={classes.container}>
           <MealForm />
-          <SportActivity />
+          <SportActivity sportActivities={sportActivities} />
         </div>
       </div>
     </Page>

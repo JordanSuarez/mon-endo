@@ -9,6 +9,7 @@ import SportActivityForm from "common/components/SportActivityForm";
 import { Pain } from "common/types/pains";
 import locale from "common/components/PainForm/config/locale";
 import { FormContext } from "common/context";
+import { SportActivity } from "common/types/sportActivity";
 import { StylesInterface } from "./styles";
 
 type Props = {
@@ -17,6 +18,9 @@ type Props = {
   context: string;
   closeDrawer: (context: string) => void;
   createPain: (pain: Omit<Pain, "userId" | "id">) => void;
+  createSportActivity: (
+    sportActivity: Omit<SportActivity, "userId" | "id">
+  ) => void;
 };
 
 const Drawer = ({
@@ -25,6 +29,7 @@ const Drawer = ({
   closeDrawer,
   context,
   createPain,
+  createSportActivity,
 }: Props): JSX.Element => {
   return (
     <MUIDrawer
@@ -37,9 +42,7 @@ const Drawer = ({
         {context === PAIN_FORM && (
           <FormContext.Provider value={CREATE}>
             <PainForm
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              title={locale.title.create}
+              title={locale.title.pain.create}
               handleSubmitForm={createPain}
             />
           </FormContext.Provider>
@@ -47,10 +50,8 @@ const Drawer = ({
         {context === SPORT_ACTIVITY && (
           <FormContext.Provider value={CREATE}>
             <SportActivityForm
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              title={locale.title.create}
-              handleSubmitForm={(values: any) => console.log(values)}
+              title={locale.title.sportActivity.create}
+              handleSubmitForm={createSportActivity}
             />
           </FormContext.Provider>
         )}

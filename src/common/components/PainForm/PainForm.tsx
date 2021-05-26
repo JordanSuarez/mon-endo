@@ -4,6 +4,7 @@ import { ClassNameMap } from "@material-ui/styles";
 import frLocale from "date-fns/locale/fr";
 import { DateTimePicker, makeValidate, makeRequired, TextField } from "mui-rff";
 import DateFnsUtils from "@date-io/date-fns";
+import { Config } from "final-form";
 import { get } from "lodash";
 
 import { Pain, PainType, PainTypeIntensity } from "common/types/pains";
@@ -16,17 +17,16 @@ import locale from "./config/locale";
 import selectFields from "./config/selectFields";
 import yupSchema from "./validation/schema";
 
-type Props = {
+export type Props = Partial<Config> & {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   handleSubmitForm: (pain: Omit<Pain, "userId" | "id">) => void;
   getPainsType: () => void;
-  onCancel: () => void;
+  handleCloseForm?: () => void;
   getPainsTypeIntensity: () => void;
   painsType: PainType[];
   painsTypeIntensity: PainTypeIntensity[];
   title: string;
-  initialValues: Pain;
-  descriptionFieldIsActive: boolean;
+  descriptionFieldIsActive?: boolean;
 };
 
 const PainForm = ({
@@ -39,7 +39,7 @@ const PainForm = ({
   title,
   initialValues,
   descriptionFieldIsActive,
-  onCancel,
+  handleCloseForm,
 }: Props): JSX.Element => {
   const context = useContext(FormContext);
 
@@ -57,17 +57,20 @@ const PainForm = ({
     getPainsTypeIntensity();
   }, [getPainsType, getPainsTypeIntensity]);
 
-  const onSubmit = ({
-    date,
-    description,
-  }: Pick<Pain, "date" | "description">): void => {
+  const onSubmit = (values: any): void => {
     setDisplayDescriptionField(false);
     const inputValues = {
       ...pain,
-      date: date.toString(),
-      description: pain.painType.name === "Autre" ? description : "",
+      date: values.date.toString(),
+      description: pain.painType.name === "Autre" ? values.description : "",
     };
     handleSubmitForm(inputValues);
+  };
+
+  const onCancel = (): void => {
+    if (handleCloseForm) {
+      handleCloseForm();
+    }
   };
 
   const handleClick = (values: PainType, fieldName: string): void => {
@@ -103,10 +106,8 @@ const PainForm = ({
 
   return (
     <Form
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      onSubmit={onSubmit}
       initialValues={initialFormValues}
+      onSubmit={onSubmit}
       onCancel={onCancel}
       validate={validate}
       title={title}
@@ -128,8 +129,6 @@ const PainForm = ({
         {selectFields.map((fieldProps) => (
           <Select
             key={fieldProps.name}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             handleClick={handleClick}
             required={required}
             fieldProps={fieldProps}
@@ -152,6 +151,11 @@ const PainForm = ({
       </div>
     </Form>
   );
+};
+
+PainForm.defaultProps = {
+  descriptionFieldIsActive: false,
+  handleCloseForm: () => {},
 };
 
 export default PainForm;

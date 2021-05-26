@@ -8,7 +8,7 @@ import { AppState } from "common/types/redux";
 import { Meal } from "common/types/meal";
 import { showDrawer } from "common/components/Drawer/redux/actions";
 import { styles } from "./styles";
-import SportActivityForm from "./SportActivityForm";
+import SportActivity, { Props } from "./SportActivity";
 
 type State = {
   meal: Meal;
@@ -26,9 +26,7 @@ const mapDispatchToProps = (
   },
 });
 
-export default compose(
+export default compose<Props, Pick<Props, "sportActivities">>(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps)
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-)(SportActivityForm);
+)(SportActivity);

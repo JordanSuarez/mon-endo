@@ -20,7 +20,7 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   root: {
     marginTop: "1rem",
     minHeight: "15rem",
-    width: "50%",
+    width: "60%",
     textTransform: "initial",
     [breakpoints.down("sm")]: {
       width: "100%",
@@ -63,7 +63,7 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
       margin: "0.2rem",
     },
     [breakpoints.down("xs")]: {
-      top: "1.8rem",
+      top: "2rem",
     },
     [breakpoints.up("sm")]: {
       display: "flex",

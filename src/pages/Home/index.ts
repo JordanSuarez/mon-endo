@@ -10,15 +10,19 @@ import { Pain } from "common/types/pains";
 import { AppState } from "common/types/redux";
 import { RootState } from "common/redux/reducers/root/types";
 import { saveRoot } from "common/redux/actions/root";
+import { getSportActivities } from "common/redux/actions/sportActivities";
+import { SportActivity } from "common/types/sportActivity";
 import { styles } from "./styles";
 import Home from "./Home";
 
 type State = {
   pains: Pain[];
+  sportActivities: SportActivity[];
 };
 
-const mapStateToProps = ({ pains }: State) => ({
+const mapStateToProps = ({ pains, sportActivities }: State) => ({
   ...pains,
+  ...sportActivities,
 });
 
 const mapDispatchToProps = (
@@ -26,6 +30,9 @@ const mapDispatchToProps = (
 ) => ({
   getDailyPains: async () => {
     dispatch(await getDailyPains());
+  },
+  getSportActivities: async () => {
+    dispatch(await getSportActivities());
   },
   saveDate: (state: RootState) => {
     dispatch(saveRoot(state));

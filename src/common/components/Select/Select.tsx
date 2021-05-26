@@ -6,14 +6,13 @@ import { Select as SelectMUI } from "mui-rff";
 
 import { SelectFieldsProps } from "common/types/fields";
 import { StylesInterface } from "./styles";
-import { PainType } from "../../types/pains";
 
 type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
-  handleClick: <T>(values: T, fieldName: string) => void;
+  handleClick: (values: any, fieldName: string) => void;
   required: any;
   fieldProps: SelectFieldsProps;
-  options: PainType[];
+  options: any[];
 };
 
 const Select = ({
