@@ -2,30 +2,18 @@ import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { Styles } from "common/types/styles";
 
 export type StylesInterface = {
-  root: string;
-  divider: string;
   list: string;
+  divider: string;
   listItem: string;
   listItemText: string;
   iconsContainer: string;
-  text: string;
-  textField: string;
-  form: string;
-  addIcon: string;
   editIcon: string;
   deleteIcon: string;
+  form: string;
+  text: string;
 };
 
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
-  root: {
-    marginTop: "1rem",
-    minHeight: "15rem",
-    width: "50%",
-    textTransform: "initial",
-    [breakpoints.down("sm")]: {
-      width: "100%",
-    },
-  },
   divider: {
     margin: "0 1rem",
   },
@@ -73,34 +61,27 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
       flexDirection: "column",
     },
   },
-  text: {
-    paddingBottom: "3rem",
-    marginTop: "3rem",
-    textAlign: "center",
-    fontStyle: "italic",
+  editIcon: {
+    color: palette.primary.main,
+    "&:hover": {
+      backgroundColor: palette.secondary.light,
+    },
   },
-  textField: {
-    marginTop: "0.5rem",
+  deleteIcon: {
+    color: palette.secondary.main,
+    "&:hover": {
+      backgroundColor: palette.secondary.light,
+    },
   },
   form: {
     width: "100%",
     minHeight: "8rem",
     position: "relative",
   },
-  addIcon: {
-    margin: "1rem",
-    color: palette.common.white,
-    backgroundColor: palette.primary.light,
-    "&:hover": {
-      backgroundColor: palette.primary.dark,
-    },
-  },
-  editIcon: {
-    color: palette.primary.main,
-    backgroundColor: palette.common.white,
-  },
-  deleteIcon: {
-    color: palette.secondary.main,
-    backgroundColor: palette.common.white,
+  text: {
+    paddingBottom: "3rem",
+    marginTop: "3rem",
+    textAlign: "center",
+    fontStyle: "italic",
   },
 });

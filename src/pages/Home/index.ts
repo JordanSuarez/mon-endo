@@ -12,16 +12,20 @@ import { RootState } from "common/redux/reducers/root/types";
 import { saveRoot } from "common/redux/actions/root";
 import { getSportActivities } from "common/redux/actions/sportActivities";
 import { SportActivity } from "common/types/sportActivity";
+import { Meal } from "common/types/meal";
+import { getDailyMeal } from "common/redux/actions/meal";
 import { styles } from "./styles";
 import Home, { Props } from "./Home";
 
 type State = {
   pains: Pain[];
+  meal: Meal;
   sportActivities: SportActivity[];
 };
 
-const mapStateToProps = ({ pains, sportActivities }: State) => ({
+const mapStateToProps = ({ pains, sportActivities, meal }: State) => ({
   ...pains,
+  meal,
   ...sportActivities,
 });
 
@@ -36,6 +40,9 @@ const mapDispatchToProps = (
   },
   saveDate: (state: RootState) => {
     dispatch(saveRoot(state));
+  },
+  getDailyMeal: async () => {
+    dispatch(await getDailyMeal());
   },
 });
 

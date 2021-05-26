@@ -4,8 +4,13 @@ import { connect } from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 
+import {
+  updateSportActivity,
+  deleteSportActivity,
+} from "common/redux/actions/sportActivities";
 import { AppState } from "common/types/redux";
 import { Meal } from "common/types/meal";
+import { SportActivity as ISportActivity } from "common/types/sportActivity";
 import { showDrawer } from "common/components/Drawer/redux/actions";
 import { styles } from "./styles";
 import SportActivity, { Props } from "./SportActivity";
@@ -23,6 +28,13 @@ const mapDispatchToProps = (
 ) => ({
   toggleDrawer: (context: string) => {
     dispatch(showDrawer(context));
+  },
+  deleteSportActivity: async (id: string) => {
+    dispatch(await deleteSportActivity(id));
+  },
+  updateSportActivity: async (sportActivity: ISportActivity) => {
+    console.log(sportActivity);
+    dispatch(await updateSportActivity(sportActivity));
   },
 });
 

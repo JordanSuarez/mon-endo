@@ -40,12 +40,13 @@ export default class Firebase {
   public getFilteredDataSnapshotByDate = async (
     date: string
   ): Promise<firebase.database.DataSnapshot> => {
-    const startDate = format(new Date(date), fullDateWIthShortDay);
-    const endDate = new Date(`${startDate} 23:59:59`).toString();
+    const currentDate = format(new Date(date), fullDateWIthShortDay);
+    const startDate = new Date(`${currentDate} 00:00:00`).toString();
+    const endDate = new Date(`${currentDate} 23:59:59`).toString();
     return this.getDatabaseRef()
       .orderByChild("date")
       .startAt(startDate)
-      .endBefore(endDate)
+      .endAt(endDate)
       .once("value", (snap) => snap);
   };
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ClassNameMap } from "@material-ui/styles";
 
@@ -10,14 +10,17 @@ import { RootState } from "common/redux/reducers/root/types";
 import { RootAction } from "common/redux/actions/root/types";
 import MealForm from "common/components/MealForm";
 import SportActivity from "common/components/SportActivity";
+import { Meal } from "common/types/meal";
 import { StylesInterface } from "./styles";
 
 export type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   getDailyPains: () => void;
   getSportActivities: () => void;
+  getDailyMeal: () => void;
   sportActivities: ISportActivity[];
   pains: IPain[];
+  meal: Meal;
   saveDate: (state: RootState) => RootAction;
 };
 
@@ -25,22 +28,27 @@ const Home = ({
   classes,
   getDailyPains,
   pains,
+  meal,
   saveDate,
   getSportActivities,
+  getDailyMeal,
   sportActivities,
 }: Props): JSX.Element => {
+  const [date] = useState(new Date().toString() as string);
+
   useEffect(() => {
-    saveDate({ date: new Date().toString() });
+    saveDate({ date });
     getDailyPains();
+    getDailyMeal();
     getSportActivities();
-  }, [getDailyPains, getSportActivities, saveDate]);
+  }, [date, getDailyMeal, getDailyPains, getSportActivities, saveDate]);
 
   return (
     <Page title="Home">
       <div className={classes.root}>
         <Pain pains={pains} dateTime={new Date().toString()} />
         <div className={classes.container}>
-          <MealForm />
+          <MealForm meal={meal} date={date} />
           <SportActivity sportActivities={sportActivities} />
         </div>
       </div>

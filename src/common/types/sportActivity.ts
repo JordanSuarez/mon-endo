@@ -11,12 +11,12 @@ export type SportActivityDuration = {
   time: string;
 };
 
-export type SportActivityDurationType = {
+export type Activity = {
   id: string;
   name: string;
 };
 
-export type Activity = {
+export type SportActivityDurationType = {
   id: string;
   name: string;
 };

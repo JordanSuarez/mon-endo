@@ -17,10 +17,15 @@ import { formatDataSnapshotValues } from "common/helpers/ressources";
 import { MealAction } from "./types";
 
 export const SAVE_MEAL = "SAVE_MEAL";
+export const RESET_MEAL = "RESET_MEAL";
 
 export const saveMeal = (meal: Meal): MealAction => ({
   type: SAVE_MEAL,
   ...meal,
+});
+
+export const resetMeal = (): Pick<MealAction, "type"> => ({
+  type: RESET_MEAL,
 });
 
 export const getMeal = (
@@ -41,6 +46,8 @@ export const getMeal = (
           const meal = formatDataSnapshotValues<Meal>(mealSnap);
           if (meal.length > 0) {
             dispatch(saveMeal(meal[0]));
+          } else {
+            dispatch(resetMeal());
           }
         } catch (err) {
           dispatch(
@@ -85,7 +92,7 @@ export const createMeal = (
             userId: user.uid,
           };
           await ressource.create<Omit<Meal, "id">>(newMeal);
-          await dispatch(getDailyMeal());
+          await dispatch(getMeal(meal.date));
           dispatch(
             showToast(
               generateToastPayload(

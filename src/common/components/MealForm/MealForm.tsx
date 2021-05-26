@@ -14,11 +14,12 @@ import locale from "./config/locale";
 import yupSchema from "./validation/schema";
 import textFields from "./config/textFields";
 
-type Props = {
+export type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   createMeal: (meal: Omit<Meal, "userId" | "id">) => void;
   updateMeal: (meal: Meal) => void;
   meal: Meal;
+  date: string;
   getDailyMeal: () => void;
 };
 
@@ -27,16 +28,12 @@ const MealForm = ({
   createMeal,
   updateMeal,
   meal,
-  getDailyMeal,
+  date,
 }: Props): JSX.Element => {
   const [initialValues, setInitialValues] = useState(
     {} as MealFormInitialValues
   );
   const validate = makeValidate(yupSchema);
-
-  useEffect(() => {
-    getDailyMeal();
-  }, [getDailyMeal]);
 
   useEffect(() => {
     if (meal.content) {
@@ -49,7 +46,7 @@ const MealForm = ({
       if (meal.id.length > 0) {
         updateMeal({ ...meal, content: values });
       } else {
-        createMeal({ content: values, date: new Date().toString() });
+        createMeal({ content: values, date });
       }
     }
   };

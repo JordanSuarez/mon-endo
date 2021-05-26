@@ -59,15 +59,18 @@ const Pain = ({
   const generateChildrenItem = (values: IPain): JSX.Element => {
     return (
       <ul>
-        <li>{locale.listItem.painType.label(values.painType.name)}</li>
+        {values.description.length > 0 ? (
+          <li>
+            {values.painType.name} : {values.description}
+          </li>
+        ) : (
+          <li>{values.painType.name}</li>
+        )}
         <li>
           {locale.listItem.painTypeIntensity.label(
             values.painTypeIntensity.name
           )}
         </li>
-        {values.description.length > 0 && (
-          <li>{locale.listItem.description.label(values.description)}</li>
-        )}
       </ul>
     );
   };

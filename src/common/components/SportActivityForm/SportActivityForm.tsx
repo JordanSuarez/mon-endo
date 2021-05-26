@@ -8,6 +8,7 @@ import { get } from "lodash";
 import {
   Activity,
   SportActivity,
+  SportActivityDuration,
   SportActivityDurationType,
 } from "common/types/sportActivity";
 import Form from "common/components/Form";
@@ -26,8 +27,9 @@ import { durationTypes, activities } from "./data";
 export type Props = Partial<Config> & {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   title: string;
+  date: string;
   handleSubmitForm: (
-    sportActivity: Omit<SportActivity, "userId" | "id" | "date">
+    sportActivity: Omit<SportActivity, "userId" | "id">
   ) => void;
   handleCloseForm?: () => void;
 };
@@ -38,26 +40,37 @@ const SportActivityForm = ({
   initialValues,
   handleSubmitForm,
   handleCloseForm,
+  date,
 }: Props): JSX.Element => {
   const context = useContext(FormContext);
   const required = makeRequired(yupSchema);
   const validate = makeValidate(yupSchema);
+  // const [activityDuration, setActivityDuration] = useState(
+  //   context === UPDATE
+  //     ? ({ ...initialValues } as SportActivity)
+  //     : ({} as { activity: string; id: string; type: string })
+  // );
   const [activityDuration, setActivityDuration] = useState(
-    {} as { activity: string; id: string; type: string }
+    context === UPDATE
+      ? ({ ...initialValues } as SportActivity)
+      : ({} as { activity: Activity; duration: SportActivityDuration })
   );
 
   const onSubmit = (values: any): void => {
+    console.log(activityDuration);
     const inputValues = {
+      date,
       duration: {
         time: values.duration,
-        type: activityDuration.type,
+        // type: activityDuration.type,
       },
       activity: {
         id: values.activity,
         name: activityDuration.activity,
       },
     };
-    handleSubmitForm(inputValues);
+    console.log(inputValues);
+    // handleSubmitForm(inputValues);
   };
 
   const onCancel = (): void => {
@@ -67,10 +80,11 @@ const SportActivityForm = ({
   };
 
   const handleClick = <T,>(values: T, fieldName: string): void => {
+    console.log(fieldName, activityDuration);
     setActivityDuration({
       ...activityDuration,
       [fieldName]: get(values, "name", ""),
-      id: get(values, "id", ""),
+      // id: get(values, "id", ""),
     });
   };
 

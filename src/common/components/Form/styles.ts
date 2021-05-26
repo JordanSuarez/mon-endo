@@ -8,6 +8,7 @@ export type StylesInterface = {
   updateFieldsContainer: string;
   createFieldsContainer: string;
   iconsContainer: string;
+  icon: string;
 };
 
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
@@ -48,6 +49,11 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     },
     "& button": {
       margin: "0.2rem",
+    },
+  },
+  icon: {
+    "&:hover": {
+      backgroundColor: palette.secondary.light,
     },
   },
 });

@@ -46,7 +46,7 @@ const SportActivity = ({
   };
 
   const handleSubmitForm = (
-    inputValues: Omit<ISportActivity, "userId" | "id" | "date">
+    inputValues: Omit<ISportActivity, "userId" | "id">
   ): void => {
     const itemUpdated = {
       ...selectedSportActivity,

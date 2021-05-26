@@ -62,6 +62,7 @@ const Form = <T,>({
                     title={locale.button.cancel.label}
                     onClick={onCancel}
                     color="secondary"
+                    className={classes.icon}
                   >
                     <ClearIcon />
                   </IconButton>
@@ -69,6 +70,7 @@ const Form = <T,>({
                     title={locale.button.submit.label}
                     type="submit"
                     disabled={submitting || !valid || pristine || error}
+                    className={classes.icon}
                   >
                     <SendIcon />
                   </IconButton>
