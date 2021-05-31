@@ -13,7 +13,10 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   root: {
     marginTop: "1rem",
     height: "fit-content",
-    [breakpoints.down("xs")]: {
+    [breakpoints.down("sm")]: {
+      width: "48%",
+    },
+    [breakpoints.down(700)]: {
       width: "100%",
     },
   },

@@ -5,12 +5,7 @@ import { makeRequired, makeValidate, TextField } from "mui-rff";
 import { Config } from "final-form";
 import { get } from "lodash";
 
-import {
-  Activity,
-  SportActivity,
-  SportActivityDuration,
-  SportActivityDurationType,
-} from "common/types/sportActivity";
+import { SportActivity } from "common/types/sportActivity";
 import Form from "common/components/Form";
 import Select from "common/components/Select";
 import { FormContext } from "common/context";
@@ -45,32 +40,26 @@ const SportActivityForm = ({
   const context = useContext(FormContext);
   const required = makeRequired(yupSchema);
   const validate = makeValidate(yupSchema);
-  // const [activityDuration, setActivityDuration] = useState(
-  //   context === UPDATE
-  //     ? ({ ...initialValues } as SportActivity)
-  //     : ({} as { activity: string; id: string; type: string })
-  // );
   const [activityDuration, setActivityDuration] = useState(
     context === UPDATE
       ? ({ ...initialValues } as SportActivity)
-      : ({} as { activity: Activity; duration: SportActivityDuration })
+      : ({} as SportActivity)
   );
 
   const onSubmit = (values: any): void => {
-    console.log(activityDuration);
     const inputValues = {
+      ...activityDuration,
       date,
       duration: {
+        ...activityDuration.duration,
         time: values.duration,
-        // type: activityDuration.type,
       },
       activity: {
+        ...activityDuration.activity,
         id: values.activity,
-        name: activityDuration.activity,
       },
     };
-    console.log(inputValues);
-    // handleSubmitForm(inputValues);
+    handleSubmitForm(inputValues);
   };
 
   const onCancel = (): void => {
@@ -79,13 +68,23 @@ const SportActivityForm = ({
     }
   };
 
-  const handleClick = <T,>(values: T, fieldName: string): void => {
-    console.log(fieldName, activityDuration);
-    setActivityDuration({
-      ...activityDuration,
-      [fieldName]: get(values, "name", ""),
-      // id: get(values, "id", ""),
-    });
+  const handleClick = (values: any, fieldName: string): void => {
+    if (fieldName === locale.field.activity.name) {
+      setActivityDuration({
+        ...activityDuration,
+        activity: {
+          ...values,
+        },
+      });
+    } else {
+      setActivityDuration({
+        ...activityDuration,
+        duration: {
+          time: values.duration,
+          type: values.name,
+        },
+      });
+    }
   };
 
   const initialFormValues =
@@ -108,9 +107,7 @@ const SportActivityForm = ({
     >
       <>
         <Select
-          handleClick={(values, fieldName) =>
-            handleClick<Activity>(values as Activity, fieldName)
-          }
+          handleClick={handleClick}
           required={required}
           fieldProps={selectActivityField}
           options={activities}
@@ -125,12 +122,7 @@ const SportActivityForm = ({
             required={required[locale.field.duration.name]}
           />
           <Select
-            handleClick={(values, fieldName) =>
-              handleClick<SportActivityDurationType>(
-                values as SportActivityDurationType,
-                fieldName
-              )
-            }
+            handleClick={handleClick}
             required={required}
             fieldProps={selectDurationTypeField}
             options={durationTypes}
