@@ -4,6 +4,7 @@ import { RootState } from "common/redux/reducers/root/types";
 import { PainsState } from "common/redux/reducers/pains/types";
 import { PainsTypeState } from "common/redux/reducers/painsType/types";
 import { PainsTypeIntensityState } from "common/redux/reducers/painsTypeIntensity/types";
+import { SportActivitiesState } from "common/redux/reducers/sportActivities/types";
 
 export type AppState = {
   root: RootState;
@@ -12,4 +13,5 @@ export type AppState = {
   pains: PainsState;
   painsType: PainsTypeState;
   painsTypeIntensity: PainsTypeIntensityState;
+  sportActivities: SportActivitiesState;
 };

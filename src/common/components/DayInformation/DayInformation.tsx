@@ -1,159 +1,86 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { ClassNameMap } from "@material-ui/styles";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
 import {
   List,
   ListItem,
-  ListItemText,
-  Paper,
   Divider,
   ListItemSecondaryAction,
-  IconButton,
-  Typography,
+  ListItemText,
 } from "@material-ui/core";
+import { ClassNameMap } from "@material-ui/styles";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import { get } from "lodash";
 
-import { fullDate, formatDate, dateWithHours } from "common/helpers/date";
-import { DELETE, PAIN_FORM, UPDATE } from "common/constants/context";
-import ActionButton from "common/components/ActionButton";
-import PainForm from "common/components/PainForm";
-import AddIcon from "@material-ui/icons/Add";
-import { Pain, PainType, PainTypeIntensity } from "common/types/pains";
-import frLocale from "date-fns/locale/fr";
-import { PainFormContext } from "common/context";
+import { DELETE, UPDATE } from "common/constants/context";
+import IconButton from "common/components/IconButton";
+import { FormContext } from "common/context";
 import { StylesInterface } from "./styles";
-import locale from "../PainForm/config/locale";
+import locale from "./config/locale";
 
-export type Props = {
+export type Props<T> = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
-  items: Array<Pain>;
-  toggleDrawer: (context: string) => void;
-  deletePain: (painId: string) => void;
-  updatePain: (pain: Pain) => void;
-  dateTime: string;
-  getPainsType: () => void;
-  getPainsTypeIntensity: () => void;
-  painsType: PainType[];
-  painsTypeIntensity: PainTypeIntensity[];
+  items: T[];
+  emptyText: string;
+  formChildren: JSX.Element;
+  generateChildrenItem: (item: T) => JSX.Element;
+  selectedItemList: T;
+  handleClick: (item: T, action: string) => void;
 };
 
-// TODO add locale
-const DayInformation = ({
+const DayInformation = <T,>({
   classes,
   items,
-  toggleDrawer,
-  deletePain,
-  updatePain,
-  dateTime,
-}: Props): JSX.Element => {
-  const [selectedPain, setSelectedPain] = useState({} as Pain);
-  const resetSelectedPain = () => setSelectedPain({} as Pain);
-  const title = formatDate(new Date(dateTime), frLocale, fullDate);
-
-  const handleClick = (pain: Pain, context: string) => {
-    if (context === DELETE) {
-      return deletePain(pain.id);
-    }
-    return setSelectedPain(pain);
-  };
-
-  const handleSubmitForm = (inputValues: Omit<Pain, "userId" | "id">): void => {
-    const painUpdated = {
-      ...selectedPain,
-      ...inputValues,
-    };
-    resetSelectedPain();
-    updatePain(painUpdated);
-  };
-
-  return (
-    <Paper elevation={3} className={classes.root}>
-      <div className={classes.header}>
-        <Typography variant="h6" className={classes.title}>
-          {title}
-        </Typography>
-        <ActionButton
-          onClick={() => toggleDrawer(PAIN_FORM)}
-          endIcon={<AddIcon>send</AddIcon>}
-          label="Ajouter une douleur"
-        />
-      </div>
-      <div>
-        {items.length > 0 ? (
-          <List dense={false} className={classes.list}>
-            {items.map(
-              (
-                { id, date, description, painType, painTypeIntensity },
-                index
-              ) => (
-                <div key={id}>
-                  <Divider className={classes.divider} />
-                  <ListItem className={classes.listItem}>
-                    {selectedPain.id !== id ? (
-                      <>
-                        <ListItemText
-                          secondary={formatDate(
-                            new Date(date),
-                            frLocale,
-                            dateWithHours
-                          )}
-                          className={classes.listItemText}
-                        >
-                          <div>Type: {painType.name}</div>
-                          <div>Intensité: {painTypeIntensity.name}</div>
-                          {description.length > 0 && (
-                            <div>Description: {description}</div>
-                          )}
-                        </ListItemText>
-                        <ListItemSecondaryAction
-                          className={classes.iconsContainer}
-                        >
-                          <IconButton
-                            edge="end"
-                            aria-label="edit"
-                            onClick={() => handleClick(items[index], UPDATE)}
-                            color="primary"
-                          >
-                            <EditIcon />
-                          </IconButton>
-                          <IconButton
-                            edge="end"
-                            aria-label="delete"
-                            onClick={() => handleClick(items[index], DELETE)}
-                            color="secondary"
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                      </>
-                    ) : (
-                      <div className={classes.form}>
-                        <PainFormContext.Provider value={UPDATE}>
-                          <PainForm
-                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                            // @ts-ignore
-                            title={locale.title.edit}
-                            initialValues={selectedPain}
-                            descriptionFieldIsActive={
-                              selectedPain.description.length > 1
-                            }
-                            onCancel={resetSelectedPain}
-                            handleSubmitForm={handleSubmitForm}
-                          />
-                        </PainFormContext.Provider>
-                      </div>
-                    )}
-                  </ListItem>
-                </div>
-              )
+  formChildren,
+  generateChildrenItem,
+  selectedItemList,
+  handleClick,
+  emptyText,
+}: Props<T>): JSX.Element => {
+  return items.length > 0 ? (
+    <List dense={false} className={classes.list}>
+      {items.map((item, index: number) => (
+        <div key={get(item, "id", "")}>
+          <Divider className={classes.divider} />
+          <ListItem className={classes.listItem}>
+            {get(selectedItemList, "id", "") !== get(item, "id", "") ? (
+              <>
+                <ListItemText
+                  secondary={locale.listItem.date.label(get(item, "date", ""))}
+                  className={classes.listItemText}
+                >
+                  {generateChildrenItem(item)}
+                </ListItemText>
+                <ListItemSecondaryAction className={classes.iconsContainer}>
+                  <IconButton
+                    title={locale.button.edit.label}
+                    className={classes.editIcon}
+                    onClick={() => handleClick(items[index], UPDATE)}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    title={locale.button.delete.label}
+                    className={classes.deleteIcon}
+                    onClick={() => handleClick(items[index], DELETE)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </>
+            ) : (
+              <div className={classes.form}>
+                <FormContext.Provider value={UPDATE}>
+                  {formChildren}
+                </FormContext.Provider>
+              </div>
             )}
-          </List>
-        ) : (
-          <p className={classes.text}>Aucune douleur enregistrée</p>
-        )}
-      </div>
-    </Paper>
+          </ListItem>
+        </div>
+      ))}
+    </List>
+  ) : (
+    <p className={classes.text}>{emptyText}</p>
   );
 };
 

@@ -1,5 +1,5 @@
 import { MealAction } from "common/redux/actions/meal/types";
-import { SAVE_MEAL } from "common/redux/actions/meal";
+import { RESET_MEAL, SAVE_MEAL } from "common/redux/actions/meal";
 import { MealFormInitialValues } from "common/types/meal";
 import { MealState } from "./types";
 
@@ -19,6 +19,10 @@ const mealReducer = (state = initialState, action: MealAction): MealState => {
         date: action.date,
         content: action.content,
         userId: action.userId,
+      };
+    case RESET_MEAL:
+      return {
+        ...initialState,
       };
     default:
       return { ...state };

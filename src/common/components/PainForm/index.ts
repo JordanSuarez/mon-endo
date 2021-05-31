@@ -9,7 +9,7 @@ import { PainType, PainTypeIntensity } from "common/types/pains";
 import { getPainsType } from "common/redux/actions/painsType";
 import { getPainsTypeIntensity } from "common/redux/actions/painsTypeIntensity";
 import { styles } from "./styles";
-import PainForm from "./PainForm";
+import PainForm, { Props } from "./PainForm";
 
 type State = {
   painsType: PainType[];
@@ -32,9 +32,17 @@ const mapDispatchToProps = (
   },
 });
 
-export default compose(
+export default compose<
+  Props,
+  Pick<
+    Props,
+    | "title"
+    | "initialValues"
+    | "descriptionFieldIsActive"
+    | "handleSubmitForm"
+    | "handleCloseForm"
+  >
+>(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps)
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
 )(PainForm);

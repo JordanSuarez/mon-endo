@@ -6,28 +6,13 @@ import { ThunkDispatch } from "redux-thunk";
 
 import { AppState } from "common/types/redux";
 import { Meal } from "common/types/meal";
-import {
-  createMeal,
-  getDailyMeal,
-  updateMeal,
-} from "common/redux/actions/meal";
+import { createMeal, updateMeal } from "common/redux/actions/meal";
 import { styles } from "./styles";
-import MealForm from "./MealForm";
-
-type State = {
-  meal: Meal;
-};
-
-const mapStateToProps = ({ meal }: State) => ({
-  meal,
-});
+import MealForm, { Props } from "./MealForm";
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>
 ) => ({
-  getDailyMeal: async () => {
-    dispatch(await getDailyMeal());
-  },
   createMeal: async (meal: Omit<Meal, "userId" | "id">) => {
     dispatch(await createMeal(meal));
   },
@@ -36,9 +21,7 @@ const mapDispatchToProps = (
   },
 });
 
-export default compose(
+export default compose<Props, Pick<Props, "meal" | "date">>(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  connect(null, mapDispatchToProps)
 )(MealForm);

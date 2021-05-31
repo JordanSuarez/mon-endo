@@ -1,7 +1,13 @@
 export default {
   title: {
-    create: "Enregistrer une douleur",
-    edit: "Modifier la douleur",
+    pain: {
+      create: "Enregistrer une douleur",
+      edit: "Modifier la douleur",
+    },
+    sportActivity: {
+      create: "Enregistrer une activité",
+      edit: "Modifier l'activité",
+    },
   },
   field: {
     required: "Le champ est requis",

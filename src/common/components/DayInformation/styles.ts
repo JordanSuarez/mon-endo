@@ -2,41 +2,23 @@ import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { Styles } from "common/types/styles";
 
 export type StylesInterface = {
-  root: string;
-  header: string;
-  title: string;
-  divider: string;
   list: string;
+  divider: string;
   listItem: string;
   listItemText: string;
   iconsContainer: string;
-  icon: string;
-  text: string;
-  textField: string;
+  editIcon: string;
+  deleteIcon: string;
   form: string;
+  text: string;
 };
 
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
-  root: {
-    marginTop: "1rem",
-    minHeight: "15rem",
-    width: "60%",
-    [breakpoints.down("sm")]: {
-      width: "100%",
-    },
-  },
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
-  },
-  title: {
-    padding: "1rem",
-    textTransform: "capitalize",
-  },
   divider: {
     margin: "0 1rem",
+  },
+  list: {
+    paddingTop: "0",
   },
   listItem: {
     minHeight: "8rem",
@@ -59,6 +41,9 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
         width: "90%",
       },
     },
+    "& ul": {
+      paddingLeft: "1rem",
+    },
     [breakpoints.down("xs")]: {
       marginTop: "1.4rem",
     },
@@ -69,28 +54,34 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
       margin: "0.2rem",
     },
     [breakpoints.down("xs")]: {
-      top: "2rem",
+      top: "1.8rem",
     },
     [breakpoints.up("sm")]: {
       display: "flex",
       flexDirection: "column",
     },
   },
-  text: {
-    paddingBottom: "3rem",
-    marginTop: "3rem",
-    textAlign: "center",
-    fontStyle: "italic",
+  editIcon: {
+    color: palette.primary.main,
+    "&:hover": {
+      backgroundColor: palette.secondary.light,
+    },
   },
-  textField: {
-    marginTop: "0.5rem",
+  deleteIcon: {
+    color: palette.secondary.main,
+    "&:hover": {
+      backgroundColor: palette.secondary.light,
+    },
   },
   form: {
     width: "100%",
     minHeight: "8rem",
     position: "relative",
-    // [breakpoints.down("xs")]: {
-    //   width: "100%",
-    // },
+  },
+  text: {
+    paddingBottom: "3rem",
+    marginTop: "3rem",
+    textAlign: "center",
+    fontStyle: "italic",
   },
 });

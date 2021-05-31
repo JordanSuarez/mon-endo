@@ -1,19 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ClassNameMap } from "@material-ui/styles";
 
 import Page from "common/components/Page";
-import DayInformation from "common/components/DayInformation";
-import { Pain } from "common/types/pains";
+import Pain from "common/components/Pain";
+import { Pain as IPain } from "common/types/pains";
+import { SportActivity as ISportActivity } from "common/types/sportActivity";
 import { RootState } from "common/redux/reducers/root/types";
 import { RootAction } from "common/redux/actions/root/types";
 import MealForm from "common/components/MealForm";
+import SportActivity from "common/components/SportActivity";
+import { Meal } from "common/types/meal";
 import { StylesInterface } from "./styles";
 
-type Props = {
+export type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   getDailyPains: () => void;
-  pains: Pain[];
+  getSportActivities: () => void;
+  getDailyMeal: () => void;
+  sportActivities: ISportActivity[];
+  pains: IPain[];
+  meal: Meal;
   saveDate: (state: RootState) => RootAction;
 };
 
@@ -21,19 +28,29 @@ const Home = ({
   classes,
   getDailyPains,
   pains,
+  meal,
   saveDate,
+  getSportActivities,
+  getDailyMeal,
+  sportActivities,
 }: Props): JSX.Element => {
+  const [date] = useState(new Date().toString() as string);
+
   useEffect(() => {
-    saveDate({ date: new Date().toString() });
+    saveDate({ date });
     getDailyPains();
-  }, [getDailyPains, saveDate]);
+    getDailyMeal();
+    getSportActivities();
+  }, [date, getDailyMeal, getDailyPains, getSportActivities, saveDate]);
+
   return (
     <Page title="Home">
       <div className={classes.root}>
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore */}
-        <DayInformation items={pains} dateTime={new Date()} />
-        <MealForm />
+        <Pain pains={pains} dateTime={new Date().toString()} />
+        <div className={classes.container}>
+          <MealForm meal={meal} date={date} />
+          <SportActivity sportActivities={sportActivities} />
+        </div>
       </div>
     </Page>
   );

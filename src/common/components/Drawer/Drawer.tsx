@@ -3,11 +3,13 @@ import React from "react";
 import { ClassNameMap } from "@material-ui/styles";
 import { Drawer as MUIDrawer, Paper } from "@material-ui/core";
 
-import { PAIN_FORM, CREATE } from "common/constants/context";
+import { PAIN_FORM, CREATE, SPORT_ACTIVITY } from "common/constants/context";
 import PainForm from "common/components/PainForm";
+import SportActivityForm from "common/components/SportActivityForm";
 import { Pain } from "common/types/pains";
 import locale from "common/components/PainForm/config/locale";
-import { PainFormContext } from "common/context";
+import { FormContext } from "common/context";
+import { SportActivity } from "common/types/sportActivity";
 import { StylesInterface } from "./styles";
 
 type Props = {
@@ -16,6 +18,9 @@ type Props = {
   context: string;
   closeDrawer: (context: string) => void;
   createPain: (pain: Omit<Pain, "userId" | "id">) => void;
+  createSportActivity: (
+    sportActivity: Omit<SportActivity, "userId" | "id" | "date">
+  ) => void;
 };
 
 const Drawer = ({
@@ -24,11 +29,8 @@ const Drawer = ({
   closeDrawer,
   context,
   createPain,
+  createSportActivity,
 }: Props): JSX.Element => {
-  const handleSubmitForm = (inputValues: Omit<Pain, "userId" | "id">): void => {
-    createPain(inputValues);
-  };
-
   return (
     <MUIDrawer
       anchor="bottom"
@@ -38,15 +40,20 @@ const Drawer = ({
     >
       <Paper className={classes.paper}>
         {context === PAIN_FORM && (
-          <PainFormContext.Provider value={CREATE}>
+          <FormContext.Provider value={CREATE}>
             <PainForm
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              inittialValues={{}}
-              title={locale.title.create}
-              handleSubmitForm={handleSubmitForm}
+              title={locale.title.pain.create}
+              handleSubmitForm={createPain}
             />
-          </PainFormContext.Provider>
+          </FormContext.Provider>
+        )}
+        {context === SPORT_ACTIVITY && (
+          <FormContext.Provider value={CREATE}>
+            <SportActivityForm
+              title={locale.title.sportActivity.create}
+              handleSubmitForm={createSportActivity}
+            />
+          </FormContext.Provider>
         )}
       </Paper>
     </MUIDrawer>
