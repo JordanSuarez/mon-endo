@@ -19,11 +19,20 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   },
   container: {
     width: "35%",
+    [breakpoints.down("lg")]: {
+      width: "45%",
+    },
     [breakpoints.down("md")]: {
       width: "48%",
     },
     [breakpoints.down("sm")]: {
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
       width: "100%",
+    },
+    [breakpoints.down(700)]: {
+      flexDirection: "column",
     },
   },
 });

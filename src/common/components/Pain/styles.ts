@@ -9,8 +9,8 @@ export type StylesInterface = {
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   root: {
     marginTop: "1rem",
-    minHeight: "15rem",
     width: "50%",
+    height: "fit-content",
     textTransform: "initial",
     [breakpoints.down("md")]: {
       width: "50%",
