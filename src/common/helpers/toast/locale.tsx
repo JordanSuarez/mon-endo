@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ERROR, SUCCESS } from "common/constants/severity";
+import { ERROR, INFO, SUCCESS } from "common/constants/severity";
 import EmailVerification from "common/components/EmailVerification";
 
 export default {
@@ -30,11 +30,6 @@ export default {
     },
   },
   login: {
-    success: {
-      title: "test",
-      content: "toto",
-      severity: SUCCESS,
-    },
     error: {
       wrongCredentials: {
         title: "Oups",
@@ -55,9 +50,9 @@ export default {
   },
   register: {
     success: {
-      title: "test",
-      content: "toto",
-      severity: SUCCESS,
+      title: "En attente de validation",
+      content: "Un email de confirmation vous à été envoyé à l'adresse indiqué",
+      severity: INFO,
     },
     error: {
       emailAlreadyTaken: {
@@ -91,6 +86,29 @@ export default {
       success: {
         title: "Suppression réussi",
         content: "La douleur a été supprimée avec succès",
+        severity: SUCCESS,
+      },
+    },
+  },
+  sportActivity: {
+    create: {
+      success: {
+        title: "Création réussi",
+        content: "L'activité a été créée avec succès",
+        severity: SUCCESS,
+      },
+    },
+    update: {
+      success: {
+        title: "Modification réussi",
+        content: "L'activité a été modifiée avec succès",
+        severity: SUCCESS,
+      },
+    },
+    delete: {
+      success: {
+        title: "Suppression réussi",
+        content: "L'activité a été supprimée avec succès",
         severity: SUCCESS,
       },
     },
