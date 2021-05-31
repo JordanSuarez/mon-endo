@@ -5,30 +5,27 @@ import { BreakpointsOptions } from "@material-ui/core/styles/createBreakpoints";
 
 const palette = {
   secondary: {
-    dark: "#141C88",
-    main: "#141C88",
-    light: "#141C88",
+    dark: "#B8BAC7",
+    main: "#D8AFB6",
+    light: "#ECECF0",
   },
   primary: {
-    dark: "#141C88",
-    main: "#141C88",
-    light: "#141C88",
+    dark: "#54507D",
+    main: "#54507D",
+    light: "#5D60A4",
   },
-  main: {
-    dark: "#141C88",
-    main: "#141C88",
-    light: "#141C88",
+  common: {
+    white: "#FAFBFE",
   },
   error: {
-    dark: "#141C88",
-    main: "#141C88",
-    light: "#141C88",
+    dark: "#DF302E",
+    main: "#DF302E",
+    light: "#DF302E",
   },
 } as PaletteOptions;
 
 const typography = {
-  main: "Open Sans, sans-serif",
-  title: "Oswald",
+  fontFamily: "Poppins, sans-serif",
 } as TypographyOptions;
 
 const breakpoints = {
