@@ -75,14 +75,16 @@ const Calendar = ({
   ] as { id: string; component: JSX.Element }[];
 
   return (
-    <Page title="Calendriers">
+    <Page title="Calendrier">
       <div className={classes.root}>
         <Hidden smDown>
           <ReactCalendar onClickDay={handleClickDay} />
-          <Pain pains={pains} />
-          <div className={classes.container}>
-            <MealForm meal={meal} date={dateSelected} />
-            <SportActivity sportActivities={sportActivities} />
+          <div className={classes.content}>
+            <Pain pains={pains} />
+            <div className={classes.container}>
+              <MealForm meal={meal} date={dateSelected} />
+              <SportActivity sportActivities={sportActivities} />
+            </div>
           </div>
         </Hidden>
         <Hidden mdUp initialWidth="sm">

@@ -71,21 +71,21 @@ export default {
     create: {
       success: {
         title: "Création réussi",
-        content: "La douleur a été créée avec succès",
+        content: "La douleur à été créée",
         severity: SUCCESS,
       },
     },
     update: {
       success: {
         title: "Modification réussi",
-        content: "La douleur a été modifiée avec succès",
+        content: "La douleur à été modifiée",
         severity: SUCCESS,
       },
     },
     delete: {
       success: {
         title: "Suppression réussi",
-        content: "La douleur a été supprimée avec succès",
+        content: "La douleur à été supprimée",
         severity: SUCCESS,
       },
     },
@@ -94,21 +94,30 @@ export default {
     create: {
       success: {
         title: "Création réussi",
-        content: "L'activité a été créée avec succès",
+        content: "L'activité à été créée",
         severity: SUCCESS,
       },
     },
     update: {
       success: {
         title: "Modification réussi",
-        content: "L'activité a été modifiée avec succès",
+        content: "L'activité à été modifiée",
         severity: SUCCESS,
       },
     },
     delete: {
       success: {
         title: "Suppression réussi",
-        content: "L'activité a été supprimée avec succès",
+        content: "L'activité à été supprimée",
+        severity: SUCCESS,
+      },
+    },
+  },
+  meal: {
+    create: {
+      success: {
+        title: "Création réussi",
+        content: "Les repas ont à été ajouté",
         severity: SUCCESS,
       },
     },

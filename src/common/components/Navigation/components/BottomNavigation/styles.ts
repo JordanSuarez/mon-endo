@@ -9,9 +9,10 @@ export type StylesInterface = {
 
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   root: {
+    borderTop: `2px solid ${palette.common.white}`,
     backgroundColor: palette.primary.light,
     color: palette.primary.dark,
-    position: "absolute",
+    position: "fixed",
     bottom: "0",
     width: "100%",
     zIndex: "2",
@@ -28,7 +29,6 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   },
   button: {
     color: palette.secondary.light,
-    borderTop: `2px solid ${palette.common.white}`,
     "& .MuiBottomNavigationAction-root": {
       minWidth: "0",
       [breakpoints.up("xs")]: {

@@ -14,6 +14,7 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     },
     [breakpoints.up("md")]: {
       maxWidth: "45rem",
+      margin: "2.5rem 0",
     },
     [breakpoints.down("sm")]: {
       marginBottom: "3rem",

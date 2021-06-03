@@ -64,6 +64,7 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     },
     [breakpoints.down("xs")]: {
       width: "90%",
+      margin: "0",
     },
   },
   box: {
