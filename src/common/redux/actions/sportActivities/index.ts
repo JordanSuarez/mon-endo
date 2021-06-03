@@ -84,7 +84,7 @@ export const createSportActivity = (
           dispatch(
             showToast(
               generateToastPayload(
-                toastLocale.pain.create.success as ToastState
+                toastLocale.sportActivity.create.success as ToastState
               )
             )
           );
@@ -115,7 +115,7 @@ export const deleteSportActivity = (
           dispatch(
             showToast(
               generateToastPayload(
-                toastLocale.pain.delete.success as ToastState
+                toastLocale.sportActivity.delete.success as ToastState
               )
             )
           );
@@ -146,7 +146,7 @@ export const updateSportActivity = (
           dispatch(
             showToast(
               generateToastPayload(
-                toastLocale.pain.update.success as ToastState
+                toastLocale.sportActivity.update.success as ToastState
               )
             )
           );

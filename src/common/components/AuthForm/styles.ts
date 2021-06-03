@@ -30,7 +30,7 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     width: "55%",
     height: "80%",
     alignSelf: "center",
-    background: `url(${process.env.PUBLIC_URL}/login.png) no-repeat center`,
+    background: `url(${process.env.PUBLIC_URL}/images/login.png) no-repeat center`,
     backgroundSize: "contain",
     [breakpoints.down("sm")]: {
       height: "65%",

@@ -2,3 +2,5 @@
 /node_modules
 webstorm.js
 /build
+/src/service-worker.ts
+/src/serviceWorkerRegistration.ts
