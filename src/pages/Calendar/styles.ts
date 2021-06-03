@@ -4,6 +4,7 @@ import { Styles } from "common/types/styles";
 export type StylesInterface = {
   root: string;
   container: string;
+  appBar: string;
 };
 
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
@@ -15,6 +16,7 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     justifyContent: "space-between",
     [breakpoints.down("sm")]: {
       flexDirection: "column",
+      margin: "-1rem",
     },
   },
   container: {
@@ -34,5 +36,10 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     [breakpoints.down(700)]: {
       flexDirection: "column",
     },
+  },
+  appBar: {
+    zIndex: "0",
+    marginTop: "-3rem",
+    marginBottom: "-0.6rem",
   },
 });

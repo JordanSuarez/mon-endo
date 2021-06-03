@@ -28,6 +28,7 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   },
   button: {
     color: palette.secondary.light,
+    borderTop: `2px solid ${palette.common.white}`,
     "& .MuiBottomNavigationAction-root": {
       minWidth: "0",
       [breakpoints.up("xs")]: {

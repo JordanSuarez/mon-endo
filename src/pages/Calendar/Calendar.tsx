@@ -14,7 +14,14 @@ import { SportActivity as ISportActivity } from "common/types/sportActivity";
 import { Meal } from "common/types/meal";
 import { MealAction } from "common/redux/actions/meal/types";
 import { SportActivitiesAction } from "common/redux/actions/sportActivities/types";
+import { Hidden } from "@material-ui/core";
 import { StylesInterface } from "./styles";
+import AppBar from "../../common/components/AppBar";
+import {
+  MEAL,
+  PAINS,
+  SPORT_ACTIVITIES,
+} from "../../common/constants/ressources";
 
 export type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
@@ -53,15 +60,39 @@ const Calendar = ({
     saveDate({ date: date.toString() });
   };
 
+  const tabs = [
+    { id: PAINS, label: "Douleurs" },
+    { id: MEAL, label: "Repas" },
+    { id: SPORT_ACTIVITIES, label: "Activités" },
+  ] as { id: string; label: string }[];
+  const components = [
+    { id: PAINS, component: <Pain pains={pains} /> },
+    { id: MEAL, component: <MealForm meal={meal} date={dateSelected} /> },
+    {
+      id: SPORT_ACTIVITIES,
+      component: <SportActivity sportActivities={sportActivities} />,
+    },
+  ] as { id: string; component: JSX.Element }[];
+
   return (
-    <Page title="Calendar">
+    <Page title="Calendriers">
       <div className={classes.root}>
-        <ReactCalendar onClickDay={handleClickDay} />
-        <Pain pains={pains} />
-        <div className={classes.container}>
-          <MealForm meal={meal} date={dateSelected} />
-          <SportActivity sportActivities={sportActivities} />
-        </div>
+        <Hidden smDown>
+          <ReactCalendar onClickDay={handleClickDay} />
+          <Pain pains={pains} />
+          <div className={classes.container}>
+            <MealForm meal={meal} date={dateSelected} />
+            <SportActivity sportActivities={sportActivities} />
+          </div>
+        </Hidden>
+        <Hidden mdUp initialWidth="sm">
+          <ReactCalendar onClickDay={handleClickDay} />
+          <AppBar
+            tabs={tabs}
+            components={components}
+            className={classes.appBar}
+          />
+        </Hidden>
       </div>
     </Page>
   );

@@ -14,9 +14,6 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     marginTop: "1rem",
     height: "fit-content",
     [breakpoints.down("sm")]: {
-      width: "48%",
-    },
-    [breakpoints.down(700)]: {
       width: "100%",
     },
   },
