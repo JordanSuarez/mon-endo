@@ -28,10 +28,15 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   },
   button: {
     color: palette.secondary.light,
-    "&.MuiBottomNavigationAction-root": {
+    "& .MuiBottomNavigationAction-root": {
       minWidth: "0",
       [breakpoints.up("xs")]: {
         minWidth: "80px",
+      },
+    },
+    "& .MuiBottomNavigationAction-label": {
+      [breakpoints.down("sm")]: {
+        fontSize: "0.65rem",
       },
     },
   },

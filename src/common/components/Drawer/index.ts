@@ -12,7 +12,7 @@ import { createSportActivity } from "common/redux/actions/sportActivities";
 import { DrawerState } from "./redux/reducers/types";
 import { hideDrawer } from "./redux/actions";
 import { styles } from "./styles";
-import Drawer from "./Drawer";
+import Drawer, { Props } from "./Drawer";
 
 type State = {
   drawer: DrawerState;
@@ -37,9 +37,7 @@ const mapDispatchToProps = (
   },
 });
 
-export default compose(
+export default compose<Props, Pick<Props, never>>(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps)
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
 )(Drawer);

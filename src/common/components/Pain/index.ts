@@ -33,7 +33,7 @@ const mapDispatchToProps = (
   },
 });
 
-export default compose<Props, Pick<Props, "pains" | "dateTime">>(
+export default compose<Props, Pick<Props, "pains">>(
   withStyles(styles),
   connect(null, mapDispatchToProps)
 )(Pain);

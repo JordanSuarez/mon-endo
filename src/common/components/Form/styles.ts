@@ -7,6 +7,7 @@ export type StylesInterface = {
   button: string;
   updateFieldsContainer: string;
   createFieldsContainer: string;
+  field: string;
   iconsContainer: string;
   icon: string;
 };
@@ -29,6 +30,11 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   },
   createFieldsContainer: {
     width: "1OO%",
+  },
+  field: {
+    width: "100%",
+    marginTop: "1rem",
+    minHeight: "5rem",
   },
   button: {
     textTransform: "none",

@@ -8,7 +8,7 @@ export default {
       label: "Calendrier",
     },
     logout: {
-      label: "Se déconnecter",
+      label: "Déconnexion",
     },
     create: {
       label: "Ajouter une douleur",

@@ -14,7 +14,10 @@ const mapStateToProps = ({ root }: State) => ({
   date: root.date,
 });
 
-export default compose<Props, Omit<Props, "classes" | "date">>(
+export default compose<
+  Props,
+  Pick<Props, "handleSubmit" | "handleClose" | "initialValues">
+>(
   withStyles(styles),
   connect(mapStateToProps)
 )(SportActivityForm);

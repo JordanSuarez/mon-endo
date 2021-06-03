@@ -24,7 +24,6 @@ export type Props = {
   getPainsTypeIntensity: () => void;
   painsType: PainType[];
   painsTypeIntensity: PainTypeIntensity[];
-  dateTime: string;
 };
 
 const Pain = ({
@@ -33,7 +32,6 @@ const Pain = ({
   toggleDrawer,
   deletePain,
   updatePain,
-  dateTime,
 }: Props): JSX.Element => {
   const [selectedPain, setSelectedPain] = useState({} as IPain);
   const resetSelectedPain = () => setSelectedPain({} as IPain);
@@ -78,7 +76,7 @@ const Pain = ({
   return (
     <Paper
       className={classes.root}
-      title={locale.title.paper(dateTime)}
+      title={locale.title.paper}
       button={
         <IconButton
           title={locale.button.create.label}
@@ -101,13 +99,12 @@ const Pain = ({
           formChildren={
             <FormContext.Provider value={UPDATE}>
               <PainForm
-                title={locale.title.form.edit}
                 initialValues={selectedPain}
                 descriptionFieldIsActive={
                   get(selectedPain, "description", "").length > 0
                 }
-                handleCloseForm={resetSelectedPain}
-                handleSubmitForm={handleSubmitForm}
+                handleClose={resetSelectedPain}
+                handleSubmit={handleSubmitForm}
               />
             </FormContext.Provider>
           }

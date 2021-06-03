@@ -57,7 +57,7 @@ const Calendar = ({
     <Page title="Calendar">
       <div className={classes.root}>
         <ReactCalendar onClickDay={handleClickDay} />
-        <Pain pains={pains} dateTime={dateSelected.toString()} />
+        <Pain pains={pains} />
         <div className={classes.container}>
           <MealForm meal={meal} date={dateSelected} />
           <SportActivity sportActivities={sportActivities} />

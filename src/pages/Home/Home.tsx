@@ -46,7 +46,7 @@ const Home = ({
   return (
     <Page title="Home">
       <div className={classes.root}>
-        <Pain pains={pains} dateTime={new Date().toString()} />
+        <Pain pains={pains} />
         <div className={classes.container}>
           <MealForm meal={meal} date={date} />
           <SportActivity sportActivities={sportActivities} />

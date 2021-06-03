@@ -65,17 +65,14 @@ export const createSportActivity = (
   sportActivity: Omit<SportActivity, "userId" | "id">
 ): ThunkAction<Promise<void>, AppState, Record<string, unknown>, AnyAction> => {
   return async (
-    dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>,
-    getState: () => AppState
+    dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>
   ): Promise<void> => {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          const currentDate = getState().root.date;
           const firebaseRef = new Firebase(user.uid, SPORT_ACTIVITIES);
           const newSportActivity = {
             ...sportActivity,
-            date: currentDate,
             userId: user.uid,
           };
           await firebaseRef.create<Omit<SportActivity, "id">>(newSportActivity);

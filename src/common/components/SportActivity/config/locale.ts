@@ -1,9 +1,6 @@
 export default {
   title: {
     paper: "Activité physique",
-    form: {
-      edit: "Modifier l'activité",
-    },
   },
   button: {
     create: {
