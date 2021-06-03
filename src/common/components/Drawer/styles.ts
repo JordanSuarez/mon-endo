@@ -27,7 +27,6 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     },
   },
   paper: {
-    margin: "1rem",
     padding: "1rem",
     [breakpoints.up("sm")]: {
       margin: "3rem auto 1rem",

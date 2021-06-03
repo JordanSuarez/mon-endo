@@ -12,6 +12,11 @@
 /build
 dist/
 
+# firebase
+.firebaserc
+firebase.json
+/.firebase
+
 # misc
 .idea
 .DS_Store

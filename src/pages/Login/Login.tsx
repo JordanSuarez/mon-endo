@@ -11,7 +11,6 @@ import {
   generateToastPayload,
   handleErrorMessage,
 } from "common/helpers/toast/toastMessage";
-import toastLocale from "common/helpers/toast/locale";
 import { AuthFormContext } from "common/context";
 import { LOGIN } from "common/constants/context";
 import { unverifiedEmail } from "common/firebase/errorMessages";
@@ -37,15 +36,10 @@ const Login = ({ showToast }: Props): JSX.Element => {
           );
         }
         await getFirebaseToken(user);
-        history.push(getHomeRoute());
-        return showToast(
-          generateToastPayload(toastLocale.login.success as ToastState)
-        );
+        return history.push(getHomeRoute());
       })
       .catch(({ code }) => {
-        return showToast(
-          generateToastPayload(handleErrorMessage(code) as ToastState)
-        );
+        showToast(generateToastPayload(handleErrorMessage(code) as ToastState));
       });
   };
 

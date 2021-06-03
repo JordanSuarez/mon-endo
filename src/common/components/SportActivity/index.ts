@@ -33,7 +33,6 @@ const mapDispatchToProps = (
     dispatch(await deleteSportActivity(id));
   },
   updateSportActivity: async (sportActivity: ISportActivity) => {
-    console.log(sportActivity);
     dispatch(await updateSportActivity(sportActivity));
   },
 });

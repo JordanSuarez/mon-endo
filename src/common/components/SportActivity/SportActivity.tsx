@@ -96,9 +96,8 @@ const SportActivity = ({
             <FormContext.Provider value={UPDATE}>
               <SportActivityForm
                 initialValues={selectedSportActivity}
-                title={locale.title.form.edit}
-                handleCloseForm={handleCloseForm}
-                handleSubmitForm={handleSubmitForm}
+                handleClose={handleCloseForm}
+                handleSubmit={handleSubmitForm}
               />
             </FormContext.Provider>
           }

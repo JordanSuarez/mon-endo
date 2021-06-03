@@ -1,11 +1,9 @@
 import frLocale from "date-fns/locale/fr";
 
-import { dateWithHours, formatDate, fullDate } from "common/helpers/date";
+import { dateWithoutHours, formatDate } from "common/helpers/date";
 
 export default {
   title: {
-    paper: (date: string): string =>
-      `Douleur du ${formatDate(new Date(date), frLocale, fullDate)}`,
     form: {
       edit: "Modifier la douleur",
     },
@@ -13,7 +11,7 @@ export default {
   listItem: {
     date: {
       label: (date: string): string =>
-        formatDate(new Date(date), frLocale, dateWithHours),
+        formatDate(new Date(date), frLocale, dateWithoutHours),
     },
     painType: {
       label: (name: string): string => `Type: ${name}`,

@@ -65,17 +65,14 @@ export const createSportActivity = (
   sportActivity: Omit<SportActivity, "userId" | "id">
 ): ThunkAction<Promise<void>, AppState, Record<string, unknown>, AnyAction> => {
   return async (
-    dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>,
-    getState: () => AppState
+    dispatch: ThunkDispatch<AppState, Record<string, unknown>, AnyAction>
   ): Promise<void> => {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          const currentDate = getState().root.date;
           const firebaseRef = new Firebase(user.uid, SPORT_ACTIVITIES);
           const newSportActivity = {
             ...sportActivity,
-            date: currentDate,
             userId: user.uid,
           };
           await firebaseRef.create<Omit<SportActivity, "id">>(newSportActivity);
@@ -84,7 +81,7 @@ export const createSportActivity = (
           dispatch(
             showToast(
               generateToastPayload(
-                toastLocale.pain.create.success as ToastState
+                toastLocale.sportActivity.create.success as ToastState
               )
             )
           );
@@ -115,7 +112,7 @@ export const deleteSportActivity = (
           dispatch(
             showToast(
               generateToastPayload(
-                toastLocale.pain.delete.success as ToastState
+                toastLocale.sportActivity.delete.success as ToastState
               )
             )
           );
@@ -146,7 +143,7 @@ export const updateSportActivity = (
           dispatch(
             showToast(
               generateToastPayload(
-                toastLocale.pain.update.success as ToastState
+                toastLocale.sportActivity.update.success as ToastState
               )
             )
           );

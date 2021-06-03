@@ -96,7 +96,7 @@ export const createMeal = (
           dispatch(
             showToast(
               generateToastPayload(
-                toastLocale.pain.create.success as ToastState
+                toastLocale.meal.create.success as ToastState
               )
             )
           );
@@ -127,7 +127,7 @@ export const updateMeal = (
           dispatch(
             showToast(
               generateToastPayload(
-                toastLocale.pain.update.success as ToastState
+                toastLocale.meal.create.success as ToastState
               )
             )
           );

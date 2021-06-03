@@ -24,9 +24,8 @@ export type Props = {
 
 const PasswordRecovery = ({ showToast }: Props): JSX.Element => {
   const history = useHistory();
-  const onSubmit = () => {
-    const test = "suarez.jordan@orange.fr";
-    resetPassword(test)
+  const onSubmit = ({ email }: { email: string }) => {
+    resetPassword(email)
       .then(() => {
         history.push(getLoginRoute());
         return showToast(

@@ -21,23 +21,20 @@ import { durationTypes, activities } from "./data";
 
 export type Props = Partial<Config> & {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
-  title: string;
   date: string;
-  handleSubmitForm: (
-    sportActivity: Omit<SportActivity, "userId" | "id">
-  ) => void;
-  handleCloseForm?: () => void;
+  handleSubmit: (sportActivity: Omit<SportActivity, "userId" | "id">) => void;
+  handleClose?: () => void;
 };
 
 const SportActivityForm = ({
   classes,
-  title,
   initialValues,
-  handleSubmitForm,
-  handleCloseForm,
+  handleSubmit,
+  handleClose,
   date,
 }: Props): JSX.Element => {
   const context = useContext(FormContext);
+  const title = context === UPDATE ? locale.title.edit : locale.title.create;
   const required = makeRequired(yupSchema);
   const validate = makeValidate(yupSchema);
   const [activityDuration, setActivityDuration] = useState(
@@ -49,7 +46,7 @@ const SportActivityForm = ({
   const onSubmit = (values: any): void => {
     const inputValues = {
       ...activityDuration,
-      date,
+      date: values.date.toString(),
       duration: {
         ...activityDuration.duration,
         time: values.duration,
@@ -59,12 +56,12 @@ const SportActivityForm = ({
         id: values.activity,
       },
     };
-    handleSubmitForm(inputValues);
+    handleSubmit(inputValues);
   };
 
   const onCancel = (): void => {
-    if (handleCloseForm) {
-      handleCloseForm();
+    if (handleClose) {
+      handleClose();
     }
   };
 
@@ -99,11 +96,12 @@ const SportActivityForm = ({
 
   return (
     <Form
-      onSubmit={onSubmit}
+      handleSubmitForm={onSubmit}
       initialValues={initialFormValues}
       onCancel={onCancel}
       validate={validate}
       title={title}
+      date={date}
     >
       <>
         <Select
@@ -134,7 +132,7 @@ const SportActivityForm = ({
 };
 
 SportActivityForm.defaultProps = {
-  handleCloseForm: () => {},
+  handleClose: () => {},
 };
 
 export default SportActivityForm;

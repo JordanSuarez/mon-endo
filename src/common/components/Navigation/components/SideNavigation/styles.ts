@@ -10,7 +10,9 @@ export type StylesInterface = {
   title: string;
   link: string;
   content: string;
+  activeListItem: string;
   listItem: string;
+  listItemText: string;
   logout: string;
   logoutButton: string;
 };
@@ -41,7 +43,14 @@ export const styles = ({ palette }: Theme): Styles => ({
     height: "100%",
     justifyContent: "space-between",
   },
+  activeListItem: {
+    color: palette.primary.light,
+    backgroundColor: palette.secondary.light,
+  },
   listItem: {
+    color: palette.primary.light,
+  },
+  listItemText: {
     marginLeft: "1rem",
   },
   logout: {

@@ -8,12 +8,16 @@ export type StylesInterface = {
 
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   root: {
-    margin: "2rem auto",
+    margin: "2.5rem auto",
     [breakpoints.down("md")]: {
       width: "100%",
     },
     [breakpoints.up("md")]: {
       maxWidth: "45rem",
+      margin: "2.5rem 0",
+    },
+    [breakpoints.down("sm")]: {
+      marginBottom: "3rem",
     },
   },
   calendar: {

@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 
 import { ClassNameMap } from "@material-ui/styles";
-import frLocale from "date-fns/locale/fr";
-import { DateTimePicker, makeValidate, makeRequired, TextField } from "mui-rff";
-import DateFnsUtils from "@date-io/date-fns";
+import { makeValidate, makeRequired, TextField } from "mui-rff";
 import { Config } from "final-form";
 import { get } from "lodash";
 
@@ -19,30 +17,29 @@ import yupSchema from "./validation/schema";
 
 export type Props = Partial<Config> & {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
-  handleSubmitForm: (pain: Omit<Pain, "userId" | "id">) => void;
+  handleSubmit: (pain: Omit<Pain, "userId" | "id">) => void;
   getPainsType: () => void;
-  handleCloseForm?: () => void;
+  handleClose?: () => void;
   getPainsTypeIntensity: () => void;
   painsType: PainType[];
   painsTypeIntensity: PainTypeIntensity[];
-  title: string;
   descriptionFieldIsActive?: boolean;
+  date: string;
 };
 
 const PainForm = ({
   classes,
-  handleSubmitForm,
+  handleSubmit,
   getPainsType,
   getPainsTypeIntensity,
   painsType,
   painsTypeIntensity,
-  title,
   initialValues,
   descriptionFieldIsActive,
-  handleCloseForm,
+  handleClose,
+  date,
 }: Props): JSX.Element => {
   const context = useContext(FormContext);
-
   const [displayDescriptionField, setDisplayDescriptionField] = useState(
     descriptionFieldIsActive || false
   );
@@ -52,24 +49,26 @@ const PainForm = ({
   const validate = makeValidate(yupSchema(displayDescriptionField));
   const required = makeRequired(yupSchema(displayDescriptionField));
 
+  const title = context === UPDATE ? locale.title.edit : locale.title.create;
+
   useEffect(() => {
     getPainsType();
     getPainsTypeIntensity();
   }, [getPainsType, getPainsTypeIntensity]);
 
-  const onSubmit = (values: any): void => {
+  const onSubmit = (values: Pick<Pain, "date" | "description">): void => {
     setDisplayDescriptionField(false);
     const inputValues = {
       ...pain,
       date: values.date.toString(),
       description: pain.painType.name === "Autre" ? values.description : "",
     };
-    handleSubmitForm(inputValues);
+    handleSubmit(inputValues);
   };
 
   const onCancel = (): void => {
-    if (handleCloseForm) {
-      handleCloseForm();
+    if (handleClose) {
+      handleClose();
     }
   };
 
@@ -107,25 +106,13 @@ const PainForm = ({
   return (
     <Form
       initialValues={initialFormValues}
-      onSubmit={onSubmit}
+      handleSubmitForm={onSubmit}
       onCancel={onCancel}
       validate={validate}
       title={title}
+      date={date}
     >
       <div>
-        <DateTimePicker
-          inputVariant="outlined"
-          ampm={false}
-          label={locale.field.date.label}
-          name={locale.field.date.name}
-          dateFunsUtils={DateFnsUtils}
-          locale={frLocale}
-          required
-          format={locale.field.date.format}
-          disableFuture
-          minDate={get(initialValues, "date", "")}
-          className={classes.field}
-        />
         {selectFields.map((fieldProps) => (
           <Select
             key={fieldProps.name}
@@ -157,7 +144,7 @@ const PainForm = ({
 
 PainForm.defaultProps = {
   descriptionFieldIsActive: false,
-  handleCloseForm: () => {},
+  handleClose: () => {},
 };
 
 export default PainForm;

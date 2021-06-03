@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ERROR, SUCCESS } from "common/constants/severity";
+import { ERROR, INFO, SUCCESS } from "common/constants/severity";
 import EmailVerification from "common/components/EmailVerification";
 
 export default {
@@ -30,11 +30,6 @@ export default {
     },
   },
   login: {
-    success: {
-      title: "test",
-      content: "toto",
-      severity: SUCCESS,
-    },
     error: {
       wrongCredentials: {
         title: "Oups",
@@ -55,9 +50,9 @@ export default {
   },
   register: {
     success: {
-      title: "test",
-      content: "toto",
-      severity: SUCCESS,
+      title: "En attente de validation",
+      content: "Un email de confirmation vous à été envoyé à l'adresse indiqué",
+      severity: INFO,
     },
     error: {
       emailAlreadyTaken: {
@@ -76,21 +71,53 @@ export default {
     create: {
       success: {
         title: "Création réussi",
-        content: "La douleur a été créée avec succès",
+        content: "La douleur à été créée",
         severity: SUCCESS,
       },
     },
     update: {
       success: {
         title: "Modification réussi",
-        content: "La douleur a été modifiée avec succès",
+        content: "La douleur à été modifiée",
         severity: SUCCESS,
       },
     },
     delete: {
       success: {
         title: "Suppression réussi",
-        content: "La douleur a été supprimée avec succès",
+        content: "La douleur à été supprimée",
+        severity: SUCCESS,
+      },
+    },
+  },
+  sportActivity: {
+    create: {
+      success: {
+        title: "Création réussi",
+        content: "L'activité à été créée",
+        severity: SUCCESS,
+      },
+    },
+    update: {
+      success: {
+        title: "Modification réussi",
+        content: "L'activité à été modifiée",
+        severity: SUCCESS,
+      },
+    },
+    delete: {
+      success: {
+        title: "Suppression réussi",
+        content: "L'activité à été supprimée",
+        severity: SUCCESS,
+      },
+    },
+  },
+  meal: {
+    create: {
+      success: {
+        title: "Création réussi",
+        content: "Les repas ont à été ajouté",
         severity: SUCCESS,
       },
     },

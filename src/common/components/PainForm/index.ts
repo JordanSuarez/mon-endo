@@ -8,17 +8,20 @@ import { AppState } from "common/types/redux";
 import { PainType, PainTypeIntensity } from "common/types/pains";
 import { getPainsType } from "common/redux/actions/painsType";
 import { getPainsTypeIntensity } from "common/redux/actions/painsTypeIntensity";
+import { RootState } from "common/redux/reducers/root/types";
 import { styles } from "./styles";
 import PainForm, { Props } from "./PainForm";
 
 type State = {
   painsType: PainType[];
   painsTypeIntensity: PainTypeIntensity[];
+  root: RootState;
 };
 
-const mapStateToProps = ({ painsType, painsTypeIntensity }: State) => ({
+const mapStateToProps = ({ painsType, painsTypeIntensity, root }: State) => ({
   ...painsType,
   ...painsTypeIntensity,
+  date: root.date,
 });
 
 const mapDispatchToProps = (
@@ -36,11 +39,10 @@ export default compose<
   Props,
   Pick<
     Props,
-    | "title"
     | "initialValues"
     | "descriptionFieldIsActive"
-    | "handleSubmitForm"
-    | "handleCloseForm"
+    | "handleSubmit"
+    | "handleClose"
   >
 >(
   withStyles(styles),

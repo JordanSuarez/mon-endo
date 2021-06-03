@@ -1,21 +1,10 @@
 export default {
   title: {
-    pain: {
-      create: "Enregistrer une douleur",
-      edit: "Modifier la douleur",
-    },
-    sportActivity: {
-      create: "Enregistrer une activité",
-      edit: "Modifier l'activité",
-    },
+    create: "Enregistrer une douleur",
+    edit: "Modifier la douleur",
   },
   field: {
     required: "Le champ est requis",
-    date: {
-      label: "Date",
-      format: "dd MMMM yyyy HH:mm",
-      name: "date",
-    },
     painType: {
       label: "Type de douleur",
       name: "painType",

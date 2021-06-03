@@ -1,42 +1,50 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import { Button, Typography } from "@material-ui/core";
 import { ClassNameMap } from "@material-ui/styles";
 import SendIcon from "@material-ui/icons/Send";
 import ClearIcon from "@material-ui/icons/Clear";
 import { Form as FormRff } from "react-final-form";
+import { Config } from "final-form";
 
-import { UPDATE } from "common/constants/context";
+import { CREATE, UPDATE } from "common/constants/context";
 import IconButton from "common/components/IconButton";
 import { FormContext } from "common/context";
-import { Config, FormApi, SubmissionErrors } from "final-form";
-import { StylesInterface } from "./styles";
+import { get } from "lodash";
 import locale from "./config/locale";
+import { StylesInterface } from "./styles";
+import DatePicker from "../DatePicker";
 
-type Props<T> = Partial<Config> & {
+type Props = Partial<Config> & {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   onCancel: () => void;
-  onSubmit: (
-    values: T,
-    form: FormApi<T>,
-    callback?: (errors?: SubmissionErrors) => void
-  ) => SubmissionErrors | Promise<SubmissionErrors> | void;
+  handleSubmitForm: (values: any) => void;
   title: string;
   children: JSX.Element;
   validate: any;
+  date: string;
 };
 
-const Form = <T,>({
+const Form = ({
   classes,
   title,
   initialValues,
   onCancel,
-  onSubmit,
+  handleSubmitForm,
   children,
   validate,
-}: Props<T>): JSX.Element => {
+  date,
+}: Props): JSX.Element => {
   const context = useContext(FormContext);
+  const [selectedDate, setSelectedDate] = useState(new Date(date) as Date);
 
+  const onSubmit = (values: FormData): void => {
+    const inputValues = {
+      ...values,
+      date: selectedDate,
+    };
+    handleSubmitForm(inputValues);
+  };
   return (
     <>
       <Typography variant="h6" className={classes.title}>
@@ -55,6 +63,14 @@ const Form = <T,>({
                   : classes.createFieldsContainer
               }
             >
+              {context === CREATE && (
+                <DatePicker
+                  minDate={get(initialValues, "date", "")}
+                  value={selectedDate}
+                  onChange={(dateTime) => setSelectedDate(dateTime as Date)}
+                  className={classes.field}
+                />
+              )}
               {children}
               {context === UPDATE ? (
                 <div className={classes.iconsContainer}>

@@ -26,18 +26,18 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     backgroundColor: palette.common.white,
   },
   image: {
-    marginTop: "2rem",
+    marginTop: "1rem",
     width: "55%",
     height: "80%",
     alignSelf: "center",
-    background: `url(${process.env.PUBLIC_URL}/login.png) no-repeat center`,
+    background: `url(${process.env.PUBLIC_URL}/images/login.png) no-repeat center`,
     backgroundSize: "contain",
     [breakpoints.down("sm")]: {
-      height: "65%",
+      height: "45%",
       width: "100%",
     },
     [breakpoints.down("xs")]: {
-      height: "45%",
+      height: "30%",
     },
   },
   title: {
@@ -58,12 +58,13 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     flexDirection: "column",
     width: "25rem",
     [breakpoints.down("sm")]: {
-      width: "50%",
+      width: "60%",
       height: "auto",
       marginBottom: "2rem",
     },
     [breakpoints.down("xs")]: {
       width: "90%",
+      margin: "0",
     },
   },
   box: {
@@ -80,7 +81,7 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     justifyContent: "flex-end",
     alignSelf: "flex-end",
     textTransform: "none",
-    width: "50%",
+    width: "55%",
     fontSize: "1rem",
     color: palette.primary.dark,
     padding: "0",

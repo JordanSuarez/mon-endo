@@ -7,12 +7,11 @@ import { PAIN_FORM, CREATE, SPORT_ACTIVITY } from "common/constants/context";
 import PainForm from "common/components/PainForm";
 import SportActivityForm from "common/components/SportActivityForm";
 import { Pain } from "common/types/pains";
-import locale from "common/components/PainForm/config/locale";
 import { FormContext } from "common/context";
 import { SportActivity } from "common/types/sportActivity";
 import { StylesInterface } from "./styles";
 
-type Props = {
+export type Props = {
   classes: Partial<ClassNameMap<keyof StylesInterface>>;
   isOpen: boolean;
   context: string;
@@ -41,18 +40,12 @@ const Drawer = ({
       <Paper className={classes.paper}>
         {context === PAIN_FORM && (
           <FormContext.Provider value={CREATE}>
-            <PainForm
-              title={locale.title.pain.create}
-              handleSubmitForm={createPain}
-            />
+            <PainForm handleSubmit={createPain} />
           </FormContext.Provider>
         )}
         {context === SPORT_ACTIVITY && (
           <FormContext.Provider value={CREATE}>
-            <SportActivityForm
-              title={locale.title.sportActivity.create}
-              handleSubmitForm={createSportActivity}
-            />
+            <SportActivityForm handleSubmit={createSportActivity} />
           </FormContext.Provider>
         )}
       </Paper>
