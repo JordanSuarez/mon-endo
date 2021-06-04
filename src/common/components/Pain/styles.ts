@@ -10,12 +10,12 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   root: {
     marginTop: "1rem",
     width: "50%",
-    minWidth: "20rem",
     height: "fit-content",
+    minHeight: "14rem",
     textTransform: "initial",
     [breakpoints.up("md")]: {
       width: "40%",
-      height: "fit-content",
+      minWidth: "20rem",
     },
     [breakpoints.down("md")]: {
       width: "50%",

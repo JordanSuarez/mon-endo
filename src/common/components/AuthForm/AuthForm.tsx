@@ -97,7 +97,8 @@ const AuthForm = ({
             </Button>
             {context !== RECOVERY ? (
               <Link to={route()} className={classes.link}>
-                {locale.form.link.text} <span>{locale.form.link.span}</span>
+                {locale.form.link.text}{" "}
+                <span className={classes.span}>{locale.form.link.span}</span>
               </Link>
             ) : (
               <Button

@@ -13,6 +13,7 @@ export type StylesInterface = {
   submitButton: string;
   icon: string;
   link: string;
+  span: string;
 };
 
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
@@ -24,6 +25,7 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     height: "100vh",
     overflow: "scroll",
     backgroundColor: palette.common.white,
+    paddingBottom: "3rem",
   },
   image: {
     marginTop: "1rem",
@@ -45,6 +47,9 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     textAlign: "center",
     color: palette.primary.dark,
     marginBottom: "1rem",
+    [breakpoints.down("xs")]: {
+      fontSize: "2.5rem",
+    },
   },
   subtitle: {
     color: palette.primary.light,
@@ -90,31 +95,21 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
       textDecoration: "underline",
       backgroundColor: palette.common.white,
     },
+    [breakpoints.down("xs")]: {
+      width: "100%",
+      textDecoration: "underline",
+    },
   },
   submitButton: {
     backgroundColor: palette.primary.light,
     textTransform: "none",
     marginTop: "1rem",
   },
-  // button: {
-  //   display: "flex",
-  //   justifyContent: "flex-end",
-  //   alignSelf: "flex-end",
-  //   textTransform: "none",
-  //   fontSize: "1rem",
-  //   color: palette.primary.dark,
-  //   padding: "0",
-  //   marginBottom: "1rem",
-  //   "&:hover": {
-  //     textDecoration: "underline",
-  //     backgroundColor: palette.common.white,
-  //   },
-  // },
   icon: {
     color: palette.primary.light,
   },
   link: {
-    textAlign: "center",
+    textAlign: "end",
     marginTop: "0.5rem",
     color: palette.primary.dark,
     fontSize: "1rem",
@@ -124,6 +119,14 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
     },
     "&:active": {
       color: palette.secondary.dark,
+    },
+    [breakpoints.down("xs")]: {
+      textAlign: "center",
+    },
+  },
+  span: {
+    [breakpoints.down("xs")]: {
+      display: "block",
     },
   },
 });
