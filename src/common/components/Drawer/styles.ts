@@ -4,6 +4,8 @@ import { Styles } from "common/types/styles";
 export type StylesInterface = {
   root: string;
   paper: string;
+  iconButton: string;
+  icon: string;
 };
 
 export const styles = ({ palette, breakpoints }: Theme): Styles => ({
@@ -28,12 +30,13 @@ export const styles = ({ palette, breakpoints }: Theme): Styles => ({
   },
   paper: {
     padding: "1rem",
-    [breakpoints.up("sm")]: {
-      margin: "3rem auto 1rem",
-      width: "70%",
-    },
-    [breakpoints.up("lg")]: {
-      margin: "4rem auto 1rem",
-    },
+  },
+  iconButton: {
+    position: "absolute",
+    top: "0",
+    right: "0",
+  },
+  icon: {
+    fontSize: "2.3rem",
   },
 });
